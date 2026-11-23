@@ -127,7 +127,7 @@
       rows.map(function (r) {
         var F = FORMS[r[0]];
         return '<div style="display:flex;gap:14px;align-items:center;margin:12px 0"><span style="flex:0 0 60px">' + manji(r[0], 60) + '</span>' + '<div><b>' + r[1] + ' · ' + F.code + '</b><div class="small muted">' + r[2] + ' · ' +
-          F.slots.map(function (x, i) { return '<b>' + x.key + '</b> ' + EN[r[0]][i] + ' ' + x.title + '<small>(' + ROLE_HAN[ROLE[r[0]][i]].slice(0, 1) + ')</small>'; }).join(' → ') + '</div></div></div>';
+          F.slots.map(function (x, i) { var w = EN[r[0]][i]; return '<b>' + w.charAt(0) + '</b>' + w.slice(1) + ' ' + x.title + '<small>(' + ROLE_HAN[ROLE[r[0]][i]].slice(0, 1) + ')</small>'; }).join(' → ') + '</div></div></div>';
       }).join('') + '</section>' +
       '<p class="small muted" style="text-align:center">감수 ' + e(CFG.reviewer || '(감수자 확정 후 표기)') + '</p>';
   };
