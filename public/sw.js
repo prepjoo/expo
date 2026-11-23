@@ -1,7 +1,7 @@
 /* 오프라인 캐시: 전시장 와이파이가 끊겨도 체험이 돌아가게 */
-const V = 'expo-20261123-a1';
+const V = 'expo-20261123-a4';
 const FILES = ['./', 'index.html', 'config.js', 'platform-web.js', 'data.js', 'persona.js', 'content.js', 'adult.js', 'app.js', 'guide.js', 'qrcode.js', 'expo.js',
-  'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'voice/guide.mp3',
+  'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'logo.png', 'voice/guide.mp3',
   'char/thumbs.webp', 'char/point_left.webp', 'char/stop.webp', 'char/surprised.webp', 'char/think.webp', 'char/point_right2.webp', 'char/joy.webp', 'char/point_right.webp', 'char/compare.webp', 'char/jump.webp'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => c.addAll(FILES)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
