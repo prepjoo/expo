@@ -1,7 +1,6 @@
-// Supabase 프로젝트의 값으로 바꾸세요. (Project Settings → API)
-// 두 값이 비어 있으면 로그인 없이 '이 브라우저에만 저장' 모드로 동작합니다.
-// anon(public) 키는 공개되어도 되는 키입니다. service_role 키는 절대 넣지 마세요.
-window.B5_CONFIG = {
-  supabaseUrl: '',      // 예: 'https://abcdxyz.supabase.co'
-  supabaseAnonKey: ''   // 예: 'eyJhbGciOi...'
+// 성인·박람회판 설정. 로그인·서버 저장은 쓰지 않아요(기록은 이 브라우저에만).
+window.EXPO_CONFIG = {
+  siteUrl: '',     // 배포 주소. 비워 두면 지금 열린 주소를 써요. QR에 들어가요. 예: 'https://expo-prepjoo.vercel.app/'
+  youthUrl: '',    // 청소년판 앱 주소. 넣으면 홈에 '중·고등학생이에요' 연결이 생겨요.
+  reviewer: ''     // 감수자 이름. 유래 화면에 '감수 ○○○'로 나와요.
 };

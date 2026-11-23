@@ -1,5 +1,5 @@
 'use strict';
-/* 말로 증명하라 · BALANCE 5 — single-page practice app */
+/* 내 말로 증명하다 · 성인·박람회판 (청소년판 youth-v1.0에서 복사) */
 
 // ---------- helpers ----------
 const $ = (s, el = document) => el.querySelector(s);
@@ -24,7 +24,7 @@ const S = {
 };
 
 // ---------- storage: this browser + (when available) the viewer's own cloud space ----------
-const LS = 'b5:v1';
+const LS = 'b5adult:v1';
 const Store = {
   mode: 'local', backend: null, chains: {}, account: null,
   loadLocal() {
@@ -329,18 +329,18 @@ function currentQ() {
 }
 
 // ---------- persona ----------
-// 대상(학교급) × 영역. 예전 기록의 'pres'(고교생 · 발표)는 고등학생 · 발표토론으로 읽는다
-const levelChosen = () => !!(S.profile.who && (LEVELS[S.profile.who] || S.profile.who === 'pres'));
-const levelId = () => S.profile.who === 'pres' ? 'high' : (LEVELS[S.profile.who] ? S.profile.who : 'high');
-const areaId = () => { const L = LEVEL_AREAS[levelId()], a = S.profile.area; if (a && L.includes(a)) return a; if (S.profile.who === 'pres') return 'talk'; return levelId() === 'elem' ? 'perf' : 'iv'; };
-// 예시·저울·워드댄싱에 쓰는 내용 묶음: 고등학생 발표토론만 '발표' 묶음을 쓴다
-const whoId = () => levelId() === 'high' && areaId() === 'talk' ? 'pres' : levelId();
+// 성인·박람회판: 대상은 '성인(대학생 포함)' 하나, 영역 5개. 청소년은 청소년판 앱으로 안내한다
+const levelChosen = () => true;
+const levelId = () => 'adult';
+const areaId = () => { const L = LEVEL_AREAS.adult, a = S.profile.area; return a && L.includes(a) ? a : 'study'; };
+const whoId = () => 'adult';
 const persona = () => PERSONAS[whoId()];
 const formEx = k => FORM_EX[whoId()][k];
 const scaleEx = id => SCALE_EX[whoId()][id];
 
 // ---------- 대상별 제목 글꼴 ----------
 const FONTS = {
+  adult: { family: 'Gothic A1', css: 'Gothic+A1:wght@700;800' },
   elem: { family: 'Do Hyeon', css: 'Do+Hyeon' },
   mid: { family: 'Do Hyeon', css: 'Do+Hyeon' },
   high: { family: 'Do Hyeon', css: 'Do+Hyeon' },
@@ -402,7 +402,7 @@ const NAV_IC = {
 };
 const NAV = [['forms', '짜기'], ['speak', '말하기'], ['scales', '재기'], ['drill', '워드댄싱'], ['scaleinfo', '다섯 저울'], ['cards', '경험 카드']].map(([id, l]) => [id, l, NAV_IC[id]]);
 const PAGES = [['home', '홈', '처음 화면, 대상 고르기'], ['forms', '짜기', '1단계 · 삼지작법 고르기'], ['speak', '말하기', '2단계 · 삼지작법 익히기'], ['scales', '재기', '3단계 · 삼지작법 점검하기'],
-  ['drill', '삼지작법 워드댄싱', '네 칸의 순서 익히기'], ['scaleinfo', '다섯 저울', '저울 다섯 개 알아보기'], ['cards', '경험 카드', '경험을 여섯 칸에 모으기'], ['report', '기록', '날짜별 점수 변화']];
+  ['drill', '삼지작법 워드댄싱', '네 칸의 순서 익히기'], ['scaleinfo', '다섯 저울', '저울 다섯 개 알아보기'], ['cards', '경험 카드', '경험을 여섯 칸에 모으기'], ['report', '기록', '날짜별 점수 변화'], ['origin', '유래', '진나의 인명학과 삼지작법']];
 function renderNav(route) {
   const r = route === 'feedback' ? 'scales' : route === 'learn' ? 'forms' : route;
   $('#nav').innerHTML = NAV.map(([id, label, ic]) => `<a href="#${id}" class="${r === id ? 'on' : ''}" ${r === id ? 'aria-current="page"' : ''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${ic}</svg>${label}</a>`).join('');
@@ -627,7 +627,7 @@ function viewMeasure() {
 
 /* 다섯 저울 설명 */
 function viewScaleInfo() {
-  const i = clamp(S.ui.scaleIdx || 0, 0, 4), sc = SCALES[i], lr = (SCALE_LR[whoId()] || SCALE_LR.high)[sc.id];
+  const i = clamp(S.ui.scaleIdx || 0, 0, 4), sc = SCALES[i], lr = (SCALE_LR[whoId()] || SCALE_LR.adult)[sc.id];
   return `
   ${backTo('scales', '재기')}
   <header class="si-head">
@@ -813,7 +813,7 @@ function sheetMenu(confirmClear) {
   ${confirmClear ? `<div class="card" style="border-color:var(--orange)"><p class="small" style="margin:0 0 10px">카드 ${S.cards.length}장과 기록 ${S.history.length}개를 모두 지울까요? 되돌릴 수 없어요.</p><div class="grid2"><button class="btn ghost small" style="width:100%" data-act="menu">취소</button><button class="btn danger small" style="width:100%" data-act="clearAll">모두 지우기</button></div></div>`
       : `<div style="text-align:center"><button class="clearbtn" data-act="askClear">기록 모두 지우기</button></div>`}
   <hr style="border:none;border-top:1px solid var(--line);margin:14px 0">
-  <p class="tiny faint mb0"><b>말로 증명하라</b>는 내 경험을 숫자로 증명하는 말하기 연습 앱이에요. 점수는 앱이 정해진 기준(다섯 저울)에 따라 자동으로 매겨요.</p>`, sh => {
+  <p class="tiny faint mb0"><b>내 말로 증명하다</b>는 AI 시대에 내 생각을 내 말로 증명하는 말하기 연습 앱이에요. 삼지작법은 진나의 인명학을 현대 말하기에 맞게 응용한 것이에요. 점수는 앱이 정해진 기준(다섯 저울)에 따라 자동으로 매겨요.</p>`, sh => {
     const f = $('#importFile', sh); if (f) f.addEventListener('change', async () => { const file = f.files[0]; if (!file) return; importText(await file.text()); });
   });
 }
@@ -1043,9 +1043,10 @@ const ACT = {
 
 // ---------- render & events ----------
 function render() {
+  if (window.EXPO_BOOTH) return;
   migrateHistory();
   const route = (location.hash || '#home').slice(1) || 'home';
-  const views = { home: viewHome, learn: viewForms, forms: viewForms, scales: viewMeasure, scaleinfo: viewScaleInfo, speak: viewSpeak, feedback: viewMeasure, drill: viewDrill, cards: viewCards, report: viewReport };
+  const views = { home: viewHome, learn: viewForms, forms: viewForms, scales: viewMeasure, scaleinfo: viewScaleInfo, speak: viewSpeak, feedback: viewMeasure, drill: viewDrill, cards: viewCards, report: viewReport, origin: () => window.viewOrigin() };
   const fn = views[route] || viewHome;
   if (route !== S.ui.lastRoute && (route === 'forms' || route === 'learn')) S.ui.formOpen = null;
   if (route !== S.ui.lastRoute && route === 'drill') { const D = S.ui.drill; if (!D.checked && D.placed.every(x => x == null)) { D.form = 'CRIB'; D.target = 0; D.introDone = false; } }
@@ -1055,6 +1056,7 @@ function render() {
   const wl = $('#whoLine'); if (wl) { const chosen = levelChosen(), lab = LEVELS[levelId()].label + ' · ' + AREAS[areaId()].label; wl.innerHTML = chosen ? `<a href="#home" data-act="focusWho" aria-label="연습 대상: ${esc(lab)}">${esc(lab)}</a>` : '<a href="#home" class="need" data-act="focusWho">대상 고르기</a>'; }
   document.body.dataset.route = route; document.body.dataset.who = whoId(); applyFont();
   if (route === 'speak') { updateEstimate(); refreshMics(); }
+  if (window.EXPO_AFTER_RENDER) window.EXPO_AFTER_RENDER();
   if (route === 'scaleinfo') { const tb = $('.si-tabs'), sel = $('.si-tabs [aria-selected="true"]'); if (tb && sel) tb.scrollLeft = sel.offsetLeft - (tb.clientWidth - sel.offsetWidth) / 2; }
 }
 document.addEventListener('click', e => {
