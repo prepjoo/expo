@@ -126,7 +126,7 @@
       '<p class="body-tx">여는·받치는·답하는 삼지작법은 진나의 삼지작법을 <b>현대 말하기에 맞게 응용한 것</b>이에요. 종·인·유로 짠 네 칸을 상황에 맞게 순서를 바꿔 써요.</p>' +
       rows.map(function (r) {
         var F = FORMS[r[0]];
-        return '<div style="display:flex;gap:14px;align-items:center;margin:12px 0"><span style="flex:0 0 60px">' + manji(r[0], 60) + '</span>' + '<div><b>' + r[1] + ' · ' + F.code + '</b><div class="small muted">' + r[2] + ' · ' +
+        return '<div style="display:flex;gap:14px;align-items:center;margin:12px 0"><span style="flex:0 0 60px">' + manji(r[0], 60) + '</span>' + '<div><b>' + r[1] + ' · ' + F.code + ' <small style="font-weight:600;opacity:.65;font-size:.78em">' + F.pron + '</small></b><div class="small muted">' + r[2] + ' · ' +
           F.slots.map(function (x, i) { var w = EN[r[0]][i]; return '<b>' + w.charAt(0) + '</b>' + w.slice(1) + ' ' + x.title + '<small>(' + ROLE_HAN[ROLE[r[0]][i]].slice(0, 1) + ')</small>'; }).join(' → ') + '</div></div></div>';
       }).join('') + '</section>' +
       '<p class="small muted" style="text-align:center">감수 ' + e(CFG.reviewer || '(감수자 확정 후 표기)') + '</p>';
@@ -143,7 +143,7 @@
     var F = FORMS[o.form], n = filledOf(o.scores);
     return pageHead('내 결과', '박람회 체험 결과') +
       '<section class="card"><p class="small muted mb0">' + e(o.item.id + ' · ' + o.item.who) + '</p><p class="body-tx"><b>“' + e(o.item.q) + '”</b></p>' +
-      '<div style="display:flex;gap:12px;align-items:center">' + manji(o.form, 64, COL.navy) + '<div><b>' + F.label + '</b><div class="small muted">' + F.code + '</div></div></div>' +
+      '<div style="display:flex;gap:12px;align-items:center">' + manji(o.form, 64, COL.navy) + '<div><b>' + F.label + '</b><div class="small muted">' + F.code + ' · ' + F.pron + '</div></div></div>' +
       '<p style="font-size:2.4em;font-weight:800;color:' + COL.scale + ';margin:12px 0 4px">채운 저울 ' + n + ' / 5</p></section>' +
       '<button class="btn mb8" style="width:100%" id="rImg">결과 이미지 저장하기</button>' +
       '<button class="btn ghost" style="width:100%" id="rAgain">이 질문 다시 연습하기</button>';
