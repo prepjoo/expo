@@ -448,7 +448,7 @@ function formGrid(k) {
   const L = FORMS[k].slots.map(x => x.key), P = [[13, 17.6], [35, 17.6], [13, 39.6], [35, 39.6]];
   return `<svg class="fgrid" viewBox="0 0 48 48" aria-hidden="true"><rect class="t" x="1" y="1" width="46" height="46" rx="13"/><path class="d" d="M24 7v34M7 24h34"/>${L.map((c, i) => `<text class="l" x="${P[i][0]}" y="${P[i][1]}" text-anchor="middle">${c}</text>`).join('')}</svg>`;
 }
-function fmono(k) { const P = [[29, 30], [71, 30], [29, 72], [71, 72]]; return `<span class="ficon mji" aria-hidden="true"><svg viewBox="0 0 100 100" style="width:100%;height:100%;display:block"><path class="mj" d="M14 14H50V86H86M86 14V50H14V86" fill="none" stroke-width="7" stroke-linecap="square"/>${FORMS[k].slots.map(x => x.key).map((ch, i) => `<text x="${P[i][0]}" y="${P[i][1]}" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="31" fill="currentColor">${ch}</text>`).join('')}</svg></span>`; }
+function fmono(k) { const f = { CRIB: 'crib', PREP: 'prep', AHWA: 'awha' }[k]; return `<span class="ficon" aria-hidden="true"><img src="icons/${f}.png" alt="" style="width:100%;height:100%;display:block"></span>`; }
 function formTag(k, size) { const F = FORMS[k]; return `<span class="ftag ${size || ''}" data-form="${k}">${fmono(k)}${F.label}<small class="ftag-code" style="font-size:.7em;opacity:.6;margin-left:.35em;font-weight:600;letter-spacing:.02em">${F.code}</small></span>`; }
 const STEP = {
   forms: { no: 1, name: '짜기', sub: '삼지작법 고르기', icon: () => ICON_FORM,
