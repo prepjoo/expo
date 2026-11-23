@@ -461,7 +461,7 @@ function formGrid(k) {
 // 종인유 고유색: 칸마다 종(宗)·인(因)·유(喩) 중 무엇인지
 const ROLE_OF = { CRIB: ['yu', 'in', 'jong', 'in'], PREP: ['jong', 'in', 'yu', 'jong'], AHWA: ['jong', 'in', 'in', 'jong'] };
 const roleBg = (k, i) => `background:var(--${(ROLE_OF[k] || [])[i] || 'ink3'})`;
-function fmono(k) { const f = { CRIB: 'crib', PREP: 'prep', AHWA: 'awha' }[k]; return `<span class="ficon" aria-hidden="true"><img src="icons/${f}.png" alt="" style="width:100%;height:100%;display:block"></span>`; }
+function fmono(k) { const f = { CRIB: 'crib', PREP: 'prep', AHWA: 'awha' }[k]; return `<span class="ficon" aria-hidden="true"><img src="icons/${f}.png?v=3" alt="" style="width:100%;height:100%;display:block"></span>`; }
 function formTag(k, size) { const F = FORMS[k]; return `<span class="ftag ${size || ''}" data-form="${k}">${fmono(k)}${F.label}<small class="ftag-code" style="font-size:.7em;opacity:.6;margin-left:.35em;font-weight:600;letter-spacing:.02em">${F.code}</small></span>`; }
 const STEP = {
   forms: { no: 1, name: '짜기', sub: '삼지작법 고르기', icon: () => ICON_FORM,

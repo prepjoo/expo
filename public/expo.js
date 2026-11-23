@@ -19,7 +19,7 @@
 
   // ---------- 卍 아이콘 (SVG) ----------
   // 삼지작법 아이콘: 사용자 제공 그림(icons/*.png, 배경 투명)
-  var ICON_FILE = { CRIB: 'icons/crib.png', PREP: 'icons/prep.png', AHWA: 'icons/awha.png' };
+  var ICON_FILE = { CRIB: 'icons/crib.png?v=3', PREP: 'icons/prep.png?v=3', AHWA: 'icons/awha.png?v=3' };
   var ICON_IMG = {};
   Object.keys(ICON_FILE).forEach(function (k) { var im = new Image(); im.src = ICON_FILE[k]; ICON_IMG[k] = im; });
   var EN = { CRIB: ['Condition', 'Risk', 'Idea', 'Benefit'], PREP: ['Point', 'Reason', 'Example', 'Point'], AHWA: ['Action', 'Why', 'How', 'Action'] };

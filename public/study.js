@@ -6,7 +6,7 @@
   var BY = window.CONTENT_BY_ID;
   var HAN = { jong: '종(宗)', in: '인(因)', yu: '유(喩)' };
   var MEAN = { jong: '주장', in: '근거', yu: '사례' };
-  var ICON = { CRIB: 'icons/crib.png', PREP: 'icons/prep.png', AHWA: 'icons/awha.png' };
+  var ICON = { CRIB: 'icons/crib.png?v=3', PREP: 'icons/prep.png?v=3', AHWA: 'icons/awha.png?v=3' };
   var SLUG = { CRIB: 'crib', PREP: 'prep', AHWA: 'awha' };
 
   var D = {
