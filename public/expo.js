@@ -18,11 +18,15 @@
   var itemByQ = function (q) { var t = q && q.q ? q.q : q; return ITEMS.filter(function (x) { return x.q === t; })[0] || null; };
 
   // ---------- 卍 아이콘 (SVG) ----------
-  function manji(form, size, color) {
-    var F = FORMS[form], pos = [[29, 30], [71, 30], [29, 72], [71, 72]];
-    return '<svg viewBox="0 0 100 100" width="' + size + '" height="' + size + '" aria-hidden="true"><path d="M14 14H50V86H86M86 14V50H14V86" fill="none" stroke="' + (color || 'currentColor') + '" stroke-width="7" stroke-linecap="square"/>' +
-      F.slots.map(function (x, i) { return '<text x="' + pos[i][0] + '" y="' + pos[i][1] + '" text-anchor="middle" dominant-baseline="central" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="31" fill="' + COL[ROLE[form][i]] + '">' + x.key + '</text>'; }).join('') + '</svg>';
+  // 삼지작법 아이콘: 사용자 제공 그림(icons/*.png, 배경 투명)
+  var ICON_FILE = { CRIB: 'icons/crib.png', PREP: 'icons/prep.png', AHWA: 'icons/awha.png' };
+  var ICON_IMG = {};
+  Object.keys(ICON_FILE).forEach(function (k) { var im = new Image(); im.src = ICON_FILE[k]; ICON_IMG[k] = im; });
+  var EN = { CRIB: ['Condition', 'Risk', 'Idea', 'Benefit'], PREP: ['Point', 'Reason', 'Example', 'Point'], AHWA: ['Action', 'Why', 'How', 'Action'] };
+  function manji(form, size) {
+    return '<img src="' + ICON_FILE[form] + '" width="' + size + '" height="' + size + '" alt="' + FORMS[form].code + '" style="display:block;margin:0 auto">';
   }
+
 
   // ---------- QR ----------
   function qrSvg(text, px) {
@@ -58,12 +62,15 @@
     // 卍 아이콘과 삼지작법 이름 (질문 줄 수에 따라 위치를 맞춤)
     var dy = (ql.length - 1) * 72 - 170, F = FORMS[o.form], x0 = 80, y0 = 760, s = 220;
     c.save(); c.translate(0, dy);
+    var IM = ICON_IMG[o.form];
+    if (IM && IM.complete && IM.naturalWidth) { c.drawImage(IM, x0, y0, s, s); } else {
     c.save(); c.translate(x0, y0); c.scale(s / 100, s / 100);
     c.strokeStyle = COL.navy; c.lineWidth = 7; c.lineCap = 'square'; c.beginPath();
     c.moveTo(14, 14); c.lineTo(50, 14); c.lineTo(50, 86); c.lineTo(86, 86); c.moveTo(86, 14); c.lineTo(86, 50); c.lineTo(14, 50); c.lineTo(14, 86); c.stroke();
     c.font = '900 31px Arial Black, Arial, sans-serif'; c.textAlign = 'center';
     [[29, 30], [71, 30], [29, 72], [71, 72]].forEach(function (p, i) { c.fillStyle = COL[ROLE[o.form][i]]; c.fillText(F.slots[i].key, p[0], p[1]); });
-    c.restore(); c.textAlign = 'left';
+    c.restore(); }
+    c.textAlign = 'left';
     c.fillStyle = '#1E1B16'; c.font = '800 60px ' + FONT; c.fillText(F.label, 340, 830);
     c.fillStyle = '#6B6457'; c.font = '600 36px ' + FONT; c.fillText(F.code + ' · ' + F.when, 340, 905);
     c.restore(); c.save(); c.translate(0, dy / 2);
@@ -111,7 +118,7 @@
       '<section class="card"><h2 class="sec" style="margin-top:0">1,500년 전 스님들의 토론법</h2>' +
       '<p class="body-tx">삼지작법(三支作法)은 5~6세기 인도의 불교 논리학자 <b>진나(陳那, 디그나가)</b>가 정리한 <b>인명학(因明學)</b>의 논증 형식이에요. 주장을 세 갈래로 받쳐 상대를 설득해요.</p>' +
       '<ul class="body-tx"><li><b style="color:' + COL.jong + '">종(宗)</b> 주장: 내가 증명하려는 것</li><li><b style="color:' + COL.in + '">인(因)</b> 이유: 그렇게 말할 수 있는 까닭</li><li><b style="color:' + COL.yu + '">유(喩)</b> 사례: 누구나 확인할 수 있는 예</li></ul></section>' +
-      '<section class="card"><h2 class="sec" style="margin-top:0">삼장법사를 토론 승자로 만든 논리</h2>' +
+      '<section class="card"><h2 class="sec" style="margin-top:0">1,400년 전 삼장법사를 토론 승자로 만든 논리</h2>' +
       '<p class="body-tx">서유기의 삼장법사로 알려진 <b>현장(玄奘) 스님</b>은 7세기에 인도 <b>나란다 대학</b>에서 계현(시라바드라) 스님에게 인명학을 배웠어요.</p>' +
       '<p class="body-tx">641~643년 무렵 북인도의 하르샤왕(계일왕)이 수도 <b>곡녀성(카냐쿠브자)</b>에서 큰 토론회를 열었어요. 왕 18명과 스님 3,000명, 학자 수천 명이 모였어요. 현장 스님이 종·인·유로 짠 논증 <b>진유식량(眞唯識量)</b>을 내걸자 18일 동안 아무도 꺾지 못했고, 현장 스님은 토론의 승자가 되었어요.</p>' +
       '<p class="body-tx">진나가 정리한 삼지작법을, 약 1,400년 전 삼장법사가 실제 토론에서 써서 이긴 거예요. 현장 스님은 인명학 책을 중국으로 가져와 번역했고, 그 덕분에 동아시아에 삼지작법이 전해졌어요.</p></section>' +
@@ -119,8 +126,8 @@
       '<p class="body-tx">여는·받치는·답하는 삼지작법은 진나의 삼지작법을 <b>현대 말하기에 맞게 응용한 것</b>이에요. 종·인·유로 짠 네 칸을 상황에 맞게 순서를 바꿔 써요.</p>' +
       rows.map(function (r) {
         var F = FORMS[r[0]];
-        return '<div style="display:flex;gap:12px;align-items:center;margin:10px 0"><span style="flex:0 0 56px">' + manji(r[0], 56, COL.navy) + '</span>' + '<div><b>' + r[1] + ' · ' + F.code + '</b><div class="small muted">' + r[2] + ' · ' +
-          F.slots.map(function (x, i) { return x.key + ' ' + x.title + '<small>(' + ROLE_HAN[ROLE[r[0]][i]].slice(0, 1) + ')</small>'; }).join(' → ') + '</div></div></div>';
+        return '<div style="display:flex;gap:14px;align-items:center;margin:12px 0"><span style="flex:0 0 60px">' + manji(r[0], 60) + '</span>' + '<div><b>' + r[1] + ' · ' + F.code + '</b><div class="small muted">' + r[2] + ' · ' +
+          F.slots.map(function (x, i) { return '<b>' + x.key + '</b> ' + EN[r[0]][i] + ' ' + x.title + '<small>(' + ROLE_HAN[ROLE[r[0]][i]].slice(0, 1) + ')</small>'; }).join(' → ') + '</div></div></div>';
       }).join('') + '</section>' +
       '<p class="small muted" style="text-align:center">감수 ' + e(CFG.reviewer || '(감수자 확정 후 표기)') + '</p>';
   };
@@ -300,7 +307,8 @@
     }
     var q = (P.get('q') || '').toUpperCase();
     if (q && BY[q]) { history.replaceState(null, '', location.pathname + '#forms'); openQuestion(q); return true; }
-    afterRender();   // 첫 화면은 expo.js가 읽히기 전에 그려지므로 여기서 한 번 더 덧붙인다
+    // 첫 화면은 expo.js가 읽히기 전에 그려지므로 여기서 한 번 더 그린다
+    if ((location.hash || '').slice(1) === 'origin') render(); else afterRender();
     return false;
   };
 })();
