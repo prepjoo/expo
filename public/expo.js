@@ -9,8 +9,8 @@
   var SITE = (CFG.siteUrl || (location.origin + location.pathname)).replace(/\/?$/, '/');
   var ITEMS = window.CONTENT.items, BY = window.CONTENT_BY_ID;
   var FK = function (f) { return f === 'AWHA' ? 'AHWA' : f; };
-  var COL = { jong: '#C0141B', in: '#1565C0', yu: '#16A34A', trap: '#6B7280', navy: '#3D4B6E', scale: '#1F6B45', brick: '#8E1B1B' };
-  var ROLE = { CRIB: ['yu', 'in', 'jong', 'in'], PREP: ['jong', 'in', 'yu', 'jong'], AHWA: ['jong', 'in', 'yu', 'jong'] };
+  var COL = { jong: '#C62828', in: '#1565C0', yu: '#2E7D32', trap: '#6B7280', navy: '#3D4B6E', scale: '#1F6B45', brick: '#8E1B1B' };
+  var ROLE = { CRIB: ['yu', 'in', 'jong', 'in'], PREP: ['jong', 'in', 'yu', 'jong'], AHWA: ['jong', 'in', 'in', 'jong'] };   // 아하의 W(왜)와 H(어떻게)는 나란한 근거(因)
   var ROLE_HAN = { jong: '종(宗)', in: '인(因)', yu: '유(喩)' };
   var FONT = "'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif";
   var e = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -330,7 +330,7 @@
     var q = (P.get('q') || '').toUpperCase();
     if (q && BY[q]) { history.replaceState(null, '', location.pathname + '#forms'); openQuestion(q); return true; }
     // 첫 화면은 expo.js가 읽히기 전에 그려지므로 여기서 한 번 더 그린다
-    if (['origin', 'youth'].indexOf((location.hash || '').slice(1)) >= 0) render(); else afterRender();
+    if (['origin', 'youth', 'study-crib', 'study-prep', 'study-awha'].indexOf((location.hash || '').slice(1)) >= 0) render(); else afterRender();
     return false;
   };
 })();

@@ -268,18 +268,28 @@ const ROLE = {
     t => FT.fact(t) && FT.past(t) ? 2 : (FT.fact(t) || FT.past(t) ? 1 : 0), (t, s) => FT.next(t) ? 2 : overlap(t, s[0]) ? 1 : 0],
   CRIB: [t => (FT.sit(t) || countNums(t)) && t.length <= 80 ? 2 : 1, t => FT.loss(t) ? 2 : RX.delta.test(t) ? 1 : 0,
     t => FT.next(t) || FT.act(t) || FT.alt(t) || /(제안|도입|하자)/.test(t) ? 2 : 0, t => FT.gain(t) ? 2 : FT.next(t) ? 1 : 0],
-  // 아하 = A 행동(종) → W 이유(인) → H 방법(유) → A 다시 행동(종)
+  // 아하 = A 행동(종) → W 이유(인) → H 방법(인) → A 다시 행동(종). W와 H는 나란한 근거(因)
   AHWA: [t => FT.next(t) && t.length <= 80 ? 2 : (done(t) ? 1 : 0), t => FT.reason(t) || FT.alt(t) ? 2 : (FT.loss(t) || FT.gain(t) ? 1 : 0),
     t => FT.act(t) && FT.fact(t) ? 2 : (FT.act(t) || FT.fact(t) ? 1 : 0), (t, s) => FT.next(t) ? 2 : overlap(t, s[0]) ? 1 : 0]
 };
+function nearSame(a, b) {
+  const n = t => t.replace(/[\s.,!?'"“”‘’()·~-]/g, '');
+  const x = n(a), y = n(b); if (!x || !y) return false;
+  if (x === y || x.includes(y) || y.includes(x)) return true;
+  const bg = t => { const o = new Set(); for (let i = 0; i < t.length - 1; i++) o.add(t.slice(i, i + 2)); return o; };
+  const A = bg(x), B = bg(y); let k = 0; A.forEach(g => { if (B.has(g)) k++; });
+  return k / Math.min(A.size, B.size) >= 0.7;
+}
 function baseLogic(form, slots, q) {
   const s = slots.map(x => (x || '').trim());
   const role = s.map((t, i) => { if (!t) return 0; const lv = ROLE[form][i](t, s); return (done(t) ? 4 : 2) + (lv === 2 ? 6 : lv === 1 ? 3 : 0); });
   const answer = !s[0] ? 0 : (q ? (onQuestion(form, s[0], q) ? 10 : (done(s[0]) && s[0].length <= 80 ? 6 : 3)) : (done(s[0]) ? 10 : 6));
-  const same = !s[0] || !s[3] ? 0 : (form === 'CRIB' ? (FT.gain(s[3]) || FT.next(s[3]) ? 10 : 4) : (overlap(s[0], s[3]) || FT.next(s[3]) ? 10 : 4));
+  // 프렙의 두 P, 아하의 두 A는 같은 뜻이되 다른 문장이어야 한다: 첫 칸을 거의 그대로 되풀이하면 끝맺음 점수를 낮춘다
+  const rep = !!(s[0] && s[3] && form !== 'CRIB' && nearSame(s[0], s[3]));
+  const same = !s[0] || !s[3] ? 0 : rep ? 3 : (form === 'CRIB' ? (FT.gain(s[3]) || FT.next(s[3]) ? 10 : 4) : (overlap(s[0], s[3]) || FT.next(s[3]) ? 10 : 4));
   const link = Math.round(s.filter(t => t && done(t)).length * 2.5);
   const roles = role.reduce((a, b) => a + b, 0);
-  return { role, roles, answer, same, link, total: roles + answer + same + link };
+  return { role, roles, answer, same, rep, link, total: roles + answer + same + link };
 }
 const GRADE = [[90, '증명 완료', '생각을 증명할 재료를 모두 갖춘 답이에요.', 'joy'], [80, '설득력 있음', '듣는 사람이 고개를 끄덕일 답이에요. 핵심 저울 하나만 더 채워 보세요.', 'thumbs'],
   [70, '논리는 섰어요', '짜임은 맞아요. 가장 약한 저울 하나만 채우면 설득력이 생겨요.', 'thumbs'], [60, '뼈대는 있어요', '칸의 역할을 하나씩 더 분명하게 하면 논리가 서요.', 'think'], [0, '칸 역할부터 다시', '칸마다 그 칸이 할 일을 한 문장씩 채워 보세요.', 'surprised']];
@@ -448,6 +458,9 @@ function formGrid(k) {
   const L = FORMS[k].slots.map(x => x.key), P = [[13, 17.6], [35, 17.6], [13, 39.6], [35, 39.6]];
   return `<svg class="fgrid" viewBox="0 0 48 48" aria-hidden="true"><rect class="t" x="1" y="1" width="46" height="46" rx="13"/><path class="d" d="M24 7v34M7 24h34"/>${L.map((c, i) => `<text class="l" x="${P[i][0]}" y="${P[i][1]}" text-anchor="middle">${c}</text>`).join('')}</svg>`;
 }
+// 종인유 고유색: 칸마다 종(宗)·인(因)·유(喩) 중 무엇인지
+const ROLE_OF = { CRIB: ['yu', 'in', 'jong', 'in'], PREP: ['jong', 'in', 'yu', 'jong'], AHWA: ['jong', 'in', 'in', 'jong'] };
+const roleBg = (k, i) => `background:var(--${(ROLE_OF[k] || [])[i] || 'ink3'})`;
 function fmono(k) { const f = { CRIB: 'crib', PREP: 'prep', AHWA: 'awha' }[k]; return `<span class="ficon" aria-hidden="true"><img src="icons/${f}.png" alt="" style="width:100%;height:100%;display:block"></span>`; }
 function formTag(k, size) { const F = FORMS[k]; return `<span class="ftag ${size || ''}" data-form="${k}">${fmono(k)}${F.label}<small class="ftag-code" style="font-size:.7em;opacity:.6;margin-left:.35em;font-weight:600;letter-spacing:.02em">${F.code}</small></span>`; }
 const STEP = {
@@ -560,14 +573,15 @@ function viewForms() {
         ${F.order ? `<p class="forder" style="margin:0 0 10px;font-weight:700;letter-spacing:.01em">${esc(F.order)}</p>` : ''}
         <p class="why">${esc(gtext(G.why))}</p>
         <ol class="rules">${F.slots.map((x, i) => `<li>
-          <span class="k">${x.key}</span>
+          <span class="k" style="${roleBg(k, i)}">${x.key}</span>
           <div class="r-main"><p class="r-top"><b>${x.title}</b> ${esc(G.short[i])}</p>
           <p class="r-ex">예) ${esc(ex[i])}</p>
           <input type="text" class="memo-in" data-memo="${i}" value="${esc(sp.memo[i])}" placeholder="내 메모 (단어만 적어도 돼요)" aria-label="${x.title} 메모"></div></li>`).join('')}</ol>
         <details class="more"><summary>왜 이 순서일까요?</summary><ul>${F.slots.map((x, i) => `<li><b>${x.title}</b> ${esc(G.long[i])}</li>`).join('')}</ul></details>
         <p class="mistake"><b>흔한 실수</b> ${esc(G.mistake)}</p>
-        ${G.refNote ? `<div class="refbox"><p class="ref">추천도서 · 《${esc(G.ref.title)}》 ${esc(G.ref.by)}</p><b>${esc(G.refNote.q)}</b><p>${esc(gtext(G.refNote.a))}</p></div>` : `<p class="ref">추천도서 · 《${esc(G.ref.title)}》 ${esc(G.ref.by)}</p>`}
         <button class="btn tospeak" data-act="toSpeak" data-v="${k}">2단계 말하기로 넘기기</button>
+        ${G.refNote ? `<div class="refbox"><p class="ref">추천도서 · 《${esc(G.ref.title)}》 ${esc(G.ref.by)}</p><b>${esc(G.refNote.q)}</b><p>${esc(gtext(G.refNote.a))}</p></div>` : `<p class="ref">추천도서 · 《${esc(G.ref.title)}》 ${esc(G.ref.by)}</p>`}
+        <a class="btn ghost" href="#study-${{ CRIB: 'crib', PREP: 'prep', AHWA: 'awha' }[k]}" style="display:flex;align-items:center;justify-content:center;width:100%;margin-top:10px;text-decoration:none">${F.code} 더 공부하기</a>
       </div>` : ''}
     </section>`; }).join('')}</div>`;
 }
@@ -578,7 +592,7 @@ function resultBlock(r) {
   const F = FORMS[r.form], sel = S.ui.selScale || r.weakest, W = WEIGHT[r.form], g = grade(r.total), B = r.base;
   const sc = sel ? SCALES.find(x => x.id === sel) : null, idx = sel ? r.at[sel] : -1;
   const d = new Date(r.t), defs = SLOTDEFS[r.form];
-  const roleRow = (x, i) => { const v = B.role[i]; return `<li class="${v >= 10 ? 'ok' : ''}"><span class="k">${x.key}</span><span class="t"><b>${x.title}</b>${v >= 10 ? '' : `<small>${esc(defs[i].hint)}</small>`}</span><em>${v}<small>/10</small></em></li>`; };
+  const roleRow = (x, i) => { const v = B.role[i]; return `<li class="${v >= 10 ? 'ok' : ''}"><span class="k" style="${roleBg(r.form, i)};color:#fff">${x.key}</span><span class="t"><b>${x.title}</b>${v >= 10 ? '' : `<small>${esc(defs[i].hint)}</small>`}</span><em>${v}<small>/10</small></em></li>`; };
   const better = r.better ? FORMS[r.better] : null;
   return `
   <section class="result" data-form="${r.form}">
@@ -598,13 +612,13 @@ function resultBlock(r) {
     <ul class="base">
       ${F.slots.map(roleRow).join('')}
       <li class="${B.answer >= 10 ? 'ok' : ''}"><span class="k">?</span><span class="t"><b>질문에 답함</b>${B.answer >= 10 ? '' : '<small>첫 칸에서 질문의 단어로 바로 답하세요.</small>'}</span><em>${B.answer}<small>/10</small></em></li>
-      <li class="${B.same >= 10 ? 'ok' : ''}"><span class="k">=</span><span class="t"><b>끝맺음</b>${B.same >= 10 ? '' : `<small>${r.form === 'CRIB' ? '마지막 칸(이익)을 상대가 얻는 것이나 바라는 행동으로 맺으세요.' : `마지막 칸(${F.slots[3].title})을 첫 칸의 말이나 다음 행동으로 다시 맺으세요.`}</small>`}</span><em>${B.same}<small>/10</small></em></li>
+      <li class="${B.same >= 10 ? 'ok' : ''}"><span class="k">=</span><span class="t"><b>끝맺음</b>${B.same >= 10 ? '' : `<small>${B.rep ? `마지막 칸이 첫 칸과 거의 같은 문장이에요. ${F.slots[3].title}은 같은 뜻을 다른 문장으로, 앞으로 할 일이나 바라는 행동으로 맺으세요.` : r.form === 'CRIB' ? '마지막 칸(이익)을 상대가 얻는 것이나 바라는 행동으로 맺으세요.' : `마지막 칸(${F.slots[3].title})을 첫 칸의 말이나 다음 행동으로 다시 맺으세요.`}</small>`}</span><em>${B.same}<small>/10</small></em></li>
       <li class="${B.link >= 10 ? 'ok' : ''}"><span class="k">~</span><span class="t"><b>연결과 완결</b>${B.link >= 10 ? '' : '<small>칸마다 끝까지 완성된 문장으로 말하세요.</small>'}</span><em>${B.link}<small>/10</small></em></li>
     </ul>
     </div>
     ${(() => { const ex = FORM_EX[whoId()] && FORM_EX[whoId()][r.form]; if (!ex) return ''; return `<details class="perfect"${r.total >= 100 ? '' : ''}><summary><span>더 높은 점수 예시 보기</span><small>${F.label} · ${esc(persona().label)}</small></summary>
       <p class="pf-note">다섯 저울과 기본 논리를 고르게 채운 답이에요. 숫자, 버린 대안, 전과 후, 다음 행동이 어느 칸에 들어가는지 내 답과 비교해 보세요.</p>
-      <ol class="pf">${F.slots.map((x, i) => `<li><span class="k">${x.key}</span><div><b>${x.title}</b><p>${markNums(ex[i])}</p></div></li>`).join('')}</ol></details>`; })()}
+      <ol class="pf">${F.slots.map((x, i) => `<li><span class="k" style="${roleBg(r.form, i)};color:#fff">${x.key}</span><div><b>${x.title}</b><p>${markNums(ex[i])}</p></div></li>`).join('')}</ol></details>`; })()}
     <p class="scope">다섯 저울은 듣는 사람이 속으로 던질 <b>다섯 가지 의심</b>을 내 답이 미리 풀어 주는지 재고, ${F.label}에 중요한 저울일수록 점수가 커요. 기본 논리 점수는 ${F.label}의 네 칸이 제 역할을 하는지 봐요.</p>
   </section>
   <div class="grid2 actions"><button class="btn ghost" data-act="retry">고쳐 말하기</button><button class="btn" data-act="newQuestion">새 질문으로</button></div>
@@ -669,7 +683,7 @@ function viewSpeak() {
   <section class="speakpad" data-form="${sp.form}">
     <div class="pad-head">${formTag(sp.form, 'lg')}<a class="textbtn" href="#forms">삼지작법 바꾸기</a></div>
     ${F.slots.map((x, i) => `
-    <div class="slot"><div class="k">${x.key}</div><div>
+    <div class="slot"><div class="k" style="${roleBg(sp.form, i)};color:#fff">${x.key}</div><div>
       <div class="between"><label class="t" for="ta${i}">${x.title}</label>${mic ? `<button class="mic" data-act="mic" data-i="${i}">🎤 말하기</button>` : ''}</div>
       ${sp.memo[i] ? `<div class="memo-line">메모: ${esc(sp.memo[i])}</div>` : ''}
       <textarea id="ta${i}" data-slot="${i}" rows="2" placeholder="${esc(x.hint)}">${esc(sp.slots[i])}</textarea>
@@ -1046,7 +1060,8 @@ function render() {
   if (window.EXPO_BOOTH) return;
   migrateHistory();
   const route = (location.hash || '#home').slice(1) || 'home';
-  const views = { home: viewHome, learn: viewForms, forms: viewForms, scales: viewMeasure, scaleinfo: viewScaleInfo, speak: viewSpeak, feedback: viewMeasure, drill: viewDrill, cards: viewCards, report: viewReport, origin: () => (window.viewOrigin ? window.viewOrigin() : ''), youth: () => (window.viewYouth ? window.viewYouth() : '') };
+  const views = { home: viewHome, learn: viewForms, forms: viewForms, scales: viewMeasure, scaleinfo: viewScaleInfo, speak: viewSpeak, feedback: viewMeasure, drill: viewDrill, cards: viewCards, report: viewReport, origin: () => (window.viewOrigin ? window.viewOrigin() : ''), youth: () => (window.viewYouth ? window.viewYouth() : ''),
+    'study-crib': () => (window.viewStudy ? window.viewStudy('crib') : ''), 'study-prep': () => (window.viewStudy ? window.viewStudy('prep') : ''), 'study-awha': () => (window.viewStudy ? window.viewStudy('awha') : '') };
   const fn = views[route] || viewHome;
   if (route !== S.ui.lastRoute && (route === 'forms' || route === 'learn')) S.ui.formOpen = null;
   if (route !== S.ui.lastRoute && route === 'drill') { const D = S.ui.drill; if (!D.checked && D.placed.every(x => x == null)) { D.form = 'CRIB'; D.target = 0; D.introDone = false; } }

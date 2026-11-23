@@ -5,7 +5,7 @@ function load() {
   const app = fs.readFileSync(P('app.js'), 'utf8');
   const a = app.indexOf('// ---------- scoring (rule based)'), b = app.indexOf('const FOLLOW');
   const ctx = { console }; vm.createContext(ctx);
-  vm.runInContext(fs.readFileSync(P('data.js'), 'utf8') + '\nconst clamp=(v,a,b)=>Math.max(a,Math.min(b,v));\n' + app.slice(a, b) + '\nthis.scoreAnswer=scoreAnswer;this.FORMS=FORMS;', ctx);
+  vm.runInContext(fs.readFileSync(P('data.js'), 'utf8') + '\nconst clamp=(v,a,b)=>Math.max(a,Math.min(b,v));\n' + app.slice(a, b) + '\nthis.scoreAnswer=scoreAnswer;this.nearSame=nearSame;this.FORMS=FORMS;', ctx);
   return ctx;
 }
 module.exports = load;
