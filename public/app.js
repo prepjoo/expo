@@ -1046,7 +1046,7 @@ function render() {
   if (window.EXPO_BOOTH) return;
   migrateHistory();
   const route = (location.hash || '#home').slice(1) || 'home';
-  const views = { home: viewHome, learn: viewForms, forms: viewForms, scales: viewMeasure, scaleinfo: viewScaleInfo, speak: viewSpeak, feedback: viewMeasure, drill: viewDrill, cards: viewCards, report: viewReport, origin: () => (window.viewOrigin ? window.viewOrigin() : '') };
+  const views = { home: viewHome, learn: viewForms, forms: viewForms, scales: viewMeasure, scaleinfo: viewScaleInfo, speak: viewSpeak, feedback: viewMeasure, drill: viewDrill, cards: viewCards, report: viewReport, origin: () => (window.viewOrigin ? window.viewOrigin() : ''), youth: () => (window.viewYouth ? window.viewYouth() : '') };
   const fn = views[route] || viewHome;
   if (route !== S.ui.lastRoute && (route === 'forms' || route === 'learn')) S.ui.formOpen = null;
   if (route !== S.ui.lastRoute && route === 'drill') { const D = S.ui.drill; if (!D.checked && D.placed.every(x => x == null)) { D.form = 'CRIB'; D.target = 0; D.introDone = false; } }

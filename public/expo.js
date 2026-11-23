@@ -132,6 +132,29 @@
       '<p class="small muted" style="text-align:center">감수 ' + e(CFG.reviewer || '(감수자 확정 후 표기)') + '</p>';
   };
 
+  // ---------- 청소년판 소개 (초·중·고등학생) ----------
+  window.viewYouth = function () {
+    var row = function (t, d) { return '<li style="margin:8px 0"><b>' + t + '</b><br><span class="small muted">' + d + '</span></li>'; };
+    return pageHead('청소년판 앱', '초·중·고등학생을 위한 BALANCE 5') +
+      '<section class="card"><p class="body-tx" style="margin-top:0"><b>AI가 숙제를 대신 써 주는 시대, 학생에게 남는 힘은 내 생각을 내 말로 증명하는 힘이에요.</b> 청소년판은 같은 삼지작법과 다섯 저울을 학교생활에 맞춘 앱이에요.</p></section>' +
+      '<section class="card"><h2 class="sec" style="margin-top:0">학교급에 맞춘 질문</h2><ul class="body-tx" style="padding-left:1.1em;margin:0">' +
+      row('초등학생', '수학 "왜?" 질문, 학급회의 발표처럼 쉬운 말로 시작해요.') +
+      row('중학생', '서술형 답안, 모둠 발표, 고입 면접을 연습해요.') +
+      row('고등학생', '서·논술형, 학생부 활동 정리, 대입 면접을 연습해요.') + '</ul></section>' +
+      '<section class="card"><h2 class="sec" style="margin-top:0">무엇을 연습하나요?</h2><ul class="body-tx" style="padding-left:1.1em;margin:0">' +
+      row('수행평가', '서술형과 AI 과제에서 내 생각을 근거로 받쳐요.') +
+      row('발표·토론', '발표 첫 30초, 건의, 토론 주장을 짜요.') +
+      row('학생부', '활동을 숫자와 사실로 정리하고 자기평가를 써요.') +
+      row('진학 면접', '고입·대입 면접 질문에 30초로 답해요.') + '</ul></section>' +
+      '<section class="card"><h2 class="sec" style="margin-top:0">이렇게 배워요</h2><ul class="body-tx" style="padding-left:1.1em;margin:0">' +
+      row('짜기 → 말하기 → 재기', '질문에 맞는 삼지작법을 골라 네 칸을 짜고, 소리 내어 말하고, 다섯 저울로 점수를 받아요.') +
+      row('워드댄싱', '뒤섞인 문장을 네 칸에 맞게 놓으며 삼지작법의 순서를 익혀요. 함정 문장도 골라내요.') +
+      row('경험 카드', '내 활동 하나를 여섯 칸에 모아 두고 여러 질문에 꺼내 써요.') +
+      row('1분 사용설명서', '그림과 목소리로 쓰는 법을 1분 만에 알려 줘요.') + '</ul></section>' +
+      '<section class="card"><h2 class="sec" style="margin-top:0">선생님께</h2><p class="body-tx" style="margin:0">5인 모둠 카드 교구(187장)와 함께 쓰면 40분 수업 한 차시가 돼요. 무료이고 가입 없이 바로 쓸 수 있어요.</p></section>' +
+      (CFG.youthUrl ? '<a class="btn" style="display:flex;align-items:center;justify-content:center;width:100%;margin:14px 0 6px;text-decoration:none;color:#fff" href="' + e(CFG.youthUrl) + '">청소년판 앱 열기</a><p class="small muted" style="text-align:center">처음 화면에서 학교급(초등·중학·고등)을 고르면 시작해요.</p>' : '');
+  };
+
   // ---------- A4 QR 바로 열기, 결과 받기 ----------
   function openQuestion(id) {
     var it = BY[id]; if (!it) return false;
@@ -156,8 +179,7 @@
       var dock = v.querySelector('.cta-dock');
       var html = '<div class="expo-links card flat" style="margin:14px 0">' +
         '<a href="#origin" class="between" style="text-decoration:none;color:inherit"><span><b>삼지작법의 유래</b><br><small class="muted">진나가 정리하고 삼장법사가 토론에서 쓴 논리</small></span><span aria-hidden="true">›</span></a>' +
-        (CFG.youthUrl ? '<hr style="border:none;border-top:1px solid var(--line);margin:10px 0"><a href="' + e(CFG.youthUrl) + '" class="between" style="text-decoration:none;color:inherit"><span><b>중·고등학생이에요</b><br><small class="muted">학교급에 맞춘 청소년판 앱으로 가요</small></span><span aria-hidden="true">›</span></a>' +
-        '<hr style="border:none;border-top:1px solid var(--line);margin:10px 0"><a href="' + e(CFG.youthUrl) + '" class="between" style="text-decoration:none;color:inherit"><span><b>초등학생이에요</b><br><small class="muted">청소년판 앱에서 \'초등학생\'을 골라 연습해요</small></span><span aria-hidden="true">›</span></a>' : '') +
+        '<hr style="border:none;border-top:1px solid var(--line);margin:10px 0"><a href="#youth" class="between" style="text-decoration:none;color:inherit"><span><b>초·중·고등학생이에요</b><br><small class="muted">학교급에 맞춘 청소년판 앱을 소개해요</small></span><span aria-hidden="true">›</span></a>' +
         '</div>';
       if (dock) dock.insertAdjacentHTML('beforebegin', html);
     }
@@ -308,7 +330,7 @@
     var q = (P.get('q') || '').toUpperCase();
     if (q && BY[q]) { history.replaceState(null, '', location.pathname + '#forms'); openQuestion(q); return true; }
     // 첫 화면은 expo.js가 읽히기 전에 그려지므로 여기서 한 번 더 그린다
-    if ((location.hash || '').slice(1) === 'origin') render(); else afterRender();
+    if (['origin', 'youth'].indexOf((location.hash || '').slice(1)) >= 0) render(); else afterRender();
     return false;
   };
 })();
