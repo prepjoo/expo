@@ -8,7 +8,7 @@
 
   // 1) 대상: 성인 하나 (청소년은 청소년판 앱으로 안내)
   Object.keys(LEVELS).forEach(function (k) { delete LEVELS[k]; });
-  LEVELS.adult = { label: '성인', sub: '대학생·직장인' };
+  LEVELS.adult = { label: '대학생·직장인', sub: '' };
 
   // 2) 영역 5개: 학업·AI, 취업 면접, 일·회의, 관계·대화, 불교·마음
   Object.keys(AREAS).forEach(function (k) { delete AREAS[k]; });
@@ -33,7 +33,7 @@
     follow: '꼬리질문', asker: '듣는 사람',
     choiceEx: { CRIB: '자기소개, 회의 제안, 발표 첫 30초', PREP: '지원 동기, 내 강점, 토론 주장', AHWA: '"어떻게 해야 하나요?"' },
     line: 'AI 시대에 내 생각을 증명하려는 대학생·직장인',
-    label: '성인', sub: '대학생·직장인',
+    label: '대학생·직장인', sub: '수업·면접·회의',
     desc: '수업·면접·회의에서 내 말로 증명하는 사람',
     scene: '면접·발표·회의', listener: '면접관·교수님·팀장',
     material: '수업 과제, 아르바이트, 회사 일',

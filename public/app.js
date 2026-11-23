@@ -372,8 +372,8 @@ function areaSelect(id) {
   return `<span class="selwrap"><select id="${id}" class="who-select area-select" aria-label="어떤 영역을 연습하나요">${LEVEL_AREAS[levelId()].map(k => `<option value="${k}" ${k === cur ? 'selected' : ''}>${AREAS[k].label} (${AREAS[k].sub})</option>`).join('')}</select></span>`;
 }
 function whoSelect(id) {
-  const cur = levelChosen() ? levelId() : '';
-  return `<span class="selwrap"><select id="${id}" class="who-select" aria-label="누가 연습하나요">${cur ? '' : '<option value="" selected disabled>대상 고르기</option>'}${Object.keys(LEVELS).map(k => `<option value="${k}" ${k === cur ? 'selected' : ''}>${LEVELS[k].label} (${LEVELS[k].sub})</option>`).join('')}</select></span>`;
+  // 성인·박람회판은 대상이 '대학생·직장인' 하나라 고르는 버튼 없이 고정해 보여 준다
+  return `<span id="${id}" class="who-fixed" style="display:flex;align-items:center;width:100%;height:42px;padding:0 12px;font-size:14.5px;font-weight:700">${esc(LEVELS[levelId()].label)}</span>`;
 }
 function toast(msg, pose = 'thumbs') {
   const old = document.querySelector('.toast'); if (old) old.remove();
@@ -493,7 +493,7 @@ function viewHome() {
   </section>
   <div class="ilist">
     <div class="irow who ${chosen ? '' : 'need'}">
-      <label class="irow-btn as-label" for="homeWho"><span class="tag">누가</span><span class="irow-t">${chosen ? '연습하는 사람' : '먼저 골라 주세요'}</span></label>
+      <span class="irow-btn as-label"><span class="tag">누가</span><span class="irow-t">연습하는 사람</span></span>
       ${whoSelect('homeWho')}
     </div>
     ${chosen ? `<div class="irow who">
