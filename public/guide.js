@@ -48,7 +48,7 @@ function guideScenes() {
       <img class="g-char g-jump" src="${CH('jump')}" alt="">
       <p class="g-kicker">BALANCE 5 사용설명서</p>
       <h2 class="g-big d3">삼지작법으로<br>생각 증명하기</h2>
-      <p class="g-cap">1,400년 전 삼장법사의 논리, 삼지작법.<br>첫 30초에 내 생각을 증명하는 연습이에요.</p>
+      <p class="g-cap">1,400년 전 삼장법사의 불교논리.<br>첫 30초에 내 생각을 증명하는 연습이에요.</p>
       <ol class="g-flow"><li style="--d:.9s"><b>1</b>짜기</li><li style="--d:1.3s"><b>2</b>말하기</li><li style="--d:1.7s"><b>3</b>재기</li></ol>
       <p class="g-cap sm" style="--d:2.3s">한 질문으로 세 단계를 이어서 해요.</p>` },
     { k: 'who', c: '#8E1B1B', html: `

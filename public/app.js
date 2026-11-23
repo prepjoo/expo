@@ -483,7 +483,7 @@ function viewHome() {
     </section>`;
   return `
   <section class="hero">
-    <h1 class="display d3">삼지작법으로<br>생각 증명하기</h1>
+    <h1 class="display d3">삼지작법으로<br>생각을 증명하라!</h1>
     <img class="hero-char bob" src="${CH('point_left')}" alt="">
     <ul class="slogan slist">
       <li>AI 시대, 자료 정리보다 생각을 증명하는 힘이 주목받아요.</li>
