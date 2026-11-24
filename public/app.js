@@ -499,9 +499,9 @@ function viewHome() {
     <h1 class="display d3"><span class="h-pre">생각과 글이 사라지는 시대,</span>내 말로 증명하라!</h1>
     <img class="hero-char bob" src="${CH('point_left')}" alt="">
     <ul class="slogan slist">
-      <li>자료 정리는 AI가 해요. 이제는 말로 증명하는 힘이에요.</li>
-      <li>첫 30초 안에 내 생각을 증명해 보세요.</li>
-      <li>세 가지 삼지작법이면 “그래서요?” 같은 압박 질문에도 흔들리지 않아요.</li>
+      <li>자료 정리는 AI가 해요. 이제는 <b>말로 증명</b>하는 힘이에요.</li>
+      <li>첫 <b>30초</b>에 내 생각을 증명해 보세요.</li>
+      <li>세 가지 <b>삼지작법</b>이면 “그래서요?” 같은 압박 질문에도 흔들리지 않아요.</li>
     </ul>
   </section>
   <div class="ilist">

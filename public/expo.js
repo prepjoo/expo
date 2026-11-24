@@ -234,7 +234,7 @@
     reset();
   }
   function stepStart() {
-    return '<div class="bx" style="text-align:center"><p class="big" style="margin-bottom:4px">생각과 글이 사라지는 시대,</p><h1 id="bTitle">내 말로 증명하라!</h1><p class="big">1,400년 전 삼장법사의 불교논리, 삼지작법<br><b>첫 30초 안에 내 생각을 증명해 보세요</b></p>' +
+    return '<div class="bx" style="text-align:center"><p class="big" style="margin-bottom:4px">생각과 글이 사라지는 시대,</p><h1 id="bTitle">내 말로 증명하라!</h1><p class="big">1,400년 전 삼장법사의 불교논리, 삼지작법<br><b>30초 안에 내 생각을 증명해 보세요</b></p>' +
       '<div style="margin:30px auto;display:flex;gap:22px;justify-content:center">' + manji('CRIB', 110, COL.navy) + manji('PREP', 110, COL.navy) + manji('AHWA', 110, COL.navy) + '</div>' +
       '<p class="big">체험하시는 분은 누구인가요?</p><div class="brow">' +
       [['student', '학생', '초·중·고·대학생'], ['teacher', '선생님', '학교·학원·사찰'], ['general', '일반', '그 밖의 모든 분']].map(function (w) { return '<button class="bbtn" data-b="who" data-v="' + w[0] + '">' + w[1] + '<br><small style="font-weight:500;font-size:.6em">' + w[2] + '</small></button>'; }).join('') + '</div>' +
