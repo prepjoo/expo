@@ -496,12 +496,12 @@ function viewHome() {
     </section>`;
   return `
   <section class="hero">
-    <h1 class="display d3">삼지작법으로<br>생각을 증명하라!</h1>
+    <h1 class="display d3"><span class="h-pre">생각과 글이 사라지는 시대,</span>내 말로 증명하라!</h1>
     <img class="hero-char bob" src="${CH('point_left')}" alt="">
     <ul class="slogan slist">
-      <li>AI 시대, 자료 정리보다 생각을 증명하는 힘이 주목받아요.</li>
-      <li>첫 30초에 내 생각을 증명하는 연습을 해 보세요.</li>
-      <li>삼지작법 세 가지만 익히면 “그래서요?” 같은 압박 질문에서 벗어나요.</li>
+      <li>자료 정리는 AI가 해요. 이제는 말로 증명하는 힘이에요.</li>
+      <li>첫 30초 안에 내 생각을 증명해 보세요.</li>
+      <li>세 가지 삼지작법이면 “그래서요?” 같은 압박 질문에도 흔들리지 않아요.</li>
     </ul>
   </section>
   <div class="ilist">
@@ -829,7 +829,7 @@ function sheetMenu(confirmClear) {
   ${confirmClear ? `<div class="card" style="border-color:var(--orange)"><p class="small" style="margin:0 0 10px">카드 ${S.cards.length}장과 기록 ${S.history.length}개를 모두 지울까요? 되돌릴 수 없어요.</p><div class="grid2"><button class="btn ghost small" style="width:100%" data-act="menu">취소</button><button class="btn danger small" style="width:100%" data-act="clearAll">모두 지우기</button></div></div>`
       : `<div style="text-align:center"><button class="clearbtn" data-act="askClear">기록 모두 지우기</button></div>`}
   <hr style="border:none;border-top:1px solid var(--line);margin:14px 0">
-  <p class="tiny faint mb0"><b>내 말로 증명하다</b>는 AI 시대에 내 생각을 내 말로 증명하는 말하기 연습 앱이에요. 삼지작법은 진나의 인명학을 현대 말하기에 맞게 응용한 것이에요. 점수는 앱이 정해진 기준(다섯 저울)에 따라 자동으로 매겨요.</p>`, sh => {
+  <p class="tiny faint mb0"><b>BALANCE 5</b>는 생각과 글이 사라지는 시대에 내 생각을 내 말로 증명하는 말하기 연습 앱이에요. 삼지작법은 진나의 인명학을 현대 말하기에 맞게 응용한 것이에요. 점수는 앱이 정해진 기준(다섯 저울)에 따라 자동으로 매겨요.</p>`, sh => {
     const f = $('#importFile', sh); if (f) f.addEventListener('change', async () => { const file = f.files[0]; if (!file) return; importText(await file.text()); });
   });
 }

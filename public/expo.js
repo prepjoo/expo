@@ -52,7 +52,7 @@
     var W = 1080, H = 1920; cv.width = W; cv.height = H; var c = cv.getContext('2d');
     c.fillStyle = '#F7F5EF'; c.fillRect(0, 0, W, H);
     c.fillStyle = COL.navy; c.fillRect(0, 0, W, 300);
-    c.fillStyle = '#fff'; c.font = '800 84px ' + FONT; c.textBaseline = 'middle'; c.fillText('내 말로 증명하다', 80, 130);
+    c.fillStyle = '#fff'; c.font = '800 84px ' + FONT; c.textBaseline = 'middle'; c.fillText('내 말로 증명했다!', 80, 130);
     c.font = '500 36px ' + FONT; c.fillStyle = 'rgba(255,255,255,.8)'; c.fillText('삼지작법 · 다섯 저울 결과', 80, 215);
     // 질문
     c.fillStyle = '#6B6457'; c.font = '600 34px ' + FONT; c.fillText((o.item ? o.item.id + ' · ' : '') + (o.who || '질문'), 80, 380);
@@ -104,7 +104,7 @@
       b.addEventListener('click', function () {
         cv.toBlob(function (blob) {
           var f = new File([blob], name, { type: 'image/png' });
-          if (navigator.canShare({ files: [f] })) navigator.share({ files: [f], title: '내 말로 증명하다' }).catch(function () {});
+          if (navigator.canShare({ files: [f] })) navigator.share({ files: [f], title: '내 말로 증명했다!' }).catch(function () {});
         });
       });
     });
@@ -234,7 +234,7 @@
     reset();
   }
   function stepStart() {
-    return '<div class="bx" style="text-align:center"><h1 id="bTitle">내 말로 증명하다</h1><p class="big">1,400년 전 삼장법사의 불교논리, 삼지작법<br><b>AI가 대신 못 하는 것, 30초 만에 내 생각 증명하기</b></p>' +
+    return '<div class="bx" style="text-align:center"><p class="big" style="margin-bottom:4px">생각과 글이 사라지는 시대,</p><h1 id="bTitle">내 말로 증명하라!</h1><p class="big">1,400년 전 삼장법사의 불교논리, 삼지작법<br><b>첫 30초 안에 내 생각을 증명해 보세요</b></p>' +
       '<div style="margin:30px auto;display:flex;gap:22px;justify-content:center">' + manji('CRIB', 110, COL.navy) + manji('PREP', 110, COL.navy) + manji('AHWA', 110, COL.navy) + '</div>' +
       '<p class="big">체험하시는 분은 누구인가요?</p><div class="brow">' +
       [['student', '학생', '초·중·고·대학생'], ['teacher', '선생님', '학교·학원·사찰'], ['general', '일반', '그 밖의 모든 분']].map(function (w) { return '<button class="bbtn" data-b="who" data-v="' + w[0] + '">' + w[1] + '<br><small style="font-weight:500;font-size:.6em">' + w[2] + '</small></button>'; }).join('') + '</div>' +
