@@ -659,6 +659,7 @@ function viewScaleInfo() {
       <div class="si-pan"><span class="lab">${esc(sc.R)}</span><p>${esc(lr[1])}</p></div>
     </div>
     ${tipHtml(sc.tip)}
+    ${sc.checks ? `<div class="si-checks"><p><b>심판 기준</b> · 셋 중 둘 이상 보이면 이 저울이 채워져요. 카드놀이의 저울 심판도 같은 기준으로 판정해요.</p><ol>${sc.checks.map(x => `<li>${esc(x)}</li>`).join('')}</ol></div>` : ''}
     ${(window.BALANCE_READY || []).includes(sc.id) ? `<button class="btn" style="width:100%;margin-top:14px" data-act="balStart" data-v="${sc.id}">${sc.name} 연습하기 · 카드를 접시에 올려 저울 맞추기</button>` : ''}
   </article>
   <div class="pager">

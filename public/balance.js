@@ -88,7 +88,7 @@
       var loss = cr.slice(4, 8).map(function (it) { return { text: it.slots[1], side: 'R', why: '하지 않으면 잃는 것을 말했어요. 듣는 사람의 귀를 여는 문장이에요.' }; });
       return shuffle(gain.concat(loss));
     },
-    train: { title: '흐릿한 다짐 고치기', how: '"열심히 하겠습니다"처럼 흐릿한 끝맺음을, 언제·무엇을·얼마나 할지와 얻는 것을 붙인 문장으로 고쳐 보세요.',
+    train: { title: '흐릿한 다짐 고치기', how: '"열심히 하겠습니다"처럼 흐릿한 끝맺음에, 안 하면 잃는 것(손실)이나 하면 얻는 것(이익)을 숫자로 붙이고, 듣는 사람이 언제 무엇을 하면 되는지 넣어 고쳐 보세요.',
       pick: function () { return { text: ['앞으로 더 열심히 하겠습니다.', '모두 조금씩 신경 써 주시면 좋겠습니다.', '좋은 결과가 있도록 노력하겠습니다.'][Math.floor(Math.random() * 3)] }; },
       measure: function (text) { return scoreAnswer('PREP', ['', '', '', text], '').scores.move || 0; } }
   };

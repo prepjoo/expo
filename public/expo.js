@@ -129,7 +129,13 @@
         return '<div style="display:flex;gap:14px;align-items:center;margin:12px 0"><span style="flex:0 0 60px">' + manji(r[0], 60) + '</span>' + '<div><b>' + r[1] + ' · ' + F.code + ' <small style="font-weight:600;opacity:.65;font-size:.78em">' + F.pron + '</small></b><div class="small muted">' + r[2] + ' · ' +
           F.slots.map(function (x, i) { var w = EN[r[0]][i]; return '<b>' + w.charAt(0) + '</b>' + w.slice(1) + ' ' + x.title + '<small>(' + ROLE_HAN[ROLE[r[0]][i]].slice(0, 1) + ')</small>'; }).join(' → ') + '</div></div></div>';
       }).join('') + '</section>' +
-      '<p class="small muted" style="text-align:center">감수 ' + e(CFG.reviewer || '(감수자 확정 후 표기)') + '</p>';
+      '<section class="card"><h2 class="sec" style="margin-top:0">이 페이지의 출처</h2><ul class="small" style="line-height:1.75;padding-left:18px;margin:0">' +
+      '<li>진나(陳那, Dignāga, 약 480~540), 『인명정리문론(因明正理門論, Nyāyamukha)』. 현장 한역 649년.</li>' +
+      '<li>상갈라주(商羯羅主, Śaṅkarasvāmin), 『인명입정리론(因明入正理論, Nyāyapraveśa)』. 현장 한역 647년. 종·인·유의 삼지작법을 정리한 입문서.</li>' +
+      '<li>혜립(慧立)·언종(彦悰), 『대자은사삼장법사전(大慈恩寺三藏法師傳)』 권5. 곡녀성 토론회와 18일 동안 반론이 없었던 일.</li>' +
+      '<li>규기(窺基), 『인명입정리론소(因明入正理論疏, 因明大疏)』. 현장의 진유식량(眞唯識量) 기록.</li>' +
+      '<li>현장 구술·변기(辯機) 편, 『대당서역기(大唐西域記)』(646). 나란다와 곡녀성.</li></ul>' +
+      '<p class="small muted" style="margin:10px 0 0">연도와 인원수는 위 전기 기록을 따랐어요. 여는·받치는·답하는 삼지작법은 이 논증 형식을 현대 말하기에 맞게 응용한 것으로, 고전 원형과 같다는 뜻은 아니에요.</p></section>';
   };
 
   // ---------- 청소년판 소개 (초·중·고등학생) ----------
@@ -248,7 +254,7 @@
   function stepSpeak() {
     var F = FORMS[B.form];
     return '<div class="bx"><div class="between" style="display:flex;justify-content:space-between;align-items:center"><div><small class="muted">' + e(B.item.id) + '</small><div style="font-weight:800;font-size:1.15em">“' + e(B.item.q) + '”</div></div><div class="btimer" id="bTimer">30</div></div>' +
-      '<p class="muted" style="margin:6px 0 2px">' + F.label + ' · 네 칸을 이어 말해요. 스태프가 들으며 핵심을 적어요.</p>' +
+      '<p class="muted" style="margin:6px 0 2px">' + F.label + ' · 부스 체험은 <b>네 칸을 한 문장씩, 30초 안에</b> 압축해 말해요. 스태프가 들으며 핵심을 적어요.</p><p class="small muted" style="margin:0 0 6px">평소 연습 목표는 여는 30초 · 받치는 60초 · 답하는 45초예요.</p>' +
       F.slots.map(function (x, i) { var r = ROLE[B.form][i]; return '<div class="bslot"><span class="k" style="background:' + COL[r] + '">' + x.key + '<small>' + x.title + '</small></span><textarea data-bs="' + i + '" placeholder="' + e(x.hint) + '">' + e(B.slots[i]) + '</textarea></div>'; }).join('') +
       '<button class="bbtn" data-b="score">저울에 올리기</button></div>';
   }
