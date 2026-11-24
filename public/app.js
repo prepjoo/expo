@@ -731,7 +731,6 @@ function viewDrill() {
   ${backTo('forms', '짜기')}
   ${pageHead('삼지작법 워드댄싱', '문장 조각을 눌러 네 칸에 순서대로 넣으세요. 하나는 함정이에요.')}
   <div class="seg-tabs f" role="tablist" aria-label="삼지작법 고르기">${Object.keys(FORMS).map(x => `<button role="tab" aria-selected="${x === D.form}" data-act="drillForm" data-v="${x}" data-form="${x}">${fmono(x)}${FORMS[x].label}</button>`).join('')}</div>
-  ${L.length > 1 ? `<div class="dprog" role="group" aria-label="문제 진행 상황">${L.map((it, i) => `<button class="${i === qi ? 'cur' : ''} ${done[it.id] ? 'done' : ''}" data-form="${D.form}" data-act="drillGo" data-v="${i}" aria-label="${i + 1}번 문제${done[it.id] ? ' · 맞힘' : ''}" ${i === qi ? 'aria-current="step"' : ''}>${i + 1}</button>`).join('<i aria-hidden="true"></i>')}</div>` : ''}
   <div class="qbox mt12"><div class="who" data-form="${D.form}">${formTag(D.form, 'sm')} · ${FORMS[D.form].when}${L.length > 1 ? ` · ${qi + 1}/${L.length}` : ''}</div><div class="q">${esc(cur.question)}</div></div>
   <div class="tip"><img class="char-sm ${D.checked ? 'pop' : ''}" src="${CH(pose)}" alt=""><div><p class="mb0" style="margin:0">${msg}</p></div></div>
   ${(() => { if (D.target == null || D.placed[D.target] != null) { const e = D.placed.indexOf(null); D.target = e < 0 ? null : e; } return ''; })()}
@@ -748,7 +747,8 @@ function viewDrill() {
   <div class="mt12">
   ${solved ? `<button class="btn mb8" data-act="drillSpeak">이 순서로 말하기</button><button class="btn ghost" data-act="drillNext">${qi < L.length - 1 ? `다음 문제 (${qi + 2}/${L.length})` : '다음 삼지작법으로'}</button>`
       : `<button class="btn mb8" data-act="drillCheck" ${full ? '' : 'disabled'}>확인</button>${D.placed.some(x => x != null) ? `<button class="link" data-act="drillReset" style="width:100%">처음부터 다시</button>` : ''}`}
-  </div>`;
+  </div>
+  ${L.length > 1 ? `<div class="dprog" role="group" aria-label="문제 진행 상황">${L.map((it, i) => `<button class="${i === qi ? 'cur' : ''} ${done[it.id] ? 'done' : ''}" data-form="${D.form}" data-act="drillGo" data-v="${i}" aria-label="${i + 1}번 문제${done[it.id] ? ' · 맞힘' : ''}" ${i === qi ? 'aria-current="step"' : ''}>${i + 1}</button>`).join('<i aria-hidden="true"></i>')}</div>` : ''}`;
 }
 
 function viewCards() {
