@@ -99,6 +99,11 @@
 
   var badge = function (role, key) { return '<span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--' + role + ');color:#fff;font-weight:800;flex:0 0 28px">' + key + '</span>'; };
   var bold1 = function (w) { return '<b>' + w.charAt(0) + '</b>' + w.slice(1); };
+  // 접었다 펴는 목록: 한 번에 하나만 열려요
+  var fold = function (key, title, body) {
+    var open = S.ui.studyFold === key;
+    return '<div class="fold' + (open ? ' open' : '') + '"><button class="fold-h" data-act="studyFold" data-v="' + key + '" aria-expanded="' + open + '"><span>' + title + '</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>' + (open ? '<div class="fold-b">' + body + '</div>' : '') + '</div>';
+  };
   var card = function (title, body) { return '<section class="card"><h2 class="sec" style="margin-top:0">' + title + '</h2>' + body + '</section>'; };
 
   function view(k) {
@@ -113,16 +118,16 @@
         '<div style="flex:1"><div><b>' + bold1(d.en[i]) + ' ' + r[0] + '</b> <small style="color:var(--' + R[i] + ');font-weight:700">' + HAN[R[i]] + ' ' + MEAN[R[i]] + '</small></div>' +
         '<div class="small" style="margin:2px 0">듣는 사람: "' + esc(r[1]) + '"</div><div class="small muted">' + esc(r[2]) + '</div></div></div>';
     }).join('') + (k === 'AHWA' ? '<p class="small" style="margin:10px 0 0;padding:10px 12px;background:var(--in-soft);border-radius:10px"><b style="color:var(--in)">W와 H는 나란히</b> · A(宗) → [ W 왜(因) | H 어떻게(因) ] → A(宗). 왜와 어떻게는 위아래가 아니라 행동을 함께 받치는 두 기둥이에요.</p>' : ''));
-    var why = card('왜 이 순서일까요?', '<ul class="body-tx" style="padding-left:1.1em;margin:0">' + d.why.map(function (w) { return '<li style="margin:6px 0">' + w + '</li>'; }).join('') + '</ul>' +
+    var why = fold('why', '왜 이 순서일까요?', '<ul class="body-tx" style="padding-left:1.1em;margin:0">' + d.why.map(function (w) { return '<li style="margin:6px 0">' + w + '</li>'; }).join('') + '</ul>' +
       (d.weight ? '<p class="small" style="margin:12px 0 4px"><b>프렙의 정보 배분</b> · 결론은 짧고 무겁게, 사례는 길고 구체적으로</p><table style="width:100%;border-collapse:collapse;font-size:.9em"><tr style="color:var(--muted)"><th style="text-align:left;padding:4px">칸</th><th style="text-align:right;padding:4px">중요도</th><th style="text-align:right;padding:4px">분량</th></tr>' +
         d.weight.map(function (w, i) { return '<tr style="border-top:1px solid var(--line)"><td style="padding:4px;color:var(--' + R[i] + ');font-weight:700">' + w[0] + '</td><td style="text-align:right;padding:4px">' + w[1] + '</td><td style="text-align:right;padding:4px">' + w[2] + '</td></tr>'; }).join('') + '</table>' : ''));
-    var exb = card('한 묶음 예시', '<p class="small muted" style="margin:0 0 6px">' + esc(it.who) + '의 질문</p><p class="body-tx" style="margin:0 0 8px"><b>"' + esc(it.q) + '"</b></p>' +
+    var exb = fold('exb', '한 묶음 예시', '<p class="small muted" style="margin:0 0 6px">' + esc(it.who) + '의 질문</p><p class="body-tx" style="margin:0 0 8px"><b>"' + esc(it.q) + '"</b></p>' +
       it.slots.map(function (s, i) { return '<div style="display:flex;gap:10px;align-items:flex-start;margin:8px 0">' + badge(R[i], F.slots[i].key) + '<div class="body-tx" style="margin:0">' + esc(s) + '</div></div>'; }).join('') +
       '<div class="note"><p><b>함정</b> ' + esc(it.trap) + '</p><span class="small muted">' + esc(it.trapWhy) + '</span></div>' +
       (k !== 'CRIB' ? '<p class="small" style="margin:10px 0 0"><b>같은 뜻, 다른 문장</b> · 첫 ' + F.slots[0].key + '은 지금의 ' + (k === 'PREP' ? '주장' : '행동 제안') + ', 마지막 ' + F.slots[3].key + '은 ' + (k === 'PREP' ? '요약과 앞으로 할 일' : '시점과 첫걸음을 붙인 다시 촉구') + '예요. 같은 문장을 되풀이하면 앱의 \'끝맺음\' 점수가 낮아져요.</p>' : ''));
-    var rules = card('이것만은 지켜요', '<ol class="body-tx" style="padding-left:1.2em;margin:0">' + d.rules.map(function (r) { return '<li style="margin:6px 0">' + esc(r) + '</li>'; }).join('') + '</ol>' +
+    var rules = fold('rules', '이것만은 지켜요', '<ol class="body-tx" style="padding-left:1.2em;margin:0">' + d.rules.map(function (r) { return '<li style="margin:6px 0">' + esc(r) + '</li>'; }).join('') + '</ol>' +
       '<p class="note"><b>흔한 실수</b> ' + esc(d.mistake) + '</p>');
-    var jong = card('宗은 하나, 쓰임은 셋', '<p class="small muted" style="margin:0 0 8px">크립의 I, 프렙의 P, 아하의 A는 모두 <b style="color:var(--jong)">종(宗)</b>이에요. 같은 주제(AI 과제)라도 삼지작법에 따라 종을 다르게 말해요.</p>' +
+    var jong = fold('jong', '宗은 하나, 쓰임은 셋', '<p class="small muted" style="margin:0 0 8px">크립의 I, 프렙의 P, 아하의 A는 모두 <b style="color:var(--jong)">종(宗)</b>이에요. 같은 주제(AI 과제)라도 삼지작법에 따라 종을 다르게 말해요.</p>' +
       JONG.map(function (j) {
         var me = j[0] === k;
         return '<div style="padding:10px 12px;margin:8px 0;border-radius:12px;border:' + (me ? '2px solid var(--jong);background:var(--jong-soft)' : '1px solid var(--line)') + '">' +
@@ -133,7 +138,7 @@
     var others = Object.keys(FORMS).filter(function (x) { return x !== k; });
     var nav = '<button class="btn" style="width:100%;margin:14px 0 8px" data-act="drillOpen" data-v="' + k + '">' + F.code + ' 워드댄싱으로 실전 연습</button>' +
       '<p class="small muted" style="text-align:center;margin-top:12px"><a href="#origin">삼지작법의 유래 보기</a></p>';
-    return head + intro + table + why + exb + rules + jong + uses + nav;
+    return head + intro + table + '<section class="card fold-list">' + why + exb + rules + jong + '</section>' + uses + nav;
   }
   window.viewStudy = function (slug) {
     try { localStorage.setItem('b5adult:lastStudy', slug); } catch (e) {}

@@ -761,7 +761,7 @@ function viewDrill() {
     <p class="lq" style="font-size:15.5px">“${esc(trap.text)}”</p><p class="note">${esc(cur.trapWhy)}</p>`}
   </section>
   <div class="mt12">
-  ${solved ? `<button class="btn mb8" data-act="drillSpeak">이 순서로 말하기</button><button class="btn ghost" data-act="drillNext">${qi < L.length - 1 ? `다음 문제 (${qi + 2}/${L.length})` : '다음 삼지작법으로'}</button><button class="link" data-act="drillReset" style="width:100%">다시 풀어 보기</button>`
+  ${solved ? `<button class="btn mb8" data-act="drillNext">${qi < L.length - 1 ? `다음 문제 (${qi + 2}/${L.length})` : '다음 삼지작법으로'}</button><button class="link" data-act="drillReset" style="width:100%">다시 풀어 보기</button>`
       : `<button class="btn mb8" data-act="drillCheck" ${full ? '' : 'disabled'}>확인</button>${D.placed.some(x => x != null) ? `<button class="link" data-act="drillReset" style="width:100%">처음부터 다시</button>` : ''}`}
   </div>
   ${L.length > 1 ? `<div class="dprog" role="group" aria-label="문제 진행 상황">${L.map((it, i) => { const part = !done[it.id] && states[it.id] && (states[it.id].placed || []).some(x => x != null); return `<button class="${i === qi ? 'cur' : ''} ${done[it.id] ? 'done' : ''} ${part ? 'part' : ''}" data-form="${D.form}" data-act="drillGo" data-v="${i}" aria-label="${i + 1}번 문제${done[it.id] ? ' · 맞힘' : part ? ' · 푸는 중' : ''}" ${i === qi ? 'aria-current="step"' : ''}>${i + 1}</button>`; }).join('<i aria-hidden="true"></i>')}</div>` : ''}`;
@@ -1084,6 +1084,7 @@ const ACT = {
   closePractice: () => { readSlotsFromDom(); S.ui.formPractice = null; Store.saveLocal(); render(); },
   scaleIdx: v => { S.ui.scaleIdx = clamp(+v, 0, 4); S.ui.balOpen = null; render(); },
   balClose: () => { S.ui.balOpen = null; render(); },
+  studyFold: v => { S.ui.studyFold = S.ui.studyFold === v ? null : v; render(); const el = document.querySelector('.fold.open'); if (el && el.getBoundingClientRect().top < 90) el.scrollIntoView({ block: 'start' }); },
   reportTab: v => { S.ui.reportTab = v; render(); },
   jump: v => { const el = document.getElementById(v); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); },
   // report
