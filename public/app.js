@@ -1092,7 +1092,23 @@ document.addEventListener('input', e => {
 });
 document.addEventListener('change', e => { const t = e.target; if (t.classList && t.classList.contains('area-select') && t.value) { ACT.setArea(t.value); return; } if (t.classList && t.classList.contains('who-select') && t.value) ACT.setWho(t.value); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#layer').innerHTML) closeSheet(); if (e.key === 'Enter' && e.target.id === 'customQ') ACT.useCustomQ(); });
-window.addEventListener('hashchange', () => { closeSheet(); render(); window.scrollTo(0, 0); });
+/* 뒤로 가기: 앱 안에서 거쳐 온 화면이 있으면 바로 앞 화면, 없으면 상위 화면 */
+const NAV_PARENT = { forms: 'home', learn: 'home', speak: 'forms', scales: 'speak', feedback: 'scales', drill: 'home', scaleinfo: 'home', cards: 'home', report: 'home',
+  origin: 'home', youth: 'home', 'study-crib': 'forms', 'study-prep': 'forms', 'study-awha': 'forms', balance: 'scaleinfo' };
+const curRoute = () => (location.hash || '#home').slice(1) || 'home';
+const NAVSTACK = [curRoute()];
+function syncBack() { const b = $('#backBtn'); if (b) b.hidden = curRoute() === 'home'; }
+$('#backBtn').addEventListener('click', () => {
+  if (NAVSTACK.length > 1) { history.back(); return; }
+  const p = NAV_PARENT[curRoute()] || 'home'; NAVSTACK.length = 0; location.replace('#' + p);
+});
+window.addEventListener('hashchange', () => {
+  const r = curRoute();
+  if (NAVSTACK.length > 1 && NAVSTACK[NAVSTACK.length - 2] === r) NAVSTACK.pop(); else if (NAVSTACK[NAVSTACK.length - 1] !== r) NAVSTACK.push(r);
+  if (NAVSTACK.length > 60) NAVSTACK.splice(0, NAVSTACK.length - 60);
+  closeSheet(); render(); syncBack(); window.scrollTo(0, 0);
+});
+syncBack();
 window.addEventListener('scroll', () => $('#top').classList.toggle('scrolled', window.scrollY > 4), { passive: true });
 
 Store.loadLocal();
