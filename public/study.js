@@ -118,10 +118,10 @@
         d.weight.map(function (w, i) { return '<tr style="border-top:1px solid var(--line)"><td style="padding:4px;color:var(--' + R[i] + ');font-weight:700">' + w[0] + '</td><td style="text-align:right;padding:4px">' + w[1] + '</td><td style="text-align:right;padding:4px">' + w[2] + '</td></tr>'; }).join('') + '</table>' : ''));
     var exb = card('한 묶음 예시', '<p class="small muted" style="margin:0 0 6px">' + esc(it.who) + '의 질문</p><p class="body-tx" style="margin:0 0 8px"><b>"' + esc(it.q) + '"</b></p>' +
       it.slots.map(function (s, i) { return '<div style="display:flex;gap:10px;align-items:flex-start;margin:8px 0">' + badge(R[i], F.slots[i].key) + '<div class="body-tx" style="margin:0">' + esc(s) + '</div></div>'; }).join('') +
-      '<div style="margin-top:10px;padding:10px 12px;background:var(--line);border-radius:10px"><span class="small"><b style="color:#6B7280">함정</b> ' + esc(it.trap) + '</span><br><span class="small muted">' + esc(it.trapWhy) + '</span></div>' +
+      '<div class="note"><p><b>함정</b> ' + esc(it.trap) + '</p><span class="small muted">' + esc(it.trapWhy) + '</span></div>' +
       (k !== 'CRIB' ? '<p class="small" style="margin:10px 0 0"><b>같은 뜻, 다른 문장</b> · 첫 ' + F.slots[0].key + '은 지금의 ' + (k === 'PREP' ? '주장' : '행동 제안') + ', 마지막 ' + F.slots[3].key + '은 ' + (k === 'PREP' ? '요약과 앞으로 할 일' : '시점과 첫걸음을 붙인 다시 촉구') + '예요. 같은 문장을 되풀이하면 앱의 \'끝맺음\' 점수가 낮아져요.</p>' : ''));
     var rules = card('이것만은 지켜요', '<ol class="body-tx" style="padding-left:1.2em;margin:0">' + d.rules.map(function (r) { return '<li style="margin:6px 0">' + esc(r) + '</li>'; }).join('') + '</ol>' +
-      '<p class="small" style="margin:10px 0 0;color:var(--jong)"><b>흔한 실수</b> ' + esc(d.mistake) + '</p>');
+      '<p class="note"><b>흔한 실수</b> ' + esc(d.mistake) + '</p>');
     var jong = card('宗은 하나, 쓰임은 셋', '<p class="small muted" style="margin:0 0 8px">크립의 I, 프렙의 P, 아하의 A는 모두 <b style="color:var(--jong)">종(宗)</b>이에요. 같은 주제(AI 과제)라도 삼지작법에 따라 종을 다르게 말해요.</p>' +
       JONG.map(function (j) {
         var me = j[0] === k;

@@ -189,4 +189,4 @@
     if (e.key === 'ArrowLeft') { e.preventDefault(); put('L'); } else if (e.key === 'ArrowRight') { e.preventDefault(); put('R'); }
   });
 })();
-if (/^#balance/.test(location.hash) && typeof render === 'function') render();
+if (/^#(balance|scaleinfo|scales|feedback)/.test(location.hash) && typeof render === 'function') render();

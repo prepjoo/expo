@@ -823,6 +823,23 @@ nav.bottom .ng a svg{width:21px;height:21px}
   nav.bottom .ng-l{display:block;text-align:center;font-size:10.5px;font-weight:700;color:var(--ink3);letter-spacing:.5px;margin:2px 0 2px}
   nav.bottom .ng a{font-size:11.5px;min-height:60px!important}
 }
+/* ===== 익히기 그룹 공통 UI (삼지작법 · 워드댄싱 · 다섯저울) ===== */
+body[data-group="learn"]{--pt:#CBD5EC;--pt-d:#3D4B6E;--pt-on:#26304A;--pt-soft:#E3E8F4;--pt-tint:#F3F5FA}
+body[data-group="learn"] .btn:not(.ghost){background:var(--pt);color:var(--pt-on)}
+body[data-group="learn"] .btn:not(.ghost):hover{background:#B9C5E3}
+body[data-group="learn"] .btn.ghost{border-color:var(--pt);color:var(--pt-on)}
+body[data-group="learn"] .card{border-radius:18px;padding:16px 18px}
+body[data-group="learn"] .card h2.sec{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.2px;color:var(--pt-d);margin:0 0 10px}
+body[data-group="learn"] .note{margin:10px 0 0;padding:10px 12px;border-radius:10px;background:var(--pt-tint);border:0;border-left:3px solid var(--pt-d);font-size:14px;line-height:1.6;color:var(--ink2)}
+body[data-group="learn"] .note p{margin:0 0 4px}
+.lq{margin:0;font-size:17px;font-weight:700;line-height:1.5;color:var(--ink)}
+.lmsg{display:flex;gap:10px;align-items:center;margin:0 0 12px}.lmsg img{width:40px;height:40px;object-fit:contain;flex:none}.lmsg p{margin:0;font-size:14px;line-height:1.55;color:var(--ink2)}
+.lol{margin:0;padding-left:20px;font-size:14.5px;line-height:1.75}
+body[data-group="learn"] .card .si-tip{background:none;padding:0;margin:0}
+body[data-group="learn"] .si-pan{background:var(--pt-tint);border-color:var(--pt-soft)}
+body[data-group="learn"] .seg-tabs.s5 button[aria-selected="true"] .snum{background:var(--pt-d);border-color:var(--pt-d)}
+body[data-group="learn"] .pager{margin-top:6px}
+nav.bottom .ng.on{background:var(--pt-tint,rgba(46,107,69,.06))}
 </style>
 <script>
 /* 휴대폰 글자 크기 설정(텍스트 확대)이 크면 화면이 깨지지 않도록, 확대 효과를 최대 1.15배까지만 남기고 화면 전체 배율을 맞춘다. */
@@ -871,12 +888,12 @@ nav.bottom .ng a svg{width:21px;height:21px}
 <script src="persona.js?v=20261125-d1"></script>
 <script src="content.js?v=20261125-b1"></script>
 <script src="adult.js?v=20261125-b1"></script>
-<script src="app.js?v=20261125-d1"></script>
+<script src="app.js?v=20261125-e1"></script>
 <script src="guide.js?v=20261125-d1"></script>
 <script src="qrcode.js"></script>
 <script src="expo.js?v=20261125-d1"></script>
-<script src="study.js?v=20261125-d1"></script>
-<script src="balance.js?v=20261125-d1"></script>
+<script src="study.js?v=20261125-e2"></script>
+<script src="balance.js?v=20261125-e2"></script>
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function(){});</script>
 </body>
 </html>

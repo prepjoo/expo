@@ -649,18 +649,17 @@ function viewScaleInfo() {
   return `
   ${pageHead('다섯저울 · BALANCE 5', '듣는 사람은 속으로 다섯 번 의심해요. 저울마다 두 접시를 함께 올리면 그 의심이 풀려요.')}
   <div class="seg-tabs f s5" role="tablist" aria-label="저울 고르기">${SCALES.map((x, j) => `<button role="tab" aria-selected="${j === i}" data-act="scaleIdx" data-v="${j}"><span class="snum" aria-hidden="true">${j + 1}</span>${x.name}</button>`).join('')}</div>
-  <article class="si-card">
-    <h2 class="si-name">${sc.name}</h2>
-    <p class="si-q">${sc.q}</p>
+  <h2 class="lp-h">${i + 1}. ${sc.name}</h2><p class="lp-sub">${sc.q}</p>
+  <section class="card"><h2 class="sec" style="margin-top:0">두 접시</h2>
     <div class="si-pair">
       <div class="si-pan"><span class="lab">${esc(sc.L)}</span><p>${esc(lr[0])}</p></div>
       <img class="si-mid" src="${CH('compare')}" alt="">
       <div class="si-pan"><span class="lab">${esc(sc.R)}</span><p>${esc(lr[1])}</p></div>
     </div>
-    ${tipHtml(sc.tip)}
-    ${sc.checks ? `<div class="si-checks"><p><b>심판 기준</b> · 셋 중 둘 이상 보이면 이 저울이 채워져요. 카드놀이의 저울 심판도 같은 기준으로 판정해요.</p><ol>${sc.checks.map(x => `<li>${esc(x)}</li>`).join('')}</ol></div>` : ''}
-    ${(window.BALANCE_READY || []).includes(sc.id) ? `<button class="btn" style="width:100%;margin-top:14px" data-act="balStart" data-v="${sc.id}">${sc.name} 연습하기 · 카드를 접시에 올려 저울 맞추기</button>` : ''}
-  </article>
+  </section>
+  <section class="card"><h2 class="sec" style="margin-top:0">이렇게 채워요</h2>${tipHtml(sc.tip)}</section>
+  ${sc.checks ? `<section class="card"><h2 class="sec" style="margin-top:0">심판 기준</h2><ol class="lol">${sc.checks.map(x => `<li>${esc(x)}</li>`).join('')}</ol><p class="note">셋 중 둘 이상 보이면 이 저울이 채워져요. 카드놀이의 저울 심판도 같은 기준으로 판정해요.</p></section>` : ''}
+  ${(window.BALANCE_READY || []).includes(sc.id) ? `<button class="btn mb8" data-act="balStart" data-v="${sc.id}">${sc.name} 연습하기 · 카드를 접시에 올려 저울 맞추기</button>` : ''}
   <div class="pager">
     <button class="btn ghost" data-act="scaleIdx" data-v="${i - 1}" ${i === 0 ? 'disabled' : ''}>이전 저울</button>
     ${i < 4 ? `<button class="btn" data-act="scaleIdx" data-v="${i + 1}">다음 저울</button>` : `<button class="btn" data-act="go" data-v="scales">내 답 재러 가기</button>`}
@@ -744,8 +743,10 @@ function viewDrill() {
   return `
   ${pageHead('워드댄싱', '문장 조각을 눌러 네 칸에 순서대로 넣으세요. 하나는 함정이에요.')}
   <div class="seg-tabs f" role="tablist" aria-label="삼지작법 고르기">${Object.keys(FORMS).map(x => `<button role="tab" aria-selected="${x === D.form}" data-act="drillForm" data-v="${x}" data-form="${x}">${fmono(x)}${FORMS[x].label}</button>`).join('')}</div>
-  <div class="qbox mt12"><div class="who" data-form="${D.form}">${formTag(D.form, 'sm')} · ${FORMS[D.form].when}${L.length > 1 ? ` · ${qi + 1}/${L.length}` : ''}</div><div class="q">${esc(cur.question)}</div></div>
-  <div class="tip"><img class="char-sm ${D.checked ? 'pop' : ''}" src="${CH(pose)}" alt=""><div><p class="mb0" style="margin:0">${msg}</p></div></div>
+  <h2 class="lp-h">${FORMS[D.form].label} · ${FORMS[D.form].code}</h2><p class="lp-sub">${FORMS[D.form].when}${L.length > 1 ? ` · 문제 ${qi + 1}/${L.length}` : ''}</p>
+  <section class="card"><h2 class="sec" style="margin-top:0">질문</h2><p class="lq">${esc(cur.question)}</p></section>
+  <section class="card"><h2 class="sec" style="margin-top:0">네 칸</h2>
+  <div class="lmsg"><img class="${D.checked ? 'pop' : ''}" src="${CH(pose)}" alt=""><p>${msg}</p></div>
   ${(() => { if (D.target == null || D.placed[D.target] != null) { const e = D.placed.indexOf(null); D.target = e < 0 ? null : e; } return ''; })()}
   <div class="dslots ${!D.introDone && D.placed.every(x => x == null) ? 'dintro' : ''}" data-form="${D.form}">
   ${defs.map((s, i) => {
@@ -753,10 +754,12 @@ function viewDrill() {
     return `<button class="slot fslot ${st}" data-tone="${s.tone}" style="--sd:${0.15 + i * 0.45}s;width:100%;text-align:left" data-act="unplace" data-i="${i}" ${!solved ? '' : 'aria-disabled="true"'} aria-label="${s.title} 칸"><div class="k">${s.key}</div><div><div class="t">${s.title}</div>${c ? `<div class="placed">${esc(c.text)}</div>` : `<div class="h">${esc(s.pick)}</div>`}${D.checked && c && !res[i] ? `<div class="h" style="color:var(--orange);margin-top:4px">${esc(s.hint)}</div>` : ''}</div></button>`;
   }).join('')}
   </div>
-  ${!solved && cur.hint ? `<div class="dhint">${D.hint ? `<p><b>힌트</b> ${esc(cur.hint)}</p>${D.hint > 1 && D.target != null ? (() => { const a = cur.chunks.find(c => c.ans === D.target); const w = a ? a.text.split(' ').slice(0, 2).join(' ') : ''; return `<p><b>${esc(defs[D.target].title)} 칸</b> 첫 말은 “${esc(w)} …”예요.</p>`; })() : ''}` : ''}${(D.hint || 0) < 2 ? `<button class="link" data-act="drillHint">${D.hint ? '힌트 하나 더' : '힌트 보기'}</button>` : ''}</div>` : ''}
-  ${!solved ? `<h2 class="mt16">문장 조각 <span class="faint small">${D.target != null ? `<b class="dnow">${defs[D.target].title}</b> 칸에 넣을 조각을 고르세요` : '칸을 누르면 조각이 되돌아와요'}</span></h2>
-    ${pool.map(c => `<button class="chunk" data-act="place" data-v="${c.id}">${esc(c.text)}</button>`).join('')}` : `
-    <section class="card tint mt12"><div class="tiny" style="color:var(--orange);font-weight:700">남은 조각은 함정입니다</div><div style="font-weight:600;margin:4px 0">“${esc(trap.text)}”</div><div class="small muted">${esc(cur.trapWhy)}</div></section>`}
+  </section>
+  <section class="card"><h2 class="sec" style="margin-top:0">${!solved ? `문장 조각 <span class="faint small" style="font-weight:600">${D.target != null ? `<b class="dnow">${defs[D.target].title}</b> 칸에 넣을 조각을 고르세요` : '칸을 누르면 조각이 되돌아와요'}</span>` : '함정'}</h2>
+  ${!solved && cur.hint ? `<div class="dhint note">${D.hint ? `<p><b>힌트</b> ${esc(cur.hint)}</p>${D.hint > 1 && D.target != null ? (() => { const a = cur.chunks.find(c => c.ans === D.target); const w = a ? a.text.split(' ').slice(0, 2).join(' ') : ''; return `<p><b>${esc(defs[D.target].title)} 칸</b> 첫 말은 “${esc(w)} …”예요.</p>`; })() : ''}` : ''}${(D.hint || 0) < 2 ? `<button class="link" data-act="drillHint">${D.hint ? '힌트 하나 더' : '힌트 보기'}</button>` : ''}</div>` : ''}
+  ${!solved ? `<div class="mt12">${pool.map(c => `<button class="chunk" data-act="place" data-v="${c.id}">${esc(c.text)}</button>`).join('')}</div>` : `
+    <p class="lq" style="font-size:15.5px">“${esc(trap.text)}”</p><p class="note">${esc(cur.trapWhy)}</p>`}
+  </section>
   <div class="mt12">
   ${solved ? `<button class="btn mb8" data-act="drillSpeak">이 순서로 말하기</button><button class="btn ghost" data-act="drillNext">${qi < L.length - 1 ? `다음 문제 (${qi + 2}/${L.length})` : '다음 삼지작법으로'}</button><button class="link" data-act="drillReset" style="width:100%">다시 풀어 보기</button>`
       : `<button class="btn mb8" data-act="drillCheck" ${full ? '' : 'disabled'}>확인</button>${D.placed.some(x => x != null) ? `<button class="link" data-act="drillReset" style="width:100%">처음부터 다시</button>` : ''}`}
@@ -1100,7 +1103,7 @@ function render() {
   $('#view').innerHTML = fn();
   renderNav(route in views ? route : 'home');
   const wl = $('#whoLine'); if (wl) { const chosen = levelChosen(), lab = LEVELS[levelId()].label + ' · ' + AREAS[areaId()].label; wl.innerHTML = chosen ? `<a href="#home" data-act="focusWho" aria-label="연습 대상: ${esc(lab)}">${esc(lab)}</a>` : '<a href="#home" class="need" data-act="focusWho">대상 고르기</a>'; }
-  document.body.dataset.route = route; document.body.dataset.who = whoId(); applyFont();
+  document.body.dataset.route = route; document.body.dataset.group = /^study-/.test(route) || ['drill', 'scaleinfo', 'balance'].includes(route) ? 'learn' : ''; document.body.dataset.who = whoId(); applyFont();
   if (route === 'speak') { updateEstimate(); refreshMics(); }
   if (window.EXPO_AFTER_RENDER) window.EXPO_AFTER_RENDER();
   if (route === 'scaleinfo') { const tb = $('.si-tabs'), sel = $('.si-tabs [aria-selected="true"]'); if (tb && sel) tb.scrollLeft = sel.offsetLeft - (tb.clientWidth - sel.offsetWidth) / 2; }
