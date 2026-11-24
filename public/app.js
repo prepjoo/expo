@@ -713,12 +713,27 @@ function drillList(f) { const D = S.ui.drill, L = DRILL[f || D.form].adultList; 
 function drillCur() { const D = S.ui.drill, L = drillList(); D.idx = D.idx || {}; const i = Math.min(D.idx[D.form] || 0, L.length - 1); return L[i]; }
 const DRILL_DONE_KEY = 'b5adult:drillDone';
 function drillDone() { try { return JSON.parse(localStorage.getItem(DRILL_DONE_KEY) || '{}'); } catch (e) { return {}; } }
+const DRILL_STATE_KEY = 'b5adult:drillState';
+function drillStates() { try { return JSON.parse(localStorage.getItem(DRILL_STATE_KEY) || '{}'); } catch (e) { return {}; } }
+function saveDrillState(id, st) { try { const all = drillStates(); if (st) all[id] = st; else delete all[id]; localStorage.setItem(DRILL_STATE_KEY, JSON.stringify(all)); } catch (e) {} }
+const DRILL_BLANK = () => ({ placed: [null, null, null, null], checked: false, target: 0, introDone: false, hint: 0 });
+/* 문제가 바뀌면 그 문제의 저장 상태를 불러와요: 풀던 문제는 이어서, 맞힌 문제는 정답 배치로 */
+function syncDrillState(cur) {
+  const D = S.ui.drill; if (!cur || !cur.id || D.curId === cur.id) return;
+  D.curId = cur.id;
+  let st = drillStates()[cur.id];
+  if (!st && drillDone()[cur.id]) st = { placed: [0, 1, 2, 3].map(i => cur.chunks.find(c => c.ans === i).id), checked: true, target: null, introDone: true, hint: 0 };
+  Object.assign(D, DRILL_BLANK(), st || {});
+}
 function markDrillDone(id) { try { const d = drillDone(); d[id] = 1; localStorage.setItem(DRILL_DONE_KEY, JSON.stringify(d)); } catch (e) {} }
 
 function viewDrill() {
   const D = S.ui.drill; if (!D.who || !DRILL[D.form][D.who]) D.who = whoId();
   D.idx = D.idx || {}; const L = drillList(), qi = Math.min(D.idx[D.form] || 0, L.length - 1), done = drillDone();
   const cur = drillCur(), defs = SLOTDEFS[D.form], byId = {};
+  syncDrillState(cur);
+  if (cur.id) { const has = D.placed.some(x => x != null) || D.hint; saveDrillState(cur.id, has ? { placed: D.placed, checked: D.checked, target: D.target, introDone: D.introDone, hint: D.hint || 0 } : null); }
+  const states = drillStates();
   cur.chunks.forEach(c => byId[c.id] = c);
   const res = D.placed.map((id, i) => id != null && byId[id].ans === i), right = res.filter(Boolean).length;
   const solved = D.checked && right === 4, full = D.placed.every(x => x != null);
@@ -745,10 +760,10 @@ function viewDrill() {
     ${pool.map(c => `<button class="chunk" data-act="place" data-v="${c.id}">${esc(c.text)}</button>`).join('')}` : `
     <section class="card tint mt12"><div class="tiny" style="color:var(--orange);font-weight:700">남은 조각은 함정입니다</div><div style="font-weight:600;margin:4px 0">“${esc(trap.text)}”</div><div class="small muted">${esc(cur.trapWhy)}</div></section>`}
   <div class="mt12">
-  ${solved ? `<button class="btn mb8" data-act="drillSpeak">이 순서로 말하기</button><button class="btn ghost" data-act="drillNext">${qi < L.length - 1 ? `다음 문제 (${qi + 2}/${L.length})` : '다음 삼지작법으로'}</button>`
+  ${solved ? `<button class="btn mb8" data-act="drillSpeak">이 순서로 말하기</button><button class="btn ghost" data-act="drillNext">${qi < L.length - 1 ? `다음 문제 (${qi + 2}/${L.length})` : '다음 삼지작법으로'}</button><button class="link" data-act="drillReset" style="width:100%">다시 풀어 보기</button>`
       : `<button class="btn mb8" data-act="drillCheck" ${full ? '' : 'disabled'}>확인</button>${D.placed.some(x => x != null) ? `<button class="link" data-act="drillReset" style="width:100%">처음부터 다시</button>` : ''}`}
   </div>
-  ${L.length > 1 ? `<div class="dprog" role="group" aria-label="문제 진행 상황">${L.map((it, i) => `<button class="${i === qi ? 'cur' : ''} ${done[it.id] ? 'done' : ''}" data-form="${D.form}" data-act="drillGo" data-v="${i}" aria-label="${i + 1}번 문제${done[it.id] ? ' · 맞힘' : ''}" ${i === qi ? 'aria-current="step"' : ''}>${i + 1}</button>`).join('<i aria-hidden="true"></i>')}</div>` : ''}`;
+  ${L.length > 1 ? `<div class="dprog" role="group" aria-label="문제 진행 상황">${L.map((it, i) => { const part = !done[it.id] && states[it.id] && (states[it.id].placed || []).some(x => x != null); return `<button class="${i === qi ? 'cur' : ''} ${done[it.id] ? 'done' : ''} ${part ? 'part' : ''}" data-form="${D.form}" data-act="drillGo" data-v="${i}" aria-label="${i + 1}번 문제${done[it.id] ? ' · 맞힘' : part ? ' · 푸는 중' : ''}" ${i === qi ? 'aria-current="step"' : ''}>${i + 1}</button>`; }).join('<i aria-hidden="true"></i>')}</div>` : ''}`;
 }
 
 function viewCards() {
@@ -996,8 +1011,8 @@ const ACT = {
   answerFollow: () => { const r = S.ui.result; newSession({ who: persona().follow, q: FOLLOW[r.weakest || 'none'] }, { form: 'AHWA', picked: true, route: 'speak' }); },
   reco: v => { S.ui.speakOpen = RECO[v]; const f = RECO[v]; const q = todaysQuestions().find(x => x.form === f) || currentQ(); startSpeak(q, f); },
   // drill
-  drillForm: v => { S.ui.drill = Object.assign(S.ui.drill, { form: v, placed: [null, null, null, null], checked: false, target: 0, introDone: false, hint: 0 }); render(); },
-  drillGo: v => { const D = S.ui.drill; D.idx = D.idx || {}; D.idx[D.form] = +v; Object.assign(D, { placed: [null, null, null, null], checked: false, target: 0, introDone: false, hint: 0 }); render(); },
+  drillForm: v => { S.ui.drill.form = v; render(); },
+  drillGo: v => { const D = S.ui.drill; D.idx = D.idx || {}; D.idx[D.form] = +v; render(); },
   drillHint: () => { const D = S.ui.drill; D.hint = Math.min(2, (D.hint || 0) + 1); render(); },
   drillWho: v => { S.ui.drill = Object.assign(S.ui.drill, { who: v, placed: [null, null, null, null], checked: false }); render(); },
   place: v => { const D = S.ui.drill; D.introDone = true; let i = D.target != null && D.placed[D.target] == null ? D.target : D.placed.indexOf(null); if (i < 0) return; D.placed[i] = v; D.checked = false;
@@ -1014,7 +1029,7 @@ const ACT = {
   },
   drillNext: () => { const D = S.ui.drill, ks = Object.keys(FORMS); D.idx = D.idx || {}; const L = drillList(), i = D.idx[D.form] || 0;
     if (i < L.length - 1) D.idx[D.form] = i + 1; else { D.idx[D.form] = 0; D.form = ks[(ks.indexOf(D.form) + 1) % 3]; }
-    D.placed = [null, null, null, null]; D.checked = false; D.target = 0; D.introDone = false; D.hint = 0; render(); window.scrollTo(0, 0); },
+    render(); window.scrollTo(0, 0); },
   drillSpeak: () => { S.ui.speakOpen = S.ui.drill.form; const D = S.ui.drill, cur = drillCur(); const slots = D.placed.map(id => cur.chunks.find(c => c.id === id).text); startSpeak({ who: '배치 연습 문제', q: cur.question.replace(/^[^:：]*[:：]\s*/, '') }, D.form, slots); },
   // cards
   newCard: () => { Editor.draft = emptyDraft(); Editor.mode = 'manual'; Editor.pasted = ''; Editor.msg = ''; sheetEditor(); },
