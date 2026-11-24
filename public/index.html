@@ -741,6 +741,50 @@ nav.bottom a{font-size:11.5px}
 .ftile.open .fname .ficon.mji,.seg-tabs.f button[aria-selected="true"] .ficon.mji{background:#3D4B6E;color:#FFFFFF}
 .ftile.open .fname .ficon.mji .mj,.seg-tabs.f button[aria-selected="true"] .ficon.mji .mj{stroke:rgba(255,255,255,.28)}
 .ftag .ficon.mji{width:1.7em;height:1.7em}
+
+/* 삼지작법 아이콘이 그림(창문 틀)일 때는 예전 卍용 배경을 쓰지 않음 */
+.ficon:has(img),.ftile.open .fname .ficon:has(img){background:transparent!important;border:0!important;box-shadow:none!important}
+/* ===== 반응형: 태블릿 가로·PC (960px 이상) =====
+   휴대폰은 지금 그대로. 넓은 화면에서는 왼쪽 세로 메뉴 + 화면별 두 단 배치 */
+@media (min-width:960px){
+  body{padding-left:92px}
+  body.booth{padding-left:0}
+  .wrap{max-width:1180px;padding:0 40px 64px}
+  header.top{margin:0 -40px;padding-left:40px;padding-right:40px}
+  nav.bottom{top:0;right:auto;width:92px;border-top:0;border-right:1px solid var(--rule);padding:0}
+  nav.bottom .in{max-width:none;height:100%;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:16px 0}
+  nav.bottom a{min-height:66px}
+  nav.bottom a.on::before{top:18%;bottom:18%;left:0;right:auto;width:3px;height:auto;border-radius:0 3px 3px 0}
+  .cta-dock{bottom:0}
+  .toast{bottom:32px}
+  .scrim{align-items:center}
+  .sheet{max-width:640px;border-radius:24px;max-height:86vh}
+  .guide{max-width:680px;box-shadow:0 0 0 100vmax rgba(20,26,22,.35)}
+  /* 홈: 머리 그림은 가로로 넓게, 입력 칸과 연결 카드는 두 단 */
+  body[data-route="home"] #view{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:32px;align-items:start}
+  body[data-route="home"] #view>.hero,body[data-route="home"] #view>.cta-dock,body[data-route="home"] #view>.free{grid-column:1/-1}
+  body[data-route="home"] #view>.expo-links{margin-top:0}
+  /* 짜기: 왼쪽 질문, 오른쪽 삼지작법 고르기 */
+  body[data-route="forms"] #view,body[data-route="learn"] #view{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:32px;align-items:start}
+  body[data-route="forms"] #view>.stepper,body[data-route="forms"] #view>.brandbox,body[data-route="learn"] #view>.stepper,body[data-route="learn"] #view>.brandbox{grid-column:1/-1}
+  body[data-route="forms"] #view>.ftiles,body[data-route="learn"] #view>.ftiles{grid-column:2;grid-row:3/span 4}
+  body[data-route="forms"] #view>.qbox,body[data-route="learn"] #view>.qbox{top:88px}
+  /* 말하기: 네 칸을 창문처럼 2 × 2 */
+  body[data-route="speak"] .speakpad{display:grid;grid-template-columns:1fr 1fr;column-gap:16px;align-items:start}
+  body[data-route="speak"] .speakpad>*:not(.slot){grid-column:1/-1}
+  body[data-route="speak"] #view{max-width:980px;margin:0 auto}
+  /* 재기: 다섯 저울과 네 칸 점검을 나란히 */
+  body[data-route="scales"] .result,body[data-route="feedback"] .result{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:20px;align-items:start}
+  body[data-route="scales"] .result>*:not(.rbox),body[data-route="feedback"] .result>*:not(.rbox){grid-column:1/-1}
+  body[data-route="scales"] #view,body[data-route="feedback"] #view{max-width:1040px;margin:0 auto}
+  /* 설명 페이지: 카드를 두 단으로 흘려 놓기 */
+  body[data-route^="study-"] #view,body[data-route="origin"] #view,body[data-route="youth"] #view{column-count:2;column-gap:24px}
+  body[data-route^="study-"] #view>*,body[data-route="origin"] #view>*,body[data-route="youth"] #view>*{break-inside:avoid}
+  body[data-route^="study-"] #view>.ph-row,body[data-route="origin"] #view>.ph-row,body[data-route="youth"] #view>.ph-row{column-span:all}
+  body[data-route^="study-"] #view>.card,body[data-route="origin"] #view>.card,body[data-route="youth"] #view>.card{display:inline-block;width:100%;margin-top:0}
+  /* 한 줄로 읽는 화면은 가운데에 알맞은 폭으로 */
+  body[data-route="drill"] #view,body[data-route="scaleinfo"] #view,body[data-route="cards"] #view,body[data-route="report"] #view{max-width:820px;margin:0 auto}
+}
 </style>
 <script>
 /* 휴대폰 글자 크기 설정(텍스트 확대)이 크면 화면이 깨지지 않도록, 확대 효과를 최대 1.15배까지만 남기고 화면 전체 배율을 맞춘다. */
