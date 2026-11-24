@@ -1012,6 +1012,7 @@ const ACT = {
   reco: v => { S.ui.speakOpen = RECO[v]; const f = RECO[v]; const q = todaysQuestions().find(x => x.form === f) || currentQ(); startSpeak(q, f); },
   // drill
   drillForm: v => { S.ui.drill.form = v; render(); },
+  drillOpen: v => { S.ui.drill.form = v; S.ui.drill.openForm = v; go('drill'); },
   drillGo: v => { const D = S.ui.drill; D.idx = D.idx || {}; D.idx[D.form] = +v; render(); },
   drillHint: () => { const D = S.ui.drill; D.hint = Math.min(2, (D.hint || 0) + 1); render(); },
   drillWho: v => { S.ui.drill = Object.assign(S.ui.drill, { who: v, placed: [null, null, null, null], checked: false }); render(); },
@@ -1096,7 +1097,7 @@ function render() {
     'study-crib': () => (window.viewStudy ? window.viewStudy('crib') : ''), 'study-prep': () => (window.viewStudy ? window.viewStudy('prep') : ''), 'study-awha': () => (window.viewStudy ? window.viewStudy('awha') : ''), balance: () => (window.viewBalance ? window.viewBalance() : '') };
   const fn = views[route] || viewHome;
   if (route !== S.ui.lastRoute && (route === 'forms' || route === 'learn')) S.ui.formOpen = null;
-  if (route !== S.ui.lastRoute && route === 'drill') { const D = S.ui.drill; if (!D.checked && D.placed.every(x => x == null)) { D.form = 'CRIB'; D.target = 0; D.introDone = false; } }
+  if (route !== S.ui.lastRoute && route === 'drill') { const D = S.ui.drill; if (D.openForm) { D.form = D.openForm; D.openForm = null; } else if (!D.checked && D.placed.every(x => x == null)) { D.form = 'CRIB'; D.target = 0; D.introDone = false; } }
   S.ui.lastRoute = route;
   $('#view').innerHTML = fn();
   renderNav(route in views ? route : 'home');
