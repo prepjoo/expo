@@ -104,7 +104,8 @@
   function view(k) {
     var F = FORMS[k], d = D[k], R = ROLE_OF[k], it = BY[d.ex];
     var tabs = '<div class="seg-tabs f" role="tablist" aria-label="삼지작법 고르기">' + Object.keys(FORMS).map(function (x) { return '<button role="tab" aria-selected="' + (x === k) + '" data-act="go" data-v="study-' + SLUG[x] + '" data-form="' + x + '">' + fmono(x) + FORMS[x].label + '</button>'; }).join('') + '</div>';
-    var head = tabs + pageHead(F.label + ' · ' + F.code, F.pron + ' · ' + d.en.join(' → '));
+    var head = pageHead('삼지작법', '종·인·유 세 칸을 상황에 맞는 순서로 쓰는 세 가지 말하기 틀이에요.') + tabs +
+      '<h2 class="lp-h">' + F.label + ' · ' + F.code + '</h2><p class="lp-sub">' + F.pron + ' · ' + d.en.join(' → ') + '</p>';
     var intro = '<section class="card" style="display:flex;gap:16px;align-items:center"><img src="' + ICON[k] + '" width="96" height="96" alt="' + F.code + '" style="flex:0 0 96px">' +
       '<div><p class="body-tx" style="margin:0 0 6px"><b>' + esc(d.def) + '</b></p><p class="small muted" style="margin:0">' + esc(d.when) + ' · 목표 ' + F.target + '초</p></div></section>';
     var table = card('네 칸', d.rows.map(function (r, i) {

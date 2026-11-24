@@ -53,7 +53,7 @@
     c.fillStyle = '#F7F5EF'; c.fillRect(0, 0, W, H);
     c.fillStyle = COL.navy; c.fillRect(0, 0, W, 300);
     c.fillStyle = '#fff'; c.font = '800 84px ' + FONT; c.textBaseline = 'middle'; c.fillText('내 말로 증명했다!', 80, 130);
-    c.font = '500 36px ' + FONT; c.fillStyle = 'rgba(255,255,255,.8)'; c.fillText('삼지작법 · 다섯 저울 결과', 80, 215);
+    c.font = '500 36px ' + FONT; c.fillStyle = 'rgba(255,255,255,.8)'; c.fillText('삼지작법 · 다섯저울 결과', 80, 215);
     // 질문
     c.fillStyle = '#6B6457'; c.font = '600 34px ' + FONT; c.fillText((o.item ? o.item.id + ' · ' : '') + (o.who || '질문'), 80, 380);
     c.fillStyle = '#1E1B16'; c.font = '700 54px ' + FONT;
@@ -142,7 +142,7 @@
   window.viewYouth = function () {
     var row = function (t, d) { return '<li style="margin:8px 0"><b>' + t + '</b><br><span class="small muted">' + d + '</span></li>'; };
     return pageHead('청소년판 앱', '초·중·고등학생을 위한 BALANCE 5') +
-      '<section class="card"><p class="body-tx" style="margin-top:0"><b>AI가 숙제를 대신 써 주는 시대, 학생에게 남는 힘은 내 생각을 내 말로 증명하는 힘이에요.</b> 청소년판은 같은 삼지작법과 다섯 저울을 학교생활에 맞춘 앱이에요.</p></section>' +
+      '<section class="card"><p class="body-tx" style="margin-top:0"><b>AI가 숙제를 대신 써 주는 시대, 학생에게 남는 힘은 내 생각을 내 말로 증명하는 힘이에요.</b> 청소년판은 같은 삼지작법과 다섯저울을 학교생활에 맞춘 앱이에요.</p></section>' +
       '<section class="card"><h2 class="sec" style="margin-top:0">학교급에 맞춘 질문</h2><ul class="body-tx" style="padding-left:1.1em;margin:0">' +
       row('초등학생', '수학 "왜?" 질문, 학급회의 발표처럼 쉬운 말로 시작해요.') +
       row('중학생', '서술형 답안, 모둠 발표, 고입 면접을 연습해요.') +
@@ -153,9 +153,9 @@
       row('학생부', '활동을 숫자와 사실로 정리하고 자기평가를 써요.') +
       row('진학 면접', '고입·대입 면접 질문에 30초로 답해요.') + '</ul></section>' +
       '<section class="card"><h2 class="sec" style="margin-top:0">이렇게 배워요</h2><ul class="body-tx" style="padding-left:1.1em;margin:0">' +
-      row('짜기 → 말하기 → 재기', '질문에 맞는 삼지작법을 골라 네 칸을 짜고, 소리 내어 말하고, 다섯 저울로 점수를 받아요.') +
+      row('짜기 → 말하기 → 재기', '질문에 맞는 삼지작법을 골라 네 칸을 짜고, 소리 내어 말하고, 다섯저울로 점수를 받아요.') +
       row('워드댄싱', '뒤섞인 문장을 네 칸에 맞게 놓으며 삼지작법의 순서를 익혀요. 함정 문장도 골라내요.') +
-      row('경험 카드', '내 활동 하나를 여섯 칸에 모아 두고 여러 질문에 꺼내 써요.') +
+      row('경험카드', '내 활동 하나를 여섯 칸에 모아 두고 여러 질문에 꺼내 써요.') +
       row('1분 사용설명서', '그림과 목소리로 쓰는 법을 1분 만에 알려 줘요.') + '</ul></section>' +
       '<section class="card"><h2 class="sec" style="margin-top:0">선생님께</h2><p class="body-tx" style="margin:0">5인 모둠 카드 교구(187장)와 함께 쓰면 40분 수업 한 차시가 돼요. 무료이고 가입 없이 바로 쓸 수 있어요.</p></section>' +
       (CFG.youthUrl ? '<a class="btn" style="display:flex;align-items:center;justify-content:center;width:100%;margin:14px 0 6px;text-decoration:none;color:#fff" href="' + e(CFG.youthUrl) + '">청소년판 앱 열기</a><p class="small muted" style="text-align:center">처음 화면에서 학교급(초등·중학·고등)을 고르면 시작해요.</p>' : '');

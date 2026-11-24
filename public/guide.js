@@ -9,7 +9,7 @@ const GUIDE_NARR = [
   '먼저 누가 연습하는지 고르세요. 질문과 예시가 내 상황에 맞게 바뀝니다.',
   '1단계, 짜기, 삼지작법 고르기. 먼저 말할 땐 여는 삼지작법, 주장할 땐 받치는 삼지작법, 질문엔 답하는 삼지작법. 골라서 네 칸에 메모합니다.',
   '2단계, 말하기. 메모를 보며 소리 내어 말해요. 마이크로 말해도, 글자로 써도 됩니다.',
-  '3단계, 재기. 다섯 저울로 내 말의 짜임을 점검하고, 가장 약한 저울 하나만 고쳐서 다시 말해요.',
+  '3단계, 재기. 다섯저울로 내 말의 짜임을 점검하고, 가장 약한 저울 하나만 고쳐서 다시 말해요.',
   '경험을 카드로 모아 두면, 어떤 질문에도 꺼내 쓸 수 있어요. 이제 첫 질문에 답해 보세요.'
 ];
 const sceneLen = i => Guide.listen ? Math.max(2, GUIDE_CUES[i + 1] - GUIDE_CUES[i]) : (i === 2 || i === 3 ? 10 : GUIDE_SEC);
@@ -80,11 +80,11 @@ function guideScenes() {
       <h2 class="g-h">재기</h2>
       <ul class="g-bars">${SCALES.map((s, n) => `<li class="${n === weak ? 'weak' : ''}" style="--d:${.4 + n * .35}s;--v:${demo[n] / 3}"><b>${s.name}</b><i><em></em></i><span>${demo[n]}</span></li>`).join('')}</ul>
       <p class="g-total" style="--d:2.6s"><b>84</b>/100 <small>예시 점검 점수</small></p>
-      <p class="g-cap" style="--d:3.2s">다섯 저울로 짜임을 점검하고, <b>가장 약한 저울 하나</b>만 고쳐서 다시 말해요.</p>` },
+      <p class="g-cap" style="--d:3.2s">다섯저울로 짜임을 점검하고, <b>가장 약한 저울 하나</b>만 고쳐서 다시 말해요.</p>` },
     { k: 'cards', c: '#1D6A47', html: `
       <p class="g-kicker">그리고</p>
       <h2 class="g-h">쌓기</h2>
-      <div class="g-stack"><span style="--d:.4s"></span><span style="--d:.7s"></span><span style="--d:1s"><b>경험 카드</b><small>상황 · 문제 · 판단 · 행동 · 결과 · 배움</small></span></div>
+      <div class="g-stack"><span style="--d:.4s"></span><span style="--d:.7s"></span><span style="--d:1s"><b>경험카드</b><small>상황 · 문제 · 판단 · 행동 · 결과 · 배움</small></span></div>
       <p class="g-cap" style="--d:1.6s">내 경험을 카드로 모아 두면 어떤 질문에도 꺼내 쓸 수 있어요. 연습 기록은 '기록'에 쌓여요.</p>
       <div class="g-end" style="--d:2.4s"><button class="btn cta" data-act="guideStart">${esc(p.cta)}</button><button class="btn ghost" data-act="guideReplay">처음부터 다시 보기</button></div>
       <img class="g-char sm" src="${CH('thumbs')}" alt="">` }

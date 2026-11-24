@@ -227,7 +227,7 @@ function scaleScores(form, slots, q) {
   return { scores: R, why, at, sec };
 }
 
-/* ---------- 100점 채점: 기본 논리 70 + 다섯 저울 가산점 30 ---------- */
+/* ---------- 100점 채점: 기본 논리 70 + 다섯저울 가산점 30 ---------- */
 const WEIGHT = {
   PREP: { fact: 10, fit: 10, move: 6, pick: 2, contrast: 2 },
   CRIB: { contrast: 10, move: 10, fit: 6, pick: 2, fact: 2 },
@@ -411,10 +411,10 @@ const NAV_IC = {
   report: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'
 };
 NAV_IC.study = '<rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M12 3.5v17M3.5 12h17"/><path d="M7.5 7.5h9l-9 9h9" stroke-width="1.4"/>';
-const NAV_GROUPS = [['실전', [['forms', '짜기'], ['speak', '말하기'], ['scales', '재기']]], ['익히기', [['study', '삼지작법'], ['drill', '워드댄싱'], ['scaleinfo', '다섯 저울']]], ['재료', [['cards', '경험 카드']]]];
+const NAV_GROUPS = [['실전', [['forms', '짜기'], ['speak', '말하기'], ['scales', '재기']]], ['익히기', [['study', '삼지작법'], ['drill', '워드댄싱'], ['scaleinfo', '다섯저울']]], ['재료', [['cards', '경험카드']]]];
 const NAV = [].concat(...NAV_GROUPS.map(g => g[1])).map(([id, l]) => [id, l, NAV_IC[id]]);
 const PAGES = [['home', '홈', '처음 화면, 대상 고르기'], ['forms', '짜기', '1단계 · 삼지작법 고르기'], ['speak', '말하기', '2단계 · 삼지작법 익히기'], ['scales', '재기', '3단계 · 삼지작법 점검하기'],
-  ['drill', '삼지작법 워드댄싱', '네 칸의 순서 익히기'], ['scaleinfo', '다섯 저울', '저울 다섯 개 알아보기'], ['cards', '경험 카드', '경험을 여섯 칸에 모으기'], ['report', '기록', '날짜별 점수 변화'], ['origin', '유래', '진나의 인명학과 삼지작법']];
+  ['drill', '삼지작법 워드댄싱', '네 칸의 순서 익히기'], ['scaleinfo', '다섯저울', '저울 다섯 개 알아보기'], ['cards', '경험카드', '경험을 여섯 칸에 모으기'], ['report', '기록', '날짜별 점수 변화'], ['origin', '유래', '진나의 인명학과 삼지작법']];
 function renderNav(route) {
   const r = route === 'feedback' ? 'scales' : route === 'learn' ? 'forms' : /^study-/.test(route) ? 'study' : route === 'balance' ? 'scaleinfo' : route;
   let last = 'crib'; try { last = localStorage.getItem('b5adult:lastStudy') || 'crib'; } catch (e) {}
@@ -475,8 +475,8 @@ const STEP = {
     body: '고른 삼지작법의 네 칸을 실제로 말하듯이 한 문장씩 채우며 익혀요. 마이크로 말해도, 직접 써도 돼요. 목표 시간은 여는 삼지작법 30초, 답하는 삼지작법 45초, 받치는 삼지작법 60초예요.',
     link: '' },
   scales: { no: 3, name: '재기', sub: '삼지작법 점검하기', icon: () => ICON_SCALE,
-    body: '방금 말한 답을 다섯 저울(BALANCE 5)로 점검해요. 저울마다 두 접시가 균형을 이루면 듣는 사람의 의심이 풀려요. 가장 약한 저울 하나만 고쳐서 다시 말하세요.',
-    link: '<span class="intro-link"><a href="#scaleinfo">다섯 저울(BALANCE 5) 보기</a></span>' }
+    body: '방금 말한 답을 다섯저울(BALANCE 5)로 점검해요. 저울마다 두 접시가 균형을 이루면 듣는 사람의 의심이 풀려요. 가장 약한 저울 하나만 고쳐서 다시 말하세요.',
+    link: '<span class="intro-link"><a href="#scaleinfo">다섯저울(BALANCE 5) 보기</a></span>' }
 };
 function stepIntro(k) { const t = STEP[k]; return introBox(t.icon(), `${t.no}단계 ${t.name} · ${t.sub}`, `${t.body}${t.link ? ' ' + t.link : ''}`); }
 function introBox(icon, title, body) { return `<section class="brandbox"><span class="b-ic">${icon}</span><div><b>${title}</b><p>${body}</p></div></section>`; }
@@ -523,7 +523,7 @@ function viewHome() {
       <ol class="flow3">
         <li><a href="#forms"><b>1 짜기</b><span>삼지작법 고르기: 질문에 맞는 삼지작법을 골라 메모해요</span></a></li>
         <li><a href="#speak"><b>2 말하기</b><span>삼지작법 익히기: 메모를 보며 소리 내어 말해요</span></a></li>
-        <li><a href="#scales"><b>3 재기</b><span>삼지작법 점검하기: 다섯 저울로 짜임을 점검해요</span></a></li>
+        <li><a href="#scales"><b>3 재기</b><span>삼지작법 점검하기: 다섯저울로 짜임을 점검해요</span></a></li>
       </ol>
       <p class="body-tx small">한 질문으로 세 단계를 이어서 해요. 삼지작법은 ${formTag('CRIB', 'sm')} ${formTag('PREP', 'sm')} ${formTag('AHWA', 'sm')} 세 가지이고, 목표 시간은 여는 삼지작법 30초, 답하는 삼지작법 45초, 받치는 삼지작법 60초예요.</p>
       <p class="body-tx small"><b>삼지작법</b>은 불교 논리학(인명학)에서 말하는 종<small>(宗)</small> 주장·인<small>(因)</small> 이유·유<small>(喩)</small> 사례의 세 갈래예요. 이 세 갈래로 짠 네 칸을 먼저 말을 꺼낼 때, 주장할 때, 질문에 답할 때에 맞게 순서를 바꿔 써요. 답하는 삼지작법 <b>아하</b>(AWHA)는 행동(Action) → 이유(Why) → 방법(How) → 다시 행동(Action), 곧 종·인·유·종의 순서로 듣는 사람을 움직여요.</p>`)}
@@ -590,7 +590,7 @@ function viewForms() {
     </section>`; }).join('')}</div>`;
 }
 
-/* 3 재기 — 2단계에서 '재기로 넘기기'를 누른 답을 다섯 저울로 잰다 */
+/* 3 재기 — 2단계에서 '재기로 넘기기'를 누른 답을 다섯저울로 잰다 */
 function resultBlock(r) {
   if (r.v !== 2 || !r.base) r = S.ui.result = Object.assign({}, r, scoreAnswer(r.form, r.slots, r.q));
   const F = FORMS[r.form], sel = S.ui.selScale || r.weakest, W = WEIGHT[r.form], g = grade(r.total), B = r.base;
@@ -603,10 +603,10 @@ function resultBlock(r) {
     <div class="r-head">${formTag(r.form)}<span class="r-date">${d.getMonth() + 1}월 ${d.getDate()}일에 한 말</span></div>
     <p class="r-q">“${esc(r.q && r.q.q || '')}”</p>
     <div class="total"><img src="${CH(g[3])}" alt="" class="pop"><div><div class="n">${r.total}<small> / 100</small></div><div class="grade">${g[1]}</div><div class="small muted">${g[2]}</div></div></div>
-    <div class="split"><span class="sp-s"><b>${r.bonus}</b>/30 다섯 저울</span><span>+</span><span class="sp-b"><b>${B.total}</b>/70 기본 논리 점수</span></div>
+    <div class="split"><span class="sp-s"><b>${r.bonus}</b>/30 다섯저울</span><span>+</span><span class="sp-b"><b>${B.total}</b>/70 기본 논리 점수</span></div>
     ${better ? `<div class="better"><p><b>이 답은 ${better.slots.map(x => x.title).join('-')} 짜임이라 ${better.label}에 더 잘 맞아요.</b> 같은 네 칸을 ${better.label}으로 다시 재 볼 수 있어요.</p><button class="btn ghost sm" data-act="rescoreAs" data-v="${r.better}">${better.label}로 다시 재기</button></div>` : ''}
     <div class="rbox rb-s">
-    <h3 class="r-sub">다섯 저울 가산점 <span>${r.bonus}/30</span></h3>
+    <h3 class="r-sub">다섯저울 가산점 <span>${r.bonus}/30</span></h3>
     ${SCALES.map(x => `<button class="scale" data-act="selScale" data-v="${x.id}" aria-pressed="${sel === x.id}"><b>${x.name}<i class="wt wt-${W[x.id]}">${wRole(r.form, x.id)}</i><small class="sq">${x.id === r.weakest ? '<span class="fixline">먼저 고칠 곳</span>' : ''}${x.q}</small></b>${segs(r.scores[x.id], x.id === r.weakest)}<em>${Math.round(r.pts[x.id])}<small>/${W[x.id]}</small></em></button>`).join('')}
     ${sc ? `<div class="why"><p style="margin:0 0 8px"><b>${sc.name} ${Math.round(r.pts[sel])}/${W[sel]}점</b> ${esc(r.why[sel])}</p>
       ${idx >= 0 && r.slots[idx] ? `<div class="quote"><span>${F.slots[idx].key} ${F.slots[idx].title}</span>${markNums(r.slots[idx])}</div>` : ''}</div>` : `<p class="small muted" style="margin:8px 0 0">저울을 누르면 이유와 내 문장이 보여요.</p>`}
@@ -621,9 +621,9 @@ function resultBlock(r) {
     </ul>
     </div>
     ${(() => { const ex = FORM_EX[whoId()] && FORM_EX[whoId()][r.form]; if (!ex) return ''; return `<details class="perfect"${r.total >= 100 ? '' : ''}><summary><span>더 높은 점수 예시 보기</span><small>${F.label} · ${esc(persona().label)}</small></summary>
-      <p class="pf-note">다섯 저울과 기본 논리를 고르게 채운 답이에요. 숫자, 버린 대안, 전과 후, 다음 행동이 어느 칸에 들어가는지 내 답과 비교해 보세요.</p>
+      <p class="pf-note">다섯저울과 기본 논리를 고르게 채운 답이에요. 숫자, 버린 대안, 전과 후, 다음 행동이 어느 칸에 들어가는지 내 답과 비교해 보세요.</p>
       <ol class="pf">${F.slots.map((x, i) => `<li><span class="k" style="${roleBg(r.form, i)};color:#fff">${x.key}</span><div><b>${x.title}</b><p>${markNums(ex[i])}</p></div></li>`).join('')}</ol></details>`; })()}
-    <p class="scope">다섯 저울은 듣는 사람이 속으로 던질 <b>다섯 가지 의심</b>을 내 답이 미리 풀어 주는지 재고, ${F.label}에 중요한 저울일수록 점수가 커요. 기본 논리 점수는 ${F.label}의 네 칸이 제 역할을 하는지 봐요.</p>
+    <p class="scope">다섯저울은 듣는 사람이 속으로 던질 <b>다섯 가지 의심</b>을 내 답이 미리 풀어 주는지 재고, ${F.label}에 중요한 저울일수록 점수가 커요. 기본 논리 점수는 ${F.label}의 네 칸이 제 역할을 하는지 봐요.</p>
   </section>
   <div class="grid2 actions"><button class="btn ghost" data-act="retry">고쳐 말하기</button><button class="btn" data-act="newQuestion">새 질문으로</button></div>
   <button class="textbtn center" data-act="answerFollow">${persona().follow}에도 답해 보기</button>`;
@@ -638,22 +638,17 @@ function viewMeasure() {
   return `
   ${stepper('scales')}
   ${stepIntro('scales')}
-  ${r ? resultBlock(r) : `<div class="empty"><img class="bob" src="${CH('think')}" alt=""><h2>아직 잰 답이 없어요</h2><p>2단계 말하기에서 답을 쓰고 <b>재기로 넘기기</b>를 누르면, 그 답을 여기서 다섯 저울로 재요.</p><button class="btn" data-act="go" data-v="${S.ui.formPicked ? 'speak' : 'forms'}">${S.ui.formPicked ? '2단계 말하기로' : '1단계 짜기부터'}</button></div>`}
+  ${r ? resultBlock(r) : `<div class="empty"><img class="bob" src="${CH('think')}" alt=""><h2>아직 잰 답이 없어요</h2><p>2단계 말하기에서 답을 쓰고 <b>재기로 넘기기</b>를 누르면, 그 답을 여기서 다섯저울로 재요.</p><button class="btn" data-act="go" data-v="${S.ui.formPicked ? 'speak' : 'forms'}">${S.ui.formPicked ? '2단계 말하기로' : '1단계 짜기부터'}</button></div>`}
   ${list}
 `;
 }
 
-/* 다섯 저울 설명 */
+/* 다섯저울 설명 */
 function viewScaleInfo() {
   const i = clamp(S.ui.scaleIdx || 0, 0, 4), sc = SCALES[i], lr = (SCALE_LR[whoId()] || SCALE_LR.adult)[sc.id];
   return `
-  ${backTo('scales', '재기')}
-  <header class="si-head">
-    <p class="si-kicker">다섯 저울</p>
-    <h1 class="si-title">BALANCE 5</h1>
-    <p class="si-sub">듣는 사람은 속으로 다섯 번 의심해요. 저울마다 두 접시를 함께 올리면 그 의심이 풀려요.</p>
-  </header>
-  <div class="si-tabs" role="tablist" aria-label="저울 고르기">${SCALES.map((x, j) => `<button role="tab" aria-selected="${j === i}" data-act="scaleIdx" data-v="${j}">${x.name}</button>`).join('')}</div>
+  ${pageHead('다섯저울 · BALANCE 5', '듣는 사람은 속으로 다섯 번 의심해요. 저울마다 두 접시를 함께 올리면 그 의심이 풀려요.')}
+  <div class="seg-tabs f s5" role="tablist" aria-label="저울 고르기">${SCALES.map((x, j) => `<button role="tab" aria-selected="${j === i}" data-act="scaleIdx" data-v="${j}"><span class="snum" aria-hidden="true">${j + 1}</span>${x.name}</button>`).join('')}</div>
   <article class="si-card">
     <h2 class="si-name">${sc.name}</h2>
     <p class="si-q">${sc.q}</p>
@@ -698,7 +693,7 @@ function viewSpeak() {
     <div class="est" id="est"></div>
     <button class="btn" data-act="score" id="scoreBtn">3단계 재기로 넘기기</button>
     <p class="tiny muted center" id="scoreHint" style="margin:6px 0 0">두 칸 이상 채우면 잴 수 있어요.</p>
-    <div class="row-links">${S.cards.length ? `<button class="textbtn" data-act="fromCard">경험 카드에서 불러오기</button>` : ''}<button class="textbtn muted" data-act="clearSlots">지우기</button></div>
+    <div class="row-links">${S.cards.length ? `<button class="textbtn" data-act="fromCard">경험카드에서 불러오기</button>` : ''}<button class="textbtn muted" data-act="clearSlots">지우기</button></div>
   </section>`;
 }
 function updateEstimate() {
@@ -747,8 +742,7 @@ function viewDrill() {
   if (D.checked && solved) { pose = 'joy'; msg = '정답이에요! 이 순서로 말하면 됩니다.'; }
   else if (D.checked) { pose = 'stop'; msg = `${right}칸이 맞았어요. 주황색 칸의 설명을 보고 다시 옮겨 보세요.`; }
   return `
-  ${backTo('forms', '짜기')}
-  ${pageHead('삼지작법 워드댄싱', '문장 조각을 눌러 네 칸에 순서대로 넣으세요. 하나는 함정이에요.')}
+  ${pageHead('워드댄싱', '문장 조각을 눌러 네 칸에 순서대로 넣으세요. 하나는 함정이에요.')}
   <div class="seg-tabs f" role="tablist" aria-label="삼지작법 고르기">${Object.keys(FORMS).map(x => `<button role="tab" aria-selected="${x === D.form}" data-act="drillForm" data-v="${x}" data-form="${x}">${fmono(x)}${FORMS[x].label}</button>`).join('')}</div>
   <div class="qbox mt12"><div class="who" data-form="${D.form}">${formTag(D.form, 'sm')} · ${FORMS[D.form].when}${L.length > 1 ? ` · ${qi + 1}/${L.length}` : ''}</div><div class="q">${esc(cur.question)}</div></div>
   <div class="tip"><img class="char-sm ${D.checked ? 'pop' : ''}" src="${CH(pose)}" alt=""><div><p class="mb0" style="margin:0">${msg}</p></div></div>
@@ -778,8 +772,8 @@ function viewCards() {
     return `<li><button data-act="openCard" data-v="${c.id}"><b>${esc(c.title || '제목 없음')}</b><span>${esc(c.res || c.sit || '')}</span>${miss ? `<em class="warn">${miss}칸 비어 있음</em>` : ''}</button></li>`; }).join('')}</ul>`
     : `<p class="body-tx muted">아직 내 카드가 없어요. 아래 예시를 열어 보거나 바로 만들어 보세요.</p>`;
   return `
-  ${pageHead('경험 카드', '경험 하나를 여섯 칸에 적어 두면, 어떤 질문을 받아도 삼지작법으로 꺼내 쓸 수 있어요.', '', 'point_right2')}
-  <button class="btn" data-act="newCard">새 경험 카드 만들기</button>
+  ${pageHead('경험카드', '경험 하나를 여섯 칸에 적어 두면, 어떤 질문을 받아도 삼지작법으로 꺼내 쓸 수 있어요.', '', 'point_right2')}
+  <button class="btn" data-act="newCard">새 경험카드 만들기</button>
   <h2 class="sec">내 카드</h2>
   ${mine}
   <h2 class="sec">${p.label} 예시 카드</h2>
@@ -858,7 +852,7 @@ function sheetMenu(confirmClear) {
   ${confirmClear ? `<div class="card" style="border-color:var(--orange)"><p class="small" style="margin:0 0 10px">카드 ${S.cards.length}장과 기록 ${S.history.length}개를 모두 지울까요? 되돌릴 수 없어요.</p><div class="grid2"><button class="btn ghost small" style="width:100%" data-act="menu">취소</button><button class="btn danger small" style="width:100%" data-act="clearAll">모두 지우기</button></div></div>`
       : `<div style="text-align:center"><button class="clearbtn" data-act="askClear">기록 모두 지우기</button></div>`}
   <hr style="border:none;border-top:1px solid var(--line);margin:14px 0">
-  <p class="tiny faint mb0"><b>BALANCE 5</b>는 생각과 글이 사라지는 시대에 내 생각을 내 말로 증명하는 말하기 연습 앱이에요. 삼지작법은 진나의 인명학을 현대 말하기에 맞게 응용한 것이에요. 점수는 앱이 정해진 기준(다섯 저울)에 따라 자동으로 매겨요.</p>`, sh => {
+  <p class="tiny faint mb0"><b>BALANCE 5</b>는 생각과 글이 사라지는 시대에 내 생각을 내 말로 증명하는 말하기 연습 앱이에요. 삼지작법은 진나의 인명학을 현대 말하기에 맞게 응용한 것이에요. 점수는 앱이 정해진 기준(다섯저울)에 따라 자동으로 매겨요.</p>`, sh => {
     const f = $('#importFile', sh); if (f) f.addEventListener('change', async () => { const file = f.files[0]; if (!file) return; importText(await file.text()); });
   });
 }
@@ -892,7 +886,7 @@ function sheetPickQ() {
     ${QUESTIONS[lv][w].map((q, i) => `<button class="chunk" data-act="useQ" data-v="${w}:${i}"><span class="tiny muted">${esc(q.who)} · 추천 ${FORMS[q.form].label}</span><br>${esc(q.q)}</button>`).join('')}`).join('')}`);
 }
 function sheetFromCard() {
-  openSheet(`<h2>경험 카드에서 불러오기</h2><p class="small muted">${FORMS[S.ui.speak.form].label} 칸에 맞춰 카드 내용을 넣어 드려요. 그다음 말하듯이 고치세요.</p>
+  openSheet(`<h2>경험카드에서 불러오기</h2><p class="small muted">${FORMS[S.ui.speak.form].label} 칸에 맞춰 카드 내용을 넣어 드려요. 그다음 말하듯이 고치세요.</p>
   ${S.cards.slice().reverse().map(c => `<button class="xcard" data-act="useCard" data-v="${c.id}"><span class="t">${esc(c.title || '제목 없음')}</span><div class="small muted">${esc(c.res || '')}</div></button>`).join('')}`);
 }
 function cardSlots(c, form) {
@@ -923,12 +917,12 @@ function emptyDraft() { return { id: null, title: '', sit: '', prob: '', judge: 
 function sheetEditor() {
   const d = Editor.draft, m = Editor.mode;
   const qsel = (d.qs || '').split(',').map(x => x.trim()).filter(Boolean);
-  openSheet(`<h2>${d.id ? '경험 카드 편집' : '새 경험 카드'}</h2>
+  openSheet(`<h2>${d.id ? '경험카드 편집' : '새 경험카드'}</h2>
   ${d.id ? '' : `<div class="grid2 mb8"><button class="chip" data-act="edMode" data-v="manual" aria-pressed="${m === 'manual'}">직접 쓰기</button><button class="chip" data-act="edMode" data-v="ai" aria-pressed="${m === 'ai'}">AI 작업에서 가져오기</button></div>`}
   ${m === 'ai' && !d.id ? `
     <div class="card flat"><b class="small">① 쓰던 AI 대화창에 이 프롬프트를 붙여 넣으세요</b><pre class="prompt">${esc(AI_PROMPT)}</pre><button class="btn soft small" data-act="copyPrompt">프롬프트 복사</button></div>
     <div class="card flat"><div class="between"><b class="small">② AI의 답을 그대로 붙여 넣으세요</b><button class="link" data-act="sampleAI">예시 답 넣기</button></div>
-    <textarea id="pasteTa" rows="7" placeholder="[경험 카드]\n제목: ...">${esc(Editor.pasted)}</textarea>
+    <textarea id="pasteTa" rows="7" placeholder="[경험카드]\n제목: ...">${esc(Editor.pasted)}</textarea>
     ${Editor.msg ? `<p class="small" style="color:var(--orange);margin:6px 0 0">${esc(Editor.msg)}</p>` : ''}</div>
     <button class="btn" data-act="parseAI">③ 카드 만들기</button>` : `
     ${d.source === 'ai' ? `<div class="tip"><img class="char-sm" src="${CH('point_right2')}" alt=""><div><p>AI 답으로 칸을 채웠어요. 확인하고 맨 아래 <b>카드 저장</b>을 누르세요.</p><p class="muted" style="margin:0">'판단'과 '행동'에는 내가 직접 한 것만 남기세요. 질문하는 사람은 바로 그 부분을 물어요.</p></div></div>` : ''}
@@ -1064,7 +1058,7 @@ const ACT = {
   },
   openCard: v => sheetCard(v, 'raw'),
   cardView: v => { const [id, k] = v.split('|'); sheetCard(id, k); },
-  cardSpeak: v => { const [id, f] = v.split('|'); const c = String(id).startsWith('sample-') ? SAMPLE_CARDS[whoId()][+String(id).slice(7)] : S.cards.find(x => x.id === id); closeSheet(); const qs = (c.qs || '').split(',')[0].trim(); S.ui.speakOpen = f; startSpeak({ who: '경험 카드 · ' + (c.title || ''), q: qs ? `${qs.replace(/ 질문$/, '')}에 대해 말해 주세요.` : (todaysQuestions().find(x => x.form === f) || currentQ()).q }, f, cardSlots(c, f)); },
+  cardSpeak: v => { const [id, f] = v.split('|'); const c = String(id).startsWith('sample-') ? SAMPLE_CARDS[whoId()][+String(id).slice(7)] : S.cards.find(x => x.id === id); closeSheet(); const qs = (c.qs || '').split(',')[0].trim(); S.ui.speakOpen = f; startSpeak({ who: '경험카드 · ' + (c.title || ''), q: qs ? `${qs.replace(/ 질문$/, '')}에 대해 말해 주세요.` : (todaysQuestions().find(x => x.form === f) || currentQ()).q }, f, cardSlots(c, f)); },
   editCard: v => { Editor.draft = Object.assign(emptyDraft(), S.cards.find(x => x.id === v)); Editor.mode = 'manual'; Editor.msg = ''; sheetEditor(); },
   delCard: v => { $('#delBox').innerHTML = `<div class="card mt8" style="border-color:var(--orange)"><p class="small" style="margin:0 0 10px">이 카드를 지울까요?</p><button class="btn danger small" data-act="delCardYes" data-v="${v}">지우기</button></div>`; },
   delCardYes: v => { S.cards = S.cards.filter(x => x.id !== v); Store.save('cards'); closeSheet(); render(); toast('카드를 지웠어요.', 'think'); },
