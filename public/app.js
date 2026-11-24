@@ -659,6 +659,7 @@ function viewScaleInfo() {
       <div class="si-pan"><span class="lab">${esc(sc.R)}</span><p>${esc(lr[1])}</p></div>
     </div>
     ${tipHtml(sc.tip)}
+    ${(window.BALANCE_READY || []).includes(sc.id) ? `<button class="btn" style="width:100%;margin-top:14px" data-act="balStart" data-v="${sc.id}">${sc.name} 연습하기 · 카드를 접시에 올려 저울 맞추기</button>` : ''}
   </article>
   <div class="pager">
     <button class="btn ghost" data-act="scaleIdx" data-v="${i - 1}" ${i === 0 ? 'disabled' : ''}>이전 저울</button>
@@ -1061,7 +1062,7 @@ function render() {
   migrateHistory();
   const route = (location.hash || '#home').slice(1) || 'home';
   const views = { home: viewHome, learn: viewForms, forms: viewForms, scales: viewMeasure, scaleinfo: viewScaleInfo, speak: viewSpeak, feedback: viewMeasure, drill: viewDrill, cards: viewCards, report: viewReport, origin: () => (window.viewOrigin ? window.viewOrigin() : ''), youth: () => (window.viewYouth ? window.viewYouth() : ''),
-    'study-crib': () => (window.viewStudy ? window.viewStudy('crib') : ''), 'study-prep': () => (window.viewStudy ? window.viewStudy('prep') : ''), 'study-awha': () => (window.viewStudy ? window.viewStudy('awha') : '') };
+    'study-crib': () => (window.viewStudy ? window.viewStudy('crib') : ''), 'study-prep': () => (window.viewStudy ? window.viewStudy('prep') : ''), 'study-awha': () => (window.viewStudy ? window.viewStudy('awha') : ''), balance: () => (window.viewBalance ? window.viewBalance() : '') };
   const fn = views[route] || viewHome;
   if (route !== S.ui.lastRoute && (route === 'forms' || route === 'learn')) S.ui.formOpen = null;
   if (route !== S.ui.lastRoute && route === 'drill') { const D = S.ui.drill; if (!D.checked && D.placed.every(x => x == null)) { D.form = 'CRIB'; D.target = 0; D.introDone = false; } }
