@@ -103,7 +103,8 @@
 
   function view(k) {
     var F = FORMS[k], d = D[k], R = ROLE_OF[k], it = BY[d.ex];
-    var head = pageHead(F.label + ' · ' + F.code, F.pron + ' · ' + d.en.join(' → '));
+    var tabs = '<div class="seg-tabs f" role="tablist" aria-label="삼지작법 고르기">' + Object.keys(FORMS).map(function (x) { return '<button role="tab" aria-selected="' + (x === k) + '" data-act="go" data-v="study-' + SLUG[x] + '" data-form="' + x + '">' + fmono(x) + FORMS[x].label + '</button>'; }).join('') + '</div>';
+    var head = tabs + pageHead(F.label + ' · ' + F.code, F.pron + ' · ' + d.en.join(' → '));
     var intro = '<section class="card" style="display:flex;gap:16px;align-items:center"><img src="' + ICON[k] + '" width="96" height="96" alt="' + F.code + '" style="flex:0 0 96px">' +
       '<div><p class="body-tx" style="margin:0 0 6px"><b>' + esc(d.def) + '</b></p><p class="small muted" style="margin:0">' + esc(d.when) + ' · 목표 ' + F.target + '초</p></div></section>';
     var table = card('네 칸', d.rows.map(function (r, i) {
@@ -130,11 +131,11 @@
     var uses = card('어디에 쓰나요?', '<div style="display:flex;flex-wrap:wrap;gap:6px">' + d.uses.map(function (u) { return '<span style="padding:6px 10px;border-radius:999px;background:var(--line);font-size:.88em">' + esc(u) + '</span>'; }).join('') + '</div>');
     var others = Object.keys(FORMS).filter(function (x) { return x !== k; });
     var nav = '<button class="btn" style="width:100%;margin:14px 0 8px" data-act="drillOpen" data-v="' + k + '">' + F.code + ' 워드댄싱으로 실전 연습</button>' +
-      '<div class="grid2">' + others.map(function (x) { return '<a class="btn ghost" style="display:flex;align-items:center;justify-content:center;text-decoration:none" href="#study-' + SLUG[x] + '">' + FORMS[x].code + ' 더 공부하기</a>'; }).join('') + '</div>' +
       '<p class="small muted" style="text-align:center;margin-top:12px"><a href="#origin">삼지작법의 유래 보기</a></p>';
     return head + intro + table + why + exb + rules + jong + uses + nav;
   }
   window.viewStudy = function (slug) {
+    try { localStorage.setItem('b5adult:lastStudy', slug); } catch (e) {}
     var k = { crib: 'CRIB', prep: 'PREP', awha: 'AHWA' }[slug];
     return k ? view(k) : '';
   };

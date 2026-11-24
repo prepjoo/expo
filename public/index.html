@@ -797,6 +797,25 @@ nav.bottom a{font-size:11.5px}
   /* 한 줄로 읽는 화면은 가운데에 알맞은 폭으로 */
   body[data-route="drill"] #view,body[data-route="balance"] #view,body[data-route="scaleinfo"] #view,body[data-route="cards"] #view,body[data-route="report"] #view{max-width:820px;margin:0 auto}
 }
+@media (max-width:400px){.hdr-btns{gap:6px}.hdr-btns .iconbtn{width:38px;height:38px}.hdr-btns .iconbtn.backbtn{width:38px}}
+@media (max-width:420px){.hero:has(.d3){grid-template-columns:minmax(0,1fr) 66px}.hero:has(.d3) .hero-char{width:66px}.hero .display.d3{font-size:7.6vw}}
+@media (max-width:360px){.si-tabs{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px}}
+/* 하단 메뉴 7개 · 세 그룹 */
+nav.bottom .in{display:flex!important;align-items:stretch}
+nav.bottom .ng{flex:var(--n) 1 0;display:flex;min-width:0;position:relative}
+nav.bottom .ng+.ng::after{content:"";position:absolute;left:0;top:14px;bottom:14px;width:1px;background:var(--rule2,#DDD8CC)}
+nav.bottom .ng.on{background:rgba(46,107,69,.06)}
+nav.bottom .ng-l{display:none}
+nav.bottom .ng a{flex:1 1 0;min-width:0;font-size:11px;letter-spacing:-.3px;padding-left:1px;padding-right:1px}
+nav.bottom .ng a svg{width:21px;height:21px}
+@media (max-width:360px){nav.bottom .ng a{font-size:10.2px;letter-spacing:-.5px}}
+@media (min-width:960px){
+  nav.bottom .in{flex-direction:column!important;justify-content:center;gap:0!important}
+  nav.bottom .ng{flex:0 0 auto;flex-direction:column;padding:8px 0}
+  nav.bottom .ng+.ng::after{left:16px;right:16px;top:0;bottom:auto;width:auto;height:1px}
+  nav.bottom .ng-l{display:block;text-align:center;font-size:10.5px;font-weight:700;color:var(--ink3);letter-spacing:.5px;margin:2px 0 2px}
+  nav.bottom .ng a{font-size:11.5px;min-height:60px!important}
+}
 </style>
 <script>
 /* 휴대폰 글자 크기 설정(텍스트 확대)이 크면 화면이 깨지지 않도록, 확대 효과를 최대 1.15배까지만 남기고 화면 전체 배율을 맞춘다. */
@@ -837,7 +856,7 @@ nav.bottom a{font-size:11.5px}
   </header>
   <main id="view" tabindex="-1"></main>
 </div>
-<nav class="bottom" aria-label="주요 메뉴"><div class="in" id="nav"></div></nav>
+ <nav class="bottom" aria-label="주요 메뉴"><div class="in" id="nav"></div></nav>
 <div id="layer"></div>
 <script src="config.js?v=20261123-a1"></script>
 <script src="platform-web.js"></script>
@@ -845,11 +864,11 @@ nav.bottom a{font-size:11.5px}
 <script src="persona.js?v=20261123-1310"></script>
 <script src="content.js?v=20261125-b1"></script>
 <script src="adult.js?v=20261125-b1"></script>
-<script src="app.js?v=20261125-b5"></script>
+<script src="app.js?v=20261125-c1"></script>
 <script src="guide.js?v=20261123-a9"></script>
 <script src="qrcode.js"></script>
 <script src="expo.js?v=20261125-a2"></script>
-<script src="study.js?v=20261125-b1"></script>
+<script src="study.js?v=20261125-c1"></script>
 <script src="balance.js?v=20261124-d1"></script>
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function(){});</script>
 </body>

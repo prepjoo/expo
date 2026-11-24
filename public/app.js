@@ -410,12 +410,16 @@ const NAV_IC = {
   cards: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h10M7 14h6"/>',
   report: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'
 };
-const NAV = [['forms', '짜기'], ['speak', '말하기'], ['scales', '재기'], ['drill', '워드댄싱'], ['scaleinfo', '다섯 저울'], ['cards', '경험 카드']].map(([id, l]) => [id, l, NAV_IC[id]]);
+NAV_IC.study = '<rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M12 3.5v17M3.5 12h17"/><path d="M7.5 7.5h9l-9 9h9" stroke-width="1.4"/>';
+const NAV_GROUPS = [['실전', [['forms', '짜기'], ['speak', '말하기'], ['scales', '재기']]], ['익히기', [['study', '삼지작법'], ['drill', '워드댄싱'], ['scaleinfo', '다섯 저울']]], ['재료', [['cards', '경험 카드']]]];
+const NAV = [].concat(...NAV_GROUPS.map(g => g[1])).map(([id, l]) => [id, l, NAV_IC[id]]);
 const PAGES = [['home', '홈', '처음 화면, 대상 고르기'], ['forms', '짜기', '1단계 · 삼지작법 고르기'], ['speak', '말하기', '2단계 · 삼지작법 익히기'], ['scales', '재기', '3단계 · 삼지작법 점검하기'],
   ['drill', '삼지작법 워드댄싱', '네 칸의 순서 익히기'], ['scaleinfo', '다섯 저울', '저울 다섯 개 알아보기'], ['cards', '경험 카드', '경험을 여섯 칸에 모으기'], ['report', '기록', '날짜별 점수 변화'], ['origin', '유래', '진나의 인명학과 삼지작법']];
 function renderNav(route) {
-  const r = route === 'feedback' ? 'scales' : route === 'learn' ? 'forms' : route;
-  $('#nav').innerHTML = NAV.map(([id, label, ic]) => `<a href="#${id}" class="${r === id ? 'on' : ''}" ${r === id ? 'aria-current="page"' : ''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${ic}</svg>${label}</a>`).join('');
+  const r = route === 'feedback' ? 'scales' : route === 'learn' ? 'forms' : /^study-/.test(route) ? 'study' : route === 'balance' ? 'scaleinfo' : route;
+  let last = 'crib'; try { last = localStorage.getItem('b5adult:lastStudy') || 'crib'; } catch (e) {}
+  const link = id => id === 'study' ? `#study-${last}` : `#${id}`;
+  $('#nav').innerHTML = NAV_GROUPS.map(([gl, items]) => `<div class="ng ${items.some(([id]) => id === r) ? 'on' : ''}" style="--n:${items.length}" role="group" aria-label="${gl}"><span class="ng-l" aria-hidden="true">${gl}</span>${items.map(([id, label]) => `<a href="${link(id)}" class="${r === id ? 'on' : ''}" ${r === id ? 'aria-current="page"' : ''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${NAV_IC[id]}</svg>${label}</a>`).join('')}</div>`).join('');
 }
 
 const ICON_FORM = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="4" rx="1.2"/><rect x="3" y="10" width="13" height="4" rx="1.2"/><rect x="3" y="16" width="16" height="4" rx="1.2"/></svg>';
