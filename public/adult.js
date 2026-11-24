@@ -74,10 +74,15 @@
     var it = byId[id], ids = ['k0', 'k1', 'k2', 'k3'];
     var ch = it.slots.map(function (t, i) { return { id: ids[i], text: t, ans: i }; });
     ch.push({ id: 'kx', text: it.trap, ans: -1 });
-    var order = [2, 4, 0, 3, 1];
-    return { question: it.who + ': ' + it.q, chunks: order.map(function (i) { return ch[i]; }), trapWhy: it.trapWhy };
+    var ORDERS = [[2, 4, 0, 3, 1], [3, 0, 4, 1, 2], [1, 3, 2, 4, 0], [4, 2, 1, 0, 3], [0, 4, 3, 2, 1], [2, 1, 4, 3, 0]];
+    var order = ORDERS[(parseInt(id.replace(/\D/g, ''), 10) || 0) % ORDERS.length];
+    return { id: id, question: it.who + ': ' + it.q, chunks: order.map(function (i) { return ch[i]; }), trapWhy: it.trapWhy, hint: it.hint || '' };
   }
-  DRILL.CRIB.adult = drill('M-04');
-  DRILL.PREP.adult = drill('M-09');
-  DRILL.AHWA.adult = drill('M-16');
+  // 삼지작법마다 기본 묶음(M) 6문제. 불교 확장팩(B)은 감수 뒤에 더해요.
+  ['CRIB', 'PREP', 'AHWA'].forEach(function (f) {
+    var key = f === 'AHWA' ? 'AWHA' : f;
+    var list = (window.CONTENT && CONTENT.items || []).filter(function (x) { return x.set === 'mini' && (x.form === key || x.form === f); }).map(function (x) { return drill(x.id); });
+    DRILL[f].adultList = list;
+    DRILL[f].adult = list[0];
+  });
 })();
