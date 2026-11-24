@@ -120,14 +120,9 @@
       pan(lx, ly, B.L, G.L, 'var(--in)') + pan(rx, ry, B.R, G.R, 'var(--jong)') + '</svg>';
   }
 
-  window.viewBalance = function () {
+  window.viewBalanceBody = function () {
     var B = S.ui.bal; if (!B || !GAMES[B.id]) { start('fact'); B = S.ui.bal; }
     var G = GAMES[B.id], sc = scaleOf(B.id), n = B.cards.length;
-    var head = pageHead(sc.name + ' 연습', sc.q + ' · ' + G.L + ' / ' + G.R + ' 가르기');
-    var tabs = '<div class="si-tabs" role="tablist" aria-label="저울 고르기">' + SCALES.map(function (x) {
-      var ok = !!GAMES[x.id];
-      return '<button role="tab" aria-selected="' + (x.id === B.id) + '" ' + (ok ? 'data-act="balStart" data-v="' + x.id + '"' : 'aria-disabled="true" title="준비 중" style="opacity:.45"') + '>' + x.name + '</button>';
-    }).join('') + '</div>';
     var body;
     if (!B.done) {
       var c = B.cards[B.i];
@@ -143,8 +138,18 @@
         (B.miss.length ? '<section class="card"><h2 class="sec" style="margin-top:0">헷갈린 카드</h2>' + B.miss.map(function (m) { return '<p class="body-tx" style="margin:6px 0"><b style="color:' + (m.side === 'L' ? 'var(--in)' : 'var(--jong)') + '">' + (m.side === 'L' ? G.L : G.R) + '</b> ' + esc(m.text) + '<br><span class="small muted">' + esc(m.why) + '</span></p>'; }).join('') + '</section>' : '') +
         trainHtml(B, G);
     }
-    var foot = '<div class="grid2" style="margin-top:14px"><button class="btn ghost" data-act="balStart" data-v="' + B.id + '">새 카드로 다시</button><button class="btn ghost" data-act="go" data-v="scaleinfo">저울 설명 보기</button></div>';
-    return head + tabs + body + foot;
+    return body;
+  };
+  // 다섯저울 페이지 안에 펼쳐지는 저울 연습
+  window.balInline = function () {
+    var body = window.viewBalanceBody();
+    return body + '<button class="btn ghost" style="margin-top:4px" data-act="balStart" data-v="' + S.ui.bal.id + '">새 카드로 다시</button>';
+  };
+  // 예전 주소(#balance)로 들어오면 다섯저울 페이지에서 펼쳐요
+  window.viewBalance = function () {
+    var B = S.ui.bal; if (!B || !GAMES[B.id]) { start('fact'); B = S.ui.bal; }
+    S.ui.balOpen = B.id; S.ui.scaleIdx = SCALES.findIndex(function (x) { return x.id === B.id; });
+    setTimeout(function () { location.replace('#scaleinfo'); }, 0); return '';
   };
 
   function trainHtml(B, G) {
@@ -174,10 +179,15 @@
     if ((route === 'scales' || route === 'feedback') && r && r.scores && !v.querySelector('.bal-go')) {
       var w = SCALES.slice().sort(function (a, b) { return (r.scores[a.id] || 0) - (r.scores[b.id] || 0); })[0];
       var box = v.querySelector('.rbox.rb-s');
-      if (box) box.insertAdjacentHTML('beforeend', '<button class="btn bal-go" style="width:100%;margin-top:12px" data-act="balStart" data-v="' + w.id + '">' + w.name + ' 연습하기 · 저울 맞추기</button>');
+      if (box) box.insertAdjacentHTML('beforeend', '<button class="btn bal-go" style="width:100%;margin-top:12px" data-act="balStart" data-v="' + w.id + '">' + w.name + ' 저울 연습하기</button>');
     }
   };
-  ACT.balStart = function (id) { start(id); if ((location.hash || '').slice(1) === 'balance') render(); else go('balance'); };
+  ACT.balStart = function (id) {
+    var first = S.ui.balOpen !== id;
+    start(id); S.ui.balOpen = id; S.ui.scaleIdx = SCALES.findIndex(function (x) { return x.id === id; });
+    if ((location.hash || '').slice(1) === 'scaleinfo') render(); else go('scaleinfo');
+    if (first) setTimeout(function () { var el = document.getElementById('balInline'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 60);
+  };
   ACT.balPut = put;
   ACT.balTrain = function () {
     var B = S.ui.bal, t = document.getElementById('balTrain'); if (!B || !t) return;
@@ -185,7 +195,7 @@
     B.trainScore = GAMES[B.id].train.measure(t.value, B.train); render();
   };
   document.addEventListener('keydown', function (e) {
-    if ((location.hash || '').slice(1) !== 'balance' || (e.target && /TEXTAREA|INPUT/.test(e.target.tagName))) return;
+    if ((location.hash || '').slice(1) !== 'scaleinfo' || !S.ui.balOpen || (e.target && /TEXTAREA|INPUT/.test(e.target.tagName))) return;
     if (e.key === 'ArrowLeft') { e.preventDefault(); put('L'); } else if (e.key === 'ArrowRight') { e.preventDefault(); put('R'); }
   });
 })();

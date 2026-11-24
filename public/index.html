@@ -840,6 +840,10 @@ body[data-group="learn"] .si-pan{background:var(--pt-tint);border-color:var(--pt
 body[data-group="learn"] .seg-tabs.s5 button[aria-selected="true"] .snum{background:var(--pt-d);border-color:var(--pt-d)}
 body[data-group="learn"] .pager{margin-top:6px}
 nav.bottom .ng.on{background:var(--pt-tint,rgba(46,107,69,.06))}
+h1.ph .b5{font-family:var(--sans);font-weight:800;letter-spacing:1.5px;font-size:.86em}
+#balInline{scroll-margin-top:96px}
+/* 캐릭터 그림 자리를 미리 잡아 다시 그릴 때 화면이 흔들리지 않게 */
+img[src^="char/"]{aspect-ratio:305/320;object-fit:contain}
 </style>
 <script>
 /* 휴대폰 글자 크기 설정(텍스트 확대)이 크면 화면이 깨지지 않도록, 확대 효과를 최대 1.15배까지만 남기고 화면 전체 배율을 맞춘다. */
@@ -888,12 +892,12 @@ nav.bottom .ng.on{background:var(--pt-tint,rgba(46,107,69,.06))}
 <script src="persona.js?v=20261125-d1"></script>
 <script src="content.js?v=20261125-b1"></script>
 <script src="adult.js?v=20261125-b1"></script>
-<script src="app.js?v=20261125-e1"></script>
+<script src="app.js?v=20261125-f1"></script>
 <script src="guide.js?v=20261125-d1"></script>
 <script src="qrcode.js"></script>
 <script src="expo.js?v=20261125-d1"></script>
 <script src="study.js?v=20261125-e2"></script>
-<script src="balance.js?v=20261125-e2"></script>
+<script src="balance.js?v=20261125-f1"></script>
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function(){});</script>
 </body>
 </html>

@@ -647,9 +647,9 @@ function viewMeasure() {
 function viewScaleInfo() {
   const i = clamp(S.ui.scaleIdx || 0, 0, 4), sc = SCALES[i], lr = (SCALE_LR[whoId()] || SCALE_LR.adult)[sc.id];
   return `
-  ${pageHead('다섯저울 · BALANCE 5', '듣는 사람은 속으로 다섯 번 의심해요. 저울마다 두 접시를 함께 올리면 그 의심이 풀려요.')}
+  ${pageHead('다섯저울 · <span class="b5">BALANCE 5</span>', '듣는 사람은 속으로 다섯 번 의심해요. 저울마다 두 접시를 함께 올리면 그 의심이 풀려요.')}
   <div class="seg-tabs f s5" role="tablist" aria-label="저울 고르기">${SCALES.map((x, j) => `<button role="tab" aria-selected="${j === i}" data-act="scaleIdx" data-v="${j}"><span class="snum" aria-hidden="true">${j + 1}</span>${x.name}</button>`).join('')}</div>
-  <h2 class="lp-h">${i + 1}. ${sc.name}</h2><p class="lp-sub">${sc.q}</p>
+  <h2 class="lp-h">${sc.name}</h2><p class="lp-sub">${sc.q}</p>
   <section class="card"><h2 class="sec" style="margin-top:0">두 접시</h2>
     <div class="si-pair">
       <div class="si-pan"><span class="lab">${esc(sc.L)}</span><p>${esc(lr[0])}</p></div>
@@ -659,7 +659,7 @@ function viewScaleInfo() {
   </section>
   <section class="card"><h2 class="sec" style="margin-top:0">이렇게 채워요</h2>${tipHtml(sc.tip)}</section>
   ${sc.checks ? `<section class="card"><h2 class="sec" style="margin-top:0">심판 기준</h2><ol class="lol">${sc.checks.map(x => `<li>${esc(x)}</li>`).join('')}</ol><p class="note">셋 중 둘 이상 보이면 이 저울이 채워져요. 카드놀이의 저울 심판도 같은 기준으로 판정해요.</p></section>` : ''}
-  ${(window.BALANCE_READY || []).includes(sc.id) ? `<button class="btn mb8" data-act="balStart" data-v="${sc.id}">${sc.name} 연습하기 · 카드를 접시에 올려 저울 맞추기</button>` : ''}
+  ${(window.BALANCE_READY || []).includes(sc.id) ? (S.ui.balOpen === sc.id && window.balInline ? `<button class="btn ghost mb8" data-act="balClose" aria-expanded="true">${sc.name} 저울 연습 닫기</button><div id="balInline">${window.balInline()}</div>` : `<button class="btn mb8" data-act="balStart" data-v="${sc.id}" aria-expanded="false">${sc.name} 저울 연습하기</button>`) : ''}
   <div class="pager">
     <button class="btn ghost" data-act="scaleIdx" data-v="${i - 1}" ${i === 0 ? 'disabled' : ''}>이전 저울</button>
     ${i < 4 ? `<button class="btn" data-act="scaleIdx" data-v="${i + 1}">다음 저울</button>` : `<button class="btn" data-act="go" data-v="scales">내 답 재러 가기</button>`}
@@ -1082,7 +1082,8 @@ const ACT = {
     const p = document.getElementById('practice'); if (p) { const y = p.getBoundingClientRect().top - window.innerHeight * 0.42; if (y > 0) window.scrollBy({ top: y, behavior: 'smooth' }); }
   },
   closePractice: () => { readSlotsFromDom(); S.ui.formPractice = null; Store.saveLocal(); render(); },
-  scaleIdx: v => { S.ui.scaleIdx = clamp(+v, 0, 4); render(); },
+  scaleIdx: v => { S.ui.scaleIdx = clamp(+v, 0, 4); S.ui.balOpen = null; render(); },
+  balClose: () => { S.ui.balOpen = null; render(); },
   reportTab: v => { S.ui.reportTab = v; render(); },
   jump: v => { const el = document.getElementById(v); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); },
   // report
