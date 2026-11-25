@@ -12,10 +12,13 @@
   var D = {
     CRIB: {
       en: ['Condition', 'Risk', 'Idea', 'Benefit'],
-      def: '문제를 "불안정한 상황"과 "그 때문에 생기는 손실"로 보여 준 뒤, 아이디어와 이익으로 듣는 사람을 움직이는 짜임이에요.',
+      power: ['문제를 정의하는 힘', '무엇이 문제이고 무엇을 잃는지 밝혀요.'],
+      ai: 'AI 시대에 가장 중요한 역량 중 하나는 문제를 정의하는 능력이에요. 답은 AI도 낼 수 있지만, 무엇이 문제인지 정하는 일은 사람의 몫이에요.',
+      def: '여는 삼지작법은 두 가지 일을 해요. 생각할 때는 문제를 정의하고(C·R) 해결을 내놓는(I·B) 틀이고, 말할 때는 듣는 사람을 내 아이디어로 끌어들이는 설득의 순서예요.',
+      groups: { 0: ['문제 정의', 'C·R · 무엇이 문제이고 무엇을 잃나'], 2: ['해결 제시', 'I·B · 어떻게 막고 무엇을 얻나'] },
       when: '먼저 말을 꺼낼 때: 회의 제안, 업무 보고, 발표 첫 30초, 기획서·보고서 도입부',
       rows: [
-        ['상황', '내가 왜 이 문제에 주목해야 하나요?', '지금 벌어지는 일을 숫자와 사실로 보여 줘요.'],
+        ['상황', '지금 무슨 일이 있나요?', '듣는 사람도 아는 상황에서 출발해요. 한 걸음 더: "그런데"로 몰랐던 사실을 붙여요. 숫자는 직접 세면 돼요(몇 명, 몇 번, 몇 분).'],
         ['손실', '해결하지 않으면 무엇을 잃나요?', '듣는 사람이 잃는 시간·돈·기회를 말해요.'],
         ['아이디어', '그래서 어떻게 하자는 건가요?', '손실을 막을 해결책을, 버린 대안("~대신")과 함께 제안해요.'],
         ['이익', '해결되면 나는 무엇을 얻나요?', '얻는 것을 숫자로 말하고, 언제부터 해 보자고 요청해요.']
@@ -24,11 +27,11 @@
         '<b>문제 = 불안정한 상황 + 그로 인한 손실.</b> 상황만 말하면 듣는 사람에게는 남의 일이에요. 손실이 붙어야 "내 일"이 돼요.',
         '듣는 사람의 가장 큰 질문은 <b>"그래서 나와 무슨 상관인데?"</b>(What\'s In It For Me)예요. 손실과 이익이 바로 그 답이에요.',
         '사람을 움직이는 힘은 두 가지, <b>고통을 피하려는 마음과 기쁨을 얻으려는 마음</b>이라고 마케팅 전문가 조 비테일은 말해요. 크립은 손실(고통)로 귀를 열고 이익(기쁨)으로 발을 움직여요.',
-        '바바라 민토의 피라미드 글쓰기 도입부(상황 → 문제 → 질문 → 답), 아리스토텔레스의 설득 순서(주의 끌기 → 문제 → 해결 → 이점)와 같은 흐름이에요.'
+        '바바라 민토의 피라미드 글쓰기 도입부(상황 → 그런데 → 질문 → 답)처럼 <b>듣는 사람이 아는 상황에서 출발하고, "그런데"로 몰랐던 사실을 붙여</b> 주의를 끌어요. 아리스토텔레스의 설득 순서(주의 끌기 → 문제 → 해결 → 이점)와도 같은 흐름이에요.'
       ],
       ex: 'M-04',
       rules: [
-        '상황(C)은 느낌이 아니라 숫자로: "회의가 길다" 대신 "평균 90분이 걸린다".',
+        '상황(C)은 아는 상황 + "그런데" + 몰랐던 사실: "회의를 매주 해요. 그런데 4번 중 3번은 결론 없이 끝났어요." 숫자는 직접 세면 돼요.',
         '손실(R)은 듣는 사람 쪽에서: 내가 힘든 것보다 상대가 잃는 것을 말해요.',
         '아이디어(I)는 손실을 막는 것이어야 해요. 손실과 아이디어가 짝이 맞는지 확인하세요.',
         '이익(B)은 얻는 것 + 요청: "4주만 시험해 주십시오"처럼 언제, 얼마나를 붙여요.'
@@ -38,6 +41,7 @@
     },
     PREP: {
       en: ['Point', 'Reason', 'Example', 'Point'],
+      power: ['생각을 증명하는 힘', '내 주장을 이유와 사례로 증명해요.'],
       def: '주장을 먼저 말하고, 이유로 받치고, 사례로 증명한 뒤, 다시 주장으로 맺는 짜임이에요.',
       when: '주장할 때: 면접 답변, 토론, 의견 말하기, 보고의 결론',
       rows: [
@@ -64,6 +68,7 @@
     },
     AHWA: {
       en: ['Action', 'Why', 'How', 'Action'],
+      power: ['움직임을 만드는 힘', '상대에게 행동을 요청해, 문제 해결을 위한 움직임을 만들어 내요.'],
       def: '"어떻게 해야 하나요?"라는 질문에 해야 할 행동부터 답하고, 왜와 어떻게로 받친 뒤, 다시 행동을 이끄는 짜임이에요.',
       when: '질문을 받고 행동으로 답할 때: 조언, 상담, 업무 지시, 면접의 상황 질문',
       rows: [
@@ -111,10 +116,13 @@
     var tabs = '<div class="seg-tabs f" role="tablist" aria-label="삼지작법 고르기">' + Object.keys(FORMS).map(function (x) { return '<button role="tab" aria-selected="' + (x === k) + '" data-act="go" data-v="study-' + SLUG[x] + '" data-form="' + x + '">' + fmono(x) + FORMS[x].label + '</button>'; }).join('') + '</div>';
     var head = pageHead('삼지작법', '종·인·유 세 칸을 상황에 맞는 순서로 쓰는 세 가지 말하기 틀이에요.') + tabs +
       '<h2 class="lp-h">' + F.label + ' · ' + F.code + '</h2><p class="lp-sub">' + F.pron + ' · ' + d.en.join(' → ') + '</p>';
-    var intro = '<section class="card" style="display:flex;gap:16px;align-items:center"><img src="' + ICON[k] + '" width="96" height="96" alt="' + F.code + '" style="flex:0 0 96px">' +
+    var power = '<section class="card lp-power"><p class="lp-pw"><span>AI 시대 역량</span><b>' + d.power[0] + '</b></p><p class="lp-pd">' + d.power[1] + (d.ai ? ' ' + d.ai : '') + '</p>' +
+      '<p class="lp-loop">' + Object.keys(FORMS).map(function (x) { return '<span class="' + (x === k ? 'on' : '') + '">' + D[x].power[0] + '</span>'; }).join('<i>→</i>') + '</p></section>';
+    var intro = power + '<section class="card" style="display:flex;gap:16px;align-items:center"><img src="' + ICON[k] + '" width="96" height="96" alt="' + F.code + '" style="flex:0 0 96px">' +
       '<div><p class="body-tx" style="margin:0 0 6px"><b>' + esc(d.def) + '</b></p><p class="small muted" style="margin:0">' + esc(d.when) + ' · 목표 ' + F.target + '초</p></div></section>';
     var table = card('네 칸', d.rows.map(function (r, i) {
-      return '<div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;' + (i ? 'border-top:1px solid var(--line)' : '') + '">' + badge(R[i], F.slots[i].key) +
+      var g = d.groups && d.groups[i];
+      return (g ? '<p class="lp-grp' + (i ? ' next' : '') + '"><b>' + g[0] + '</b> ' + g[1] + '</p>' : '') + '<div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;' + (i && !(d.groups && d.groups[i]) ? 'border-top:1px solid var(--line)' : '') + '">' + badge(R[i], F.slots[i].key) +
         '<div style="flex:1"><div><b>' + bold1(d.en[i]) + ' ' + r[0] + '</b> <small style="color:var(--' + R[i] + ');font-weight:700">' + HAN[R[i]] + ' ' + MEAN[R[i]] + '</small></div>' +
         '<div class="small" style="margin:2px 0">듣는 사람: "' + esc(r[1]) + '"</div><div class="small muted">' + esc(r[2]) + '</div></div></div>';
     }).join('') + (k === 'AHWA' ? '<p class="small" style="margin:10px 0 0;padding:10px 12px;background:var(--in-soft);border-radius:10px"><b style="color:var(--in)">W와 H는 나란히</b> · A(宗) → [ W 왜(因) | H 어떻게(因) ] → A(宗). 왜와 어떻게는 위아래가 아니라 행동을 함께 받치는 두 기둥이에요.</p>' : ''));
