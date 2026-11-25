@@ -1,6 +1,23 @@
 // ---------- 1분 사용설명서 (모션 스틸컷 6장, 약 48초) ----------
 const GUIDE_SEC = 8;
-const Guide = { i: 0, t: null, paused: false, listen: false, tok: 0 };
+const Guide = { i: 0, t: null, paused: false, listen: false, tok: 0, set: 'start' };
+/* 설명서 세 편: start(시작하기, 녹음 파일 하나) · learn(익히기) · level(단계 연습).
+   learn·level은 장면마다 녹음 파일 voice/<편>-<번호>.mp3 를 재생하고, 파일이 없으면 기기 음성(TTS)으로 읽어요. */
+const GUIDE_SETS = {
+  start: { title: '1분 사용설명서', sub: '시작하기' },
+  learn: { title: '1분 사용설명서', sub: '② 익히기', sec: [8, 10, 11, 11, 7], narr: [
+    '삼지작법 익히기 편입니다. 받치는, 답하는, 여는 삼지작법. 쉬운 것부터 차례로 익혀요.',
+    '삼지작법 메뉴에서는 맨 위 탭으로 세 기법을 오가요. 네 칸의 색은 종은 빨강, 인은 파랑, 유는 초록. 궁금한 제목을 누르면 설명이 펼쳐져요.',
+    '워드댄싱에서는 섞인 문장 조각을 네 칸에 순서대로 놓아요. 조각 하나는 함정이에요. 막히면 힌트를 누르세요. 기법마다 여섯 문제, 아래 번호로 오가며 풀어요.',
+    '다섯저울은 듣는 사람의 다섯 가지 의심이에요. 저울을 고르고 심판 기준을 읽은 뒤, 저울 연습하기를 눌러 카드를 두 접시에 갈라 보세요.',
+    '순서가 손에 익으면, 짜기로 가서 내 답을 말해 보세요.'] },
+  level: { title: '1분 사용설명서', sub: '③ 단계 연습', sec: [7, 10, 10, 12, 8], narr: [
+    '단계 연습 편입니다. 네 칸을 한 번에 외우지 말고, 두 칸에서 시작해 한 칸씩 늘려요.',
+    '말하기 화면 맨 위에서 1단계를 고르면 두 칸만 열려요. 받치는 삼지작법이라면 결론과 이유, 피알만 말하면 됩니다.',
+    '두 칸만 채워도 잴 수 있어요. 결과 화면에서 다음 단계 버튼을 누르면, 쓴 내용은 그대로 두고 한 칸이 더 열려요.',
+    '네 칸을 다 채웠다면 점수를 보세요. 기본 논리 칠십 점에 다섯저울 삼십 점. 가장 약한 저울을 연습하고, 고쳐 말하기로 한 문장만 고쳐 다시 재요.',
+    '경험카드를 모아 두면 어떤 질문에도 불러와 쓸 수 있어요. 오늘은 1단계부터 시작해 보세요.'] }
+};
 /* 음성 안내: 녹음 파일 하나(voice/guide.mp3, 55.2초)를 장면 시작점(초)으로 나눠 맞춰요. */
 const GUIDE_AUDIO = 'voice/guide.mp3';
 const GUIDE_CUES = [0, 9.4, 15.9, 29.44, 39.29, 47.34, 55.23];
@@ -12,7 +29,7 @@ const GUIDE_NARR = [
   '3단계, 재기. 다섯저울로 내 말의 짜임을 점검하고, 가장 약한 저울 하나만 고쳐서 다시 말해요.',
   '경험을 카드로 모아 두면, 어떤 질문에도 꺼내 쓸 수 있어요. 이제 첫 질문에 답해 보세요.'
 ];
-const sceneLen = i => Guide.listen ? Math.max(2, GUIDE_CUES[i + 1] - GUIDE_CUES[i]) : (i === 2 || i === 3 ? 10 : GUIDE_SEC);
+const sceneLen = i => Guide.set !== 'start' ? GUIDE_SETS[Guide.set].sec[i] : Guide.listen ? Math.max(2, GUIDE_CUES[i + 1] - GUIDE_CUES[i]) : (i === 2 || i === 3 ? 10 : GUIDE_SEC);
 function guideAudio() {
   if (Guide.audio) return Guide.audio;
   const a = new Audio(GUIDE_AUDIO); a.preload = 'auto'; Guide.audio = a;
@@ -36,6 +53,8 @@ function guideDing() {
 function voiceStop() { try { if (Guide.audio) Guide.audio.pause(); } catch (e) {} }
 
 function guideScenes() {
+  if (Guide.set === 'learn') return learnScenes();
+  if (Guide.set === 'level') return levelScenes();
   const id = whoId(), p = persona(), chosen = levelChosen();
   const q = (todaysQuestions().find(x => x.form === p.reco) || currentQ());
   const F = FORMS[q.form], ex = (FORM_EX[id] && FORM_EX[id][q.form]) || F.ex;
@@ -91,6 +110,108 @@ function guideScenes() {
   ];
 }
 
+const GA = (d, h, cls) => `<div class="g-anim ${cls || ''}" style="--d:${d}s">${h}</div>`;
+const gSlot = (f, i, t) => `<span class="g-slot" style="${roleBg(f, i)}"><b>${FORMS[f].slots[i].key}</b>${t || FORMS[f].slots[i].title}</span>`;
+function learnScenes() {
+  const order = ['PREP', 'AHWA', 'CRIB'];
+  return [
+    { k: 'l-intro', c: '#22356B', html: `
+      <img class="g-char g-jump" src="${CH('jump')}" alt="">
+      <p class="g-kicker">사용설명서 ② · 익히기</p>
+      <h2 class="g-big d3">세 가지<br>삼지작법 익히기</h2>
+      <ol class="g-flow">${order.map((f, n) => `<li style="--d:${.9 + n * .4}s"><b>${n + 1}</b>${FORMS[f].code}</li>`).join('')}</ol>
+      <p class="g-cap sm" style="--d:2.4s">쉬운 것부터: 받치는 → 답하는 → 여는</p>` },
+    { k: 'l-study', c: '#22356B', html: `
+      <p class="g-kicker">익히기 · 삼지작법</p>
+      <h2 class="g-h">원리 읽기</h2>
+      ${GA(.4, order.map((f, n) => `<span class="${n === 0 ? 'on' : ''}">${FORMS[f].label.replace(' 삼지작법', '')}</span>`).join(''), 'g-tabs')}
+      ${GA(1.2, [0, 1, 2, 3].map(i => gSlot('PREP', i)).join(''), 'g-slots4')}
+      ${GA(2.2, '<span class="c1">宗 빨강</span><span class="c2">因 파랑</span><span class="c3">喻 초록</span>', 'g-legend')}
+      ${GA(3.2, ['왜 이 순서일까요?', '한 묶음 예시', '이것만은 지켜요'].map((t, n) => `<p class="${n === 0 ? 'open' : ''}">${t}<i>${n === 0 ? '−' : '+'}</i></p>`).join(''), 'g-fold')}
+      <p class="g-cap sm" style="--d:4s">맨 위 탭으로 세 기법을 오가고, 제목을 누르면 설명이 펼쳐져요.</p>` },
+    { k: 'l-drill', c: '#22356B', html: `
+      <p class="g-kicker">익히기 · 워드댄싱</p>
+      <h2 class="g-h">순서 맞추기</h2>
+      ${GA(.4, ['AI의 답은 내 생각을 증명해 주지 않기 때문입니다.', 'AI가 쓴 과제를 그대로 내면 안 됩니다.', 'AI가 저보다 글을 더 잘 쓰는 것 같습니다.'].map((t, n) => `<span class="${n === 2 ? 'trap' : ''}" style="--o:${n}">${t}${n === 2 ? '<em>함정</em>' : ''}</span>`).join(''), 'g-pieces')}
+      ${GA(2.6, gSlot('PREP', 0, '결론 ✓') + gSlot('PREP', 1, '이유 ✓') + gSlot('PREP', 2, '사례') + gSlot('PREP', 3, '다시 결론'), 'g-slots4')}
+      ${GA(3.6, '<span class="hint">💡 힌트 보기</span><span class="dots"><i class="on">1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i></span>', 'g-drow')}
+      <p class="g-cap sm" style="--d:4.4s">조각 하나는 함정이에요. 막히면 힌트, 기법마다 6문제.</p>` },
+    { k: 'l-scale', c: '#22356B', html: `
+      <p class="g-kicker">익히기 · 다섯저울</p>
+      <h2 class="g-h">의심 풀기</h2>
+      ${GA(.4, SCALES.map((s, n) => `<span class="${n === 1 ? 'on' : ''}">${n + 1}</span>`).join(''), 'g-tabs num')}
+      ${GA(1.2, `<div class="pan"><small>사실</small>취소율 12% → 7%</div><div class="pan"><small>생각</small>더 만족한 것 같아요</div>`, 'g-scale2')}
+      ${GA(2.4, '<b>심판 기준</b> 셋 중 둘이 보이면 채워져요', 'g-judge')}
+      ${GA(3.2, `<span class="btn">${SCALES[1].name} 저울 연습하기</span>`, 'g-fakebtn')}
+      <p class="g-cap sm" style="--d:4s">카드를 두 접시에 가르면 저울이 수평이 돼요.</p>` },
+    { k: 'l-end', c: '#22356B', html: `
+      <p class="g-kicker">이제</p>
+      <h2 class="g-h">손에 익히기</h2>
+      <p class="g-cap" style="--d:.5s">순서가 손에 익으면 짜기로 가서 내 답을 말해 보세요.</p>
+      <div class="g-end" style="--d:1.2s"><button class="btn cta" data-act="guideTo" data-v="drill">워드댄싱 시작하기</button><button class="btn ghost" data-act="guideReplay">처음부터 다시 보기</button></div>
+      <img class="g-char sm" src="${CH('thumbs')}" alt="">` }
+  ];
+}
+function levelScenes() {
+  const ans = ['AI가 쓴 과제를 그대로 내면 안 됩니다.', 'AI의 답은 내 생각을 증명해 주지 않기 때문입니다.'];
+  const stg = on => `<div class="g-stagebar">${['PR', 'PRE', 'PREP'].map((t, n) => `<span class="${n === on ? 'on' : ''}"><small>${n + 1}단계</small>${t}</span>`).join('')}</div>`;
+  return [
+    { k: 'v-intro', c: '#7A4A12', html: `
+      <img class="g-char g-jump" src="${CH('jump')}" alt="">
+      <p class="g-kicker">사용설명서 ③ · 단계 연습</p>
+      <h2 class="g-big d3">두 칸부터<br>한 칸씩</h2>
+      <ol class="g-flow"><li style="--d:.9s"><b>1</b>PR</li><li style="--d:1.3s"><b>2</b>PRE</li><li style="--d:1.7s"><b>3</b>PREP</li></ol>
+      <p class="g-cap sm" style="--d:2.3s">AW → AWH → AWHA, CR → CRI → CRIB도 같아요.</p>` },
+    { k: 'v-steps', c: '#7A4A12', html: `
+      <p class="g-kicker">말하기 화면 맨 위</p>
+      <h2 class="g-h">단계 고르기</h2>
+      ${GA(.4, stg(0), '')}
+      ${GA(1.4, gSlot('PREP', 0) + `<p>${ans[0]}</p>`, 'g-line')}
+      ${GA(2.2, gSlot('PREP', 1) + `<p>${ans[1]}</p>`, 'g-line')}
+      <p class="g-cap sm" style="--d:3.2s">1단계를 고르면 두 칸만 열려요. 결론과 이유만 말하면 돼요.</p>` },
+    { k: 'v-next', c: '#7A4A12', html: `
+      <p class="g-kicker">재기 · 단계 결과</p>
+      <h2 class="g-h">한 칸 더</h2>
+      ${GA(.4, '<b>1단계 PR</b>까지 쟀어요. 단계 연습이라 점수가 낮아도 괜찮아요.', 'g-note')}
+      ${GA(1.4, '<span class="btn">2단계로: PRE 말하기</span>', 'g-fakebtn')}
+      ${GA(2.4, stg(1), '')}
+      <p class="g-cap sm" style="--d:3.2s">쓴 내용은 그대로, 사례(E) 칸이 하나 더 열려요.</p>` },
+    { k: 'v-fix', c: '#1D6A47', html: `
+      <p class="g-kicker">네 칸을 다 채웠다면</p>
+      <h2 class="g-h">점수 올리기</h2>
+      ${GA(.4, '<span><b>70</b>기본 논리</span><i>+</i><span><b>30</b>다섯저울</span>', 'g-split')}
+      <ul class="g-bars">${SCALES.map((s, n) => `<li class="${n === 2 ? 'weak' : ''}" style="--d:${1 + n * .25}s;--v:${[3, 3, 1, 3, 2][n] / 3}"><b>${s.name}</b><i><em></em></i><span>${[3, 3, 1, 3, 2][n]}</span></li>`).join('')}</ul>
+      ${GA(2.8, '<span class="btn">가장 약한 저울 연습하기</span><span class="btn ghost">고쳐 말하기</span>', 'g-fakebtn two')}
+      <p class="g-cap sm" style="--d:3.6s">약한 저울 하나만, 한 문장만 고쳐 다시 재요.</p>` },
+    { k: 'v-end', c: '#1D6A47', html: `
+      <p class="g-kicker">그리고</p>
+      <h2 class="g-h">경험카드</h2>
+      <div class="g-stack"><span style="--d:.4s"></span><span style="--d:.7s"></span><span style="--d:1s"><b>경험카드에서 불러오기</b><small>상황 · 문제가 그대로 C · R 칸으로</small></span></div>
+      <p class="g-cap" style="--d:1.6s">오늘은 1단계부터 시작해 보세요.</p>
+      <div class="g-end" style="--d:2.2s"><button class="btn cta" data-act="guideStart">바로 연습하기</button><button class="btn ghost" data-act="guideReplay">처음부터 다시 보기</button></div>
+      <img class="g-char sm" src="${CH('thumbs')}" alt="">` }
+  ];
+}
+
+/* learn·level 음성: 장면별 녹음 파일 → 없으면 기기 음성(TTS) */
+function partStop() { Guide.tok++; try { if (Guide.part) { Guide.part.onended = Guide.part.onerror = null; Guide.part.pause(); } } catch (e) {} Guide.part = null; try { speechSynthesis.cancel(); } catch (e) {} Guide.mode = null; }
+function partNext(tok) { if (tok !== Guide.tok || Guide.paused) return; const n = guideScenes().length; if (Guide.i < n - 1) Guide.t = setTimeout(() => { if (tok === Guide.tok && !Guide.paused) guideGo(1); }, 600); }
+function partTTS(tok) {
+  const text = GUIDE_SETS[Guide.set].narr[Guide.i];
+  if (!('speechSynthesis' in window)) { Guide.mode = 'timer'; Guide.t = setTimeout(() => partNext(tok), sceneLen(Guide.i) * 1000); return; }
+  const u = new SpeechSynthesisUtterance(text); u.lang = 'ko-KR'; u.rate = 1.02;
+  const v = speechSynthesis.getVoices().find(x => /^ko/i.test(x.lang)); if (v) u.voice = v;
+  u.onend = () => partNext(tok);
+  Guide.mode = 'tts'; speechSynthesis.cancel(); speechSynthesis.speak(u);
+}
+function partPlay() {
+  partStop(); const tok = Guide.tok;
+  const a = new Audio(`voice/${Guide.set}-${Guide.i + 1}.mp3`); Guide.part = a; Guide.mode = 'file';
+  a.onended = () => partNext(tok);
+  a.onerror = () => { if (tok === Guide.tok) { Guide.part = null; partTTS(tok); } };
+  a.play().catch(e => { if (e && e.name === 'NotAllowedError' && tok === Guide.tok) { Guide.paused = true; const b = document.querySelector('.guide'); if (b) b.classList.add('paused'); } });
+}
+
 function guideRender() {
   const sc = guideScenes(), n = sc.length, s = sc[Guide.i];
   const box = document.querySelector('.guide'); if (!box) return;
@@ -102,6 +223,12 @@ function guideRender() {
   box.classList.toggle('listen', Guide.listen);
   clearTimeout(Guide.t); clearTimeout(Guide.dingT);
   if (s.k === 'forms' && Guide.listen && !Guide.paused) Guide.dingT = setTimeout(() => { if (!Guide.paused && Guide.listen) guideDing(); }, 8750);
+  if (Guide.set !== 'start') {
+    partStop();
+    if (Guide.listen) { if (!Guide.paused) partPlay(); return; }
+    if (!Guide.paused && Guide.i < n - 1) { Guide.t0 = Date.now(); Guide.left = sceneLen(Guide.i) * 1000; Guide.t = setTimeout(() => guideGo(1), Guide.left); }
+    return;
+  }
   if (Guide.listen) {
     const a = guideAudio();
     if (Guide.seek !== false) { try { a.currentTime = GUIDE_CUES[Guide.i]; } catch (e) {} }
@@ -116,11 +243,11 @@ function guideGo(d) {
   const n = guideScenes().length;
   Guide.i = Math.max(0, Math.min(n - 1, Guide.i + d)); guideRender();
 }
-function openGuide(listen) {
-  Guide.i = 0; Guide.paused = false; Guide.listen = listen === true;
+function openGuide(listen, set) {
+  Guide.set = GUIDE_SETS[set] ? set : 'start'; Guide.i = 0; Guide.paused = false; Guide.listen = listen === true;
   if (Guide.listen && !Guide.ac) { try { const C = window.AudioContext || window.webkitAudioContext; if (C) Guide.ac = new C(); } catch (e) {} }
   const L = $('#layer');
-  L.innerHTML = `<div class="guide" role="dialog" aria-modal="true" aria-label="1분 사용설명서">
+  L.innerHTML = `<div class="guide" role="dialog" aria-modal="true" aria-label="${GUIDE_SETS[Guide.set].title} ${GUIDE_SETS[Guide.set].sub}">
     <div class="g-top"><div class="g-bars-top"></div>
       <div class="g-ctl"><span class="g-count"></span>
         <button class="g-btn snd" data-act="guideSound" aria-label="소리 켜기/끄기"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path class="ic-on" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/><path class="ic-off" d="M16 9l5 6M21 9l-5 6"/></svg></button>
@@ -132,18 +259,26 @@ function openGuide(listen) {
   document.body.style.overflow = 'hidden';
   guideRender();
 }
-function closeGuide() { clearTimeout(Guide.t); voiceStop(); Guide.audio = null; closeSheet(); }
+function closeGuide() { clearTimeout(Guide.t); voiceStop(); partStop(); Guide.audio = null; closeSheet(); }
 
 Object.assign(ACT, {
-  openGuide: () => openGuide(false),
-  openGuideListen: () => openGuide(true),
+  openGuide: v => openGuide(false, v),
+  openGuideListen: v => openGuide(true, v),
   guideSound: () => { Guide.listen = !Guide.listen; guideRender(); },
+  guideTo: v => { closeGuide(); go(v); },
   guideClose: closeGuide,
   guideNext: () => guideGo(1),
   guidePrev: () => guideGo(-1),
   guidePause: () => {
     Guide.paused = !Guide.paused;
     const box = document.querySelector('.guide'); if (box) box.classList.toggle('paused', Guide.paused);
+    if (Guide.set !== 'start' && Guide.listen) {
+      if (Guide.paused) { clearTimeout(Guide.t); if (Guide.mode === 'file' && Guide.part) Guide.part.pause(); else if (Guide.mode === 'tts') try { speechSynthesis.pause(); } catch (e) {} }
+      else if (Guide.mode === 'file' && Guide.part) Guide.part.play().catch(() => {});
+      else if (Guide.mode === 'tts' && speechSynthesis.paused) try { speechSynthesis.resume(); } catch (e) {}
+      else partPlay();
+      return;
+    }
     if (Guide.listen) { const a = guideAudio(); Guide.paused ? a.pause() : a.play().catch(() => {}); return; }
     const n = guideScenes().length;
     if (Guide.paused) { clearTimeout(Guide.t); Guide.left = Math.max(300, (Guide.left || GUIDE_SEC * 1000) - (Date.now() - (Guide.t0 || Date.now()))); }

@@ -535,6 +535,17 @@ function viewHome() {
       <p class="vs-note">왼쪽은 이 한 문장만 말했을 때, 오른쪽은 같은 경험을 ${FORMS[p.reco].label} 네 칸으로 말했을 때 잰 예시 점수예요. 오른쪽 문장은 네 칸 중 ${FORMS[p.reco].slots[sc.ex.hi].title} 칸이에요.</p>
       <details class="vs-full" data-form="${p.reco}"><summary>${sc.good}점을 받은 네 칸 전체 보기</summary><p class="vs-form" style="margin:6px 0 10px;font-size:.92em">이 예시는 ${formTag(p.reco, 'sm')}으로 말했어요.</p><ol>${FORMS[p.reco].slots.map((x, i) => `<li class="${i === sc.ex.hi ? 'hi' : ''}"><b><span class="vs-code" style="display:inline-block;min-width:1.3em;font-weight:800;letter-spacing:.02em">${FORMS[p.reco].code[i]}</span>${x.title}</b>${esc(sc.ex.slots[i])}</li>`).join('')}</ol></details>`)}
   </div>
+  <section class="guide-more" aria-label="사용설명서 더 보기">
+    <p class="gm-h">1분 사용설명서 더 보기</p>
+      <div class="guide-pair">
+        <button class="btn cta guide-btn" data-act="openGuide" data-v="learn"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="#fff"><path d="M8 5l11 7-11 7z"/></svg></span><span class="gl"><small>② 익히기 편</small><b>보기</b></span></button>
+        <button class="btn cta guide-btn alt" data-act="openGuideListen" data-v="learn"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6"/></svg></span><span class="gl"><small>② 익히기 편</small><b>보고 듣기</b></span></button>
+      </div>
+      <div class="guide-pair">
+        <button class="btn cta guide-btn" data-act="openGuide" data-v="level"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="#fff"><path d="M8 5l11 7-11 7z"/></svg></span><span class="gl"><small>③ 단계 연습 편</small><b>보기</b></span></button>
+        <button class="btn cta guide-btn alt" data-act="openGuideListen" data-v="level"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6"/></svg></span><span class="gl"><small>③ 단계 연습 편</small><b>보고 듣기</b></span></button>
+      </div>
+  </section>
   <div class="cta-dock">
     <div class="guide-pair">
       <button class="btn cta guide-btn" data-act="openGuide"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="#fff"><path d="M8 5l11 7-11 7z"/></svg></span><span class="gl"><small>1분 사용설명서</small><b>보기</b></span></button>
