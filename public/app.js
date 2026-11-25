@@ -17,7 +17,7 @@ const S = {
   ui: {
     speak: { form: 'PREP', q: null, slots: ['', '', '', ''] },
     result: null, selScale: null,
-    drill: { form: 'CRIB', who: null, placed: [null, null, null, null], checked: false },
+    drill: { form: 'PREP', who: null, placed: [null, null, null, null], checked: false },
     report: { sel: null },
     qIndex: 0
   }
@@ -469,10 +469,10 @@ function fmono(k) { const f = { CRIB: 'crib', PREP: 'prep', AHWA: 'awha' }[k]; r
 function formTag(k, size) { const F = FORMS[k]; return `<span class="ftag ${size || ''}" data-form="${k}">${fmono(k)}${F.label}<small class="ftag-code" style="font-size:.7em;opacity:.6;margin-left:.35em;font-weight:600;letter-spacing:.02em">${F.code}</small></span>`; }
 const STEP = {
   forms: { no: 1, name: '짜기', sub: '삼지작법 고르기', icon: () => ICON_FORM,
-    body: '질문을 보고 그에 맞는 삼지작법 하나를 골라요. 여는·받치는·답하는 삼지작법 가운데 무엇으로 답할지 정하고, 네 칸에 떠오르는 단어만 메모하세요.',
+    body: '질문을 보고 그에 맞는 삼지작법 하나를 골라요. 받치는·답하는·여는 삼지작법 가운데 무엇으로 답할지 정하고, 네 칸에 떠오르는 단어만 메모하세요.',
     link: '' },
   speak: { no: 2, name: '말하기', sub: '삼지작법 익히기', icon: () => ICON_MIC,
-    body: '고른 삼지작법의 네 칸을 실제로 말하듯이 한 문장씩 채우며 익혀요. 마이크로 말해도, 직접 써도 돼요. 목표 시간은 여는 삼지작법 30초, 답하는 삼지작법 45초, 받치는 삼지작법 60초예요.',
+    body: '고른 삼지작법의 네 칸을 실제로 말하듯이 한 문장씩 채우며 익혀요. 마이크로 말해도, 직접 써도 돼요. 목표 시간은 받치는 삼지작법 60초, 답하는 삼지작법 45초, 여는 삼지작법 30초예요.',
     link: '' },
   scales: { no: 3, name: '재기', sub: '삼지작법 점검하기', icon: () => ICON_SCALE,
     body: '방금 말한 답을 다섯저울(BALANCE 5)로 점검해요. 저울마다 두 접시가 균형을 이루면 듣는 사람의 의심이 풀려요. 가장 약한 저울 하나만 고쳐서 다시 말하세요.',
@@ -525,7 +525,7 @@ function viewHome() {
         <li><a href="#speak"><b>2 말하기</b><span>삼지작법 익히기: 메모를 보며 소리 내어 말해요</span></a></li>
         <li><a href="#scales"><b>3 재기</b><span>삼지작법 점검하기: 다섯저울로 짜임을 점검해요</span></a></li>
       </ol>
-      <p class="body-tx small">한 질문으로 세 단계를 이어서 해요. 삼지작법은 ${formTag('CRIB', 'sm')} ${formTag('PREP', 'sm')} ${formTag('AHWA', 'sm')} 세 가지이고, 목표 시간은 여는 삼지작법 30초, 답하는 삼지작법 45초, 받치는 삼지작법 60초예요.</p>
+      <p class="body-tx small">한 질문으로 세 단계를 이어서 해요. 삼지작법은 ${formTag('PREP', 'sm')} ${formTag('AHWA', 'sm')} ${formTag('CRIB', 'sm')} 세 가지이고, 목표 시간은 받치는 삼지작법 60초, 답하는 삼지작법 45초, 여는 삼지작법 30초예요.</p>
       <p class="body-tx small"><b>삼지작법</b>은 불교 논리학(인명학)에서 말하는 종<small>(宗)</small> 주장·인<small>(因)</small> 이유·유<small>(喩)</small> 사례의 세 갈래예요. 이 세 갈래로 짠 네 칸을 먼저 말을 꺼낼 때, 주장할 때, 질문에 답할 때에 맞게 순서를 바꿔 써요. 답하는 삼지작법 <b>아하</b>(AWHA)는 행동(Action) → 이유(Why) → 방법(How) → 다시 행동(Action), 곧 종·인·유·종의 순서로 듣는 사람을 움직여요.</p>`)}
     ${row('use', '효과', `같은 경험, ${sc.bad}점이 ${sc.good}점으로`, `
       <div class="vs" aria-label="같은 경험, 다른 점수">
@@ -603,6 +603,7 @@ function resultBlock(r) {
     <div class="r-head">${formTag(r.form)}<span class="r-date">${d.getMonth() + 1}월 ${d.getDate()}일에 한 말</span></div>
     <p class="r-q">“${esc(r.q && r.q.q || '')}”</p>
     <div class="total"><img src="${CH(g[3])}" alt="" class="pop"><div><div class="n">${r.total}<small> / 100</small></div><div class="grade">${g[1]}</div><div class="small muted">${g[2]}</div></div></div>
+    ${r.stage && r.stage < 4 ? `<div class="stage-next"><p><b>${r.stage - 1}단계 ${FORMS[r.form].slots.slice(0, r.stage).map(x => x.key).join('')}</b>까지 쟀어요. 단계 연습이라 네 칸 점수는 낮게 나와도 괜찮아요.</p><button class="btn" data-act="stageUp">${r.stage}단계로: ${FORMS[r.form].slots.slice(0, r.stage + 1).map(x => x.key).join('')} 말하기</button></div>` : ''}
     <div class="split"><span class="sp-s"><b>${r.bonus}</b>/30 다섯저울</span><span>+</span><span class="sp-b"><b>${B.total}</b>/70 기본 논리 점수</span></div>
     ${better ? `<div class="better"><p><b>이 답은 ${better.slots.map(x => x.title).join('-')} 짜임이라 ${better.label}에 더 잘 맞아요.</b> 같은 네 칸을 ${better.label}으로 다시 재 볼 수 있어요.</p><button class="btn ghost sm" data-act="rescoreAs" data-v="${r.better}">${better.label}로 다시 재기</button></div>` : ''}
     <div class="rbox rb-s">
@@ -675,14 +676,16 @@ function viewSpeak() {
   const sp = S.ui.speak; qCard(); if (!sp.memo) sp.memo = ['', '', '', ''];
   if (!S.ui.formPicked) return `${stepper('speak')}${stepIntro('speak')}${qCard()}
     <div class="empty"><img class="bob" src="${CH('point_left')}" alt=""><h2>먼저 삼지작법을 골라 주세요</h2><p>1단계 짜기에서 이 질문에 맞는 삼지작법을 고르면, 여기서 그 순서대로 말해요.</p><button class="btn" data-act="go" data-v="forms">1단계 짜기로</button></div>`;
-  const F = FORMS[sp.form], mic = !!Dict.d;
+  const F = FORMS[sp.form], mic = !!Dict.d, st = stageOf(), keys = F.slots.map(x => x.key);
   return `
   ${stepper('speak')}
   ${stepIntro('speak')}
   ${qCard()}
   <section class="speakpad" data-form="${sp.form}">
     <div class="pad-head">${formTag(sp.form, 'lg')}<a class="textbtn" href="#forms">삼지작법 바꾸기</a></div>
-    ${F.slots.map((x, i) => `
+    <div class="stagebar" role="group" aria-label="연습 단계">${[2, 3, 4].map(n => `<button data-act="stage" data-v="${n}" aria-pressed="${st === n}"><b>${n - 1}단계</b><span>${keys.slice(0, n).join('')}</span></button>`).join('')}</div>
+    <p class="stage-tip">${st === 4 ? `네 칸을 모두 채워 ${F.target}초 안에 말해요.` : `${st - 1}단계: ${F.slots.slice(0, st).map(x => x.title).join(' + ')}만 말해요. 익숙해지면 다음 단계로 한 칸을 더해요.`}</p>
+    ${F.slots.slice(0, st).map((x, i) => `
     <div class="slot"><div class="k" style="${roleBg(sp.form, i)};color:#fff">${x.key}</div><div>
       <div class="between"><label class="t" for="ta${i}">${x.title}</label>${mic ? `<button class="mic" data-act="mic" data-i="${i}">🎤 말하기</button>` : ''}</div>
       ${sp.memo[i] ? `<div class="memo-line">메모: ${esc(sp.memo[i])}</div>` : ''}
@@ -697,11 +700,11 @@ function viewSpeak() {
 }
 function updateEstimate() {
   const el = $('#est'); if (!el) return;
-  const sp = S.ui.speak, F = FORMS[sp.form], sec = estSeconds(sp.slots), pct = clamp(sec / F.target * 100, 0, 100);
+  const sp = S.ui.speak, F = FORMS[sp.form], st = stageOf(), sl = sp.slots.map((x, i) => i < st ? x : ''), sec = estSeconds(sl), pct = clamp(sec / F.target * 100, 0, 100);
   el.innerHTML = `<span>예상 말하기 ${sec}초</span><span class="bar"><i class="${sec > F.target * 1.3 ? 'over' : ''}" style="width:${pct}%"></i></span><span>목표 ${F.target}초</span>`;
-  const n = sp.slots.filter(x => x.trim()).length, b = $('#scoreBtn'), h = $('#scoreHint');
+  const n = sl.filter(x => x.trim()).length, b = $('#scoreBtn'), h = $('#scoreHint');
   if (b) b.disabled = n < 2;
-  if (h) h.textContent = n < 2 ? `두 칸 이상 채우면 잴 수 있어요. 지금 ${n}칸` : (n < 4 ? `지금 ${n}칸. 네 칸을 다 채우면 기본 논리 점수가 올라가요.` : '');
+  if (h) h.textContent = n < 2 ? `두 칸 이상 채우면 잴 수 있어요. 지금 ${n}칸` : (n < st ? `지금 ${n}칸. ${st}칸을 다 채우면 ${st === 4 ? '기본 논리 점수가 올라가요.' : '이 단계를 끝낼 수 있어요.'}` : '');
 }
 
 function markNums(t) { return esc(t).replace(/\d[\d,.]*\s*(%|퍼센트|명|건|원|만\s?원|억|시간|분|초|일|주|개월|달|년|배|kg|점|개|회|곳|종)?/g, m => `<mark>${m}</mark>`); }
@@ -959,9 +962,10 @@ function startSpeak(q, form, slots) { newSession(q, { form, slots, picked: true,
 function readSlotsFromDom() { document.querySelectorAll('textarea[data-slot]').forEach(t => S.ui.speak.slots[+t.dataset.slot] = t.value); }
 function readEditorFromDom() { document.querySelectorAll('[data-field]').forEach(el => Editor.draft[el.dataset.field] = el.value); const p = $('#pasteTa'); if (p) Editor.pasted = p.value; }
 
-function saveScore(form, slots, q) {
+function stageOf() { const s = S.ui.speak.stage; return s >= 2 && s <= 4 ? s : 4; }
+function saveScore(form, slots, q, stage) {
   const r = scoreAnswer(form, slots, q);
-  const rec = { id: uidGen(), t: Date.now(), day: todayKey(), kind: 'speak', form, q, slots: slots.slice(), scores: r.scores, total: r.total, weakest: r.weakest, v: 2 };
+  const rec = { id: uidGen(), t: Date.now(), day: todayKey(), kind: 'speak', form, q, slots: slots.slice(), scores: r.scores, total: r.total, weakest: r.weakest, v: 2, stage: stage || 4 };
   S.history.push(rec); Store.save('history');
   S.ui.result = Object.assign({}, rec, r); S.ui.selScale = r.weakest || null;
   go('scales'); window.scrollTo(0, 0);
@@ -1001,10 +1005,13 @@ const ACT = {
   useCard: v => { const c = S.cards.find(x => x.id === v); S.ui.speak.slots = cardSlots(c, S.ui.speak.form); closeSheet(); Store.saveLocal(); render(); toast('카드 내용을 칸에 넣었어요. 말하듯이 다듬어 보세요.', 'point_right2'); },
   score: () => {
     readSlotsFromDom(); const sp = S.ui.speak;
-    if (sp.slots.filter(x => x.trim()).length < 2) return;
+    const st = stageOf(), sl = sp.slots.map((x, i) => i < st ? x : '');
+    if (sl.filter(x => x.trim()).length < 2) return;
     if (Dict.d && Dict.state === 'listening') Dict.d.stop().catch(() => { });
-    saveScore(sp.form, sp.slots, sp.q);
+    saveScore(sp.form, sl, sp.q, st);
   },
+  stage: v => { readSlotsFromDom(); S.ui.speak.stage = clamp(+v, 2, 4); render(); },
+  stageUp: () => { const r = S.ui.result; if (!r) return; S.ui.speak = Object.assign({}, S.ui.speak, { form: r.form, q: r.q, slots: r.slots.slice(), stage: Math.min(4, (r.stage || 4) + 1) }); S.ui.formPicked = true; go('speak'); window.scrollTo(0, 0); },
   rescoreAs: v => { const r = S.ui.result; if (!r) return; S.ui.speak = Object.assign({}, S.ui.speak, { form: v, q: r.q, slots: r.slots.slice() }); saveScore(v, r.slots, r.q); },
   selScale: v => { S.ui.selScale = S.ui.selScale === v ? null : v; render(); },
   retry: () => { const r = S.ui.result; S.ui.speak = Object.assign({}, S.ui.speak, { form: r.form, q: r.q, slots: r.slots.slice() }); S.ui.formPicked = true; go('speak'); window.scrollTo(0, 0); },
@@ -1100,7 +1107,7 @@ function render() {
     'study-crib': () => (window.viewStudy ? window.viewStudy('crib') : ''), 'study-prep': () => (window.viewStudy ? window.viewStudy('prep') : ''), 'study-awha': () => (window.viewStudy ? window.viewStudy('awha') : ''), balance: () => (window.viewBalance ? window.viewBalance() : '') };
   const fn = views[route] || viewHome;
   if (route !== S.ui.lastRoute && (route === 'forms' || route === 'learn')) S.ui.formOpen = null;
-  if (route !== S.ui.lastRoute && route === 'drill') { const D = S.ui.drill; if (D.openForm) { D.form = D.openForm; D.openForm = null; } else if (!D.checked && D.placed.every(x => x == null)) { D.form = 'CRIB'; D.target = 0; D.introDone = false; } }
+  if (route !== S.ui.lastRoute && route === 'drill') { const D = S.ui.drill; if (D.openForm) { D.form = D.openForm; D.openForm = null; } else if (!D.checked && D.placed.every(x => x == null)) { D.form = 'PREP'; D.target = 0; D.introDone = false; } }
   S.ui.lastRoute = route;
   $('#view').innerHTML = fn();
   renderNav(route in views ? route : 'home');

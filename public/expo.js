@@ -113,7 +113,7 @@
 
   // ---------- A9 유래 화면 ----------
   window.viewOrigin = function () {
-    var rows = [['CRIB', '여는 삼지작법', '먼저 말을 꺼낼 때'], ['PREP', '받치는 삼지작법', '주장할 때'], ['AHWA', '답하는 삼지작법', '질문을 받고 행동으로 답할 때']];
+    var rows = [['PREP', '받치는 삼지작법', '주장할 때'], ['AHWA', '답하는 삼지작법', '질문을 받고 행동으로 답할 때'], ['CRIB', '여는 삼지작법', '먼저 말을 꺼낼 때']];
     return pageHead('삼지작법의 유래', '진나가 정리하고 삼장법사가 토론에서 쓴 논리') +
       '<section class="card"><h2 class="sec" style="margin-top:0">1,500년 전 스님들의 토론법</h2>' +
       '<p class="body-tx">삼지작법(三支作法)은 5~6세기 인도의 불교 논리학자 <b>진나(陳那, 디그나가)</b>가 정리한 <b>인명학(因明學)</b>의 논증 형식이에요. 주장을 세 갈래로 받쳐 상대를 설득해요.</p>' +
@@ -123,7 +123,7 @@
       '<p class="body-tx">641~643년 무렵 북인도의 하르샤왕(계일왕)이 수도 <b>곡녀성(카냐쿠브자)</b>에서 큰 토론회를 열었어요. 왕 18명과 스님 3,000명, 학자 수천 명이 모였어요. 현장 스님이 종·인·유로 짠 논증 <b>진유식량(眞唯識量)</b>을 내걸자 18일 동안 아무도 꺾지 못했고, 현장 스님은 토론의 승자가 되었어요.</p>' +
       '<p class="body-tx">진나가 정리한 삼지작법을, 약 1,400년 전 삼장법사가 실제 토론에서 써서 이긴 거예요. 현장 스님은 인명학 책을 중국으로 가져와 번역했고, 그 덕분에 동아시아에 삼지작법이 전해졌어요.</p></section>' +
       '<section class="card"><h2 class="sec" style="margin-top:0">현대 말하기에 맞게 응용했어요</h2>' +
-      '<p class="body-tx">여는·받치는·답하는 삼지작법은 진나의 삼지작법을 <b>현대 말하기에 맞게 응용한 것</b>이에요. 종·인·유로 짠 네 칸을 상황에 맞게 순서를 바꿔 써요.</p>' +
+      '<p class="body-tx">받치는·답하는·여는 삼지작법은 진나의 삼지작법을 <b>현대 말하기에 맞게 응용한 것</b>이에요. 종·인·유로 짠 네 칸을 상황에 맞게 순서를 바꿔 써요.</p>' +
       rows.map(function (r) {
         var F = FORMS[r[0]];
         return '<div style="display:flex;gap:14px;align-items:center;margin:12px 0"><span style="flex:0 0 60px">' + manji(r[0], 60) + '</span>' + '<div><b>' + r[1] + ' · ' + F.code + ' <small style="font-weight:600;opacity:.65;font-size:.78em">' + F.pron + '</small></b><div class="small muted">' + r[2] + ' · ' +
@@ -135,7 +135,7 @@
       '<li>혜립(慧立)·언종(彦悰), 『대자은사삼장법사전(大慈恩寺三藏法師傳)』 권5. 곡녀성 토론회와 18일 동안 반론이 없었던 일.</li>' +
       '<li>규기(窺基), 『인명입정리론소(因明入正理論疏, 因明大疏)』. 현장의 진유식량(眞唯識量) 기록.</li>' +
       '<li>현장 구술·변기(辯機) 편, 『대당서역기(大唐西域記)』(646). 나란다와 곡녀성.</li></ul>' +
-      '<p class="small muted" style="margin:10px 0 0">연도와 인원수는 위 전기 기록을 따랐어요. 여는·받치는·답하는 삼지작법은 이 논증 형식을 현대 말하기에 맞게 응용한 것으로, 고전 원형과 같다는 뜻은 아니에요.</p></section>';
+      '<p class="small muted" style="margin:10px 0 0">연도와 인원수는 위 전기 기록을 따랐어요. 받치는·답하는·여는 삼지작법은 이 논증 형식을 현대 말하기에 맞게 응용한 것으로, 고전 원형과 같다는 뜻은 아니에요.</p></section>';
   };
 
   // ---------- 청소년판 소개 (초·중·고등학생) ----------
@@ -235,7 +235,7 @@
   }
   function stepStart() {
     return '<div class="bx" style="text-align:center"><p class="big" style="margin-bottom:4px">생각과 글이 사라지는 시대,</p><h1 id="bTitle">내 말로 증명하라!</h1><p class="big">1,400년 전 삼장법사의 불교논리, 삼지작법<br><b>30초 안에 내 생각을 증명해 보세요</b></p>' +
-      '<div style="margin:30px auto;display:flex;gap:22px;justify-content:center">' + manji('CRIB', 110, COL.navy) + manji('PREP', 110, COL.navy) + manji('AHWA', 110, COL.navy) + '</div>' +
+      '<div style="margin:30px auto;display:flex;gap:22px;justify-content:center">' + manji('PREP', 110, COL.navy) + manji('AHWA', 110, COL.navy) + manji('CRIB', 110, COL.navy) + '</div>' +
       '<p class="big">체험하시는 분은 누구인가요?</p><div class="brow">' +
       [['student', '학생', '초·중·고·대학생'], ['teacher', '선생님', '학교·학원·사찰'], ['general', '일반', '그 밖의 모든 분']].map(function (w) { return '<button class="bbtn" data-b="who" data-v="' + w[0] + '">' + w[1] + '<br><small style="font-weight:500;font-size:.6em">' + w[2] + '</small></button>'; }).join('') + '</div>' +
       '<p class="small muted" style="margin-top:22px">이름·연락처·목소리와 답 문장은 받지도, 저장하지도 않아요.</p></div>';
@@ -249,7 +249,7 @@
     var it = B.item;
     return '<div class="bx"><p class="small muted">' + e(it.id + ' · ' + it.who + '의 질문') + '</p><div class="bq">“' + e(it.q) + '”</div>' +
       '<p class="big">어떤 삼지작법으로 답할까요?</p><div class="brow">' +
-      ['CRIB', 'PREP', 'AHWA'].map(function (k) { var F = FORMS[k]; return '<div class="bform" data-b="form" data-v="' + k + '" role="button" tabindex="0">' + manji(k, 110, COL.navy) + '<b>' + F.label + '</b><small>' + F.when + '</small></div>'; }).join('') + '</div></div>';
+      ['PREP', 'AHWA', 'CRIB'].map(function (k) { var F = FORMS[k]; return '<div class="bform" data-b="form" data-v="' + k + '" role="button" tabindex="0">' + manji(k, 110, COL.navy) + '<b>' + F.label + '</b><small>' + F.when + '</small></div>'; }).join('') + '</div></div>';
   }
   function stepSpeak() {
     var F = FORMS[B.form];

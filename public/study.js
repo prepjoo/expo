@@ -97,9 +97,9 @@
 
   // 宗 비교: 같은 주제(AI 시대의 과제)를 세 삼지작법의 宗으로 말하면
   var JONG = [
-    ['CRIB', 'I 아이디어', '해결책을 제안', '손실(R) 다음, 셋째 칸', '"AI를 금지하는 대신, 쓴 곳을 표시하고 내 말로 고치자고 제안합니다."', '~하자고 제안합니다'],
     ['PREP', 'P 결론', '옳고 그름을 판단·주장', '맨 앞, 그리고 맨 끝(P′)', '"AI가 쓴 과제를 그대로 내면 안 됩니다."', '~입니다 / ~해야 합니다'],
-    ['AHWA', 'A 행동', '상대가 할 일을 권함', '맨 앞, 그리고 맨 끝(A′)', '"AI 초안은 꼭 내 말로 고쳐 쓰세요."', '~하세요']
+    ['AHWA', 'A 행동', '상대가 할 일을 권함', '맨 앞, 그리고 맨 끝(A′)', '"AI 초안은 꼭 내 말로 고쳐 쓰세요."', '~하세요'],
+    ['CRIB', 'I 아이디어', '해결책을 제안', '손실(R) 다음, 셋째 칸', '"AI를 금지하는 대신, 쓴 곳을 표시하고 내 말로 고치자고 제안합니다."', '~하자고 제안합니다']
   ];
 
   var badge = function (role, key) { return '<span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--' + role + ');color:#fff;font-weight:800;flex:0 0 28px">' + key + '</span>'; };
@@ -117,7 +117,7 @@
     var head = pageHead('삼지작법', '종·인·유 세 칸을 상황에 맞는 순서로 쓰는 세 가지 말하기 틀이에요.') + tabs +
       '<h2 class="lp-h">' + F.label + ' · ' + F.code + '</h2><p class="lp-sub">' + F.pron + ' · ' + d.en.join(' → ') + '</p>';
     var power = '<section class="card lp-power"><p class="lp-pw"><span>AI 시대 역량</span><b>' + d.power[0] + '</b></p><p class="lp-pd">' + d.power[1] + (d.ai ? ' ' + d.ai : '') + '</p>' +
-      '<p class="lp-loop">' + Object.keys(FORMS).map(function (x) { return '<span class="' + (x === k ? 'on' : '') + '">' + D[x].power[0] + '</span>'; }).join('<i>→</i>') + '</p></section>';
+      '<p class="lp-loop"><b>문제를 풀 때</b> ' + ['CRIB', 'PREP', 'AHWA'].map(function (x) { return '<span class="' + (x === k ? 'on' : '') + '">' + D[x].power[0] + '</span>'; }).join('<i>→</i>') + '</p></section>';
     var intro = power + '<section class="card" style="display:flex;gap:16px;align-items:center"><img src="' + ICON[k] + '" width="96" height="96" alt="' + F.code + '" style="flex:0 0 96px">' +
       '<div><p class="body-tx" style="margin:0 0 6px"><b>' + esc(d.def) + '</b></p><p class="small muted" style="margin:0">' + esc(d.when) + ' · 목표 ' + F.target + '초</p></div></section>';
     var table = card('네 칸', d.rows.map(function (r, i) {
