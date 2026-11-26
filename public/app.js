@@ -500,42 +500,30 @@ function viewHome() {
     </section>`;
   return `
   <section class="hero">
-    <h1 class="display d3"><span class="h-pre">생각과 글이 사라지는 시대,</span>내 말로 증명하라!</h1>
+    <h1 class="display d3"><span class="h-pre">AI 시대에서 살아남기,</span>내 생각을 말로 증명하라!</h1>
     <img class="hero-char bob" src="${CH('point_left')}" alt="">
     <ul class="slogan slist">
-      <li>자료 정리는 AI가 해요. 이제는 <b>말로 증명</b>하는 힘이에요.</li>
-      <li>첫 <b>30초</b>에 내 생각을 증명해 보세요.</li>
-      <li>세 가지 <b>삼지작법</b>이면 “그래서요?” 같은 압박 질문에도 흔들리지 않아요.</li>
+      <li>생각과 글이 사라지는 AI 시대,</li>
+      <li>이제는 <b>문제 정의</b>와 <b>말로 증명</b>하는 힘이 필요해요.</li>
+      <li>세 가지 <b>삼지작법</b>으로 <b>30초</b>에 내 생각을 증명해 보세요.</li>
+      <li>세 가지 삼지작법이면 “그래서요?” 같은 압박 질문에도 흔들리지 않아요.</li>
     </ul>
   </section>
   <div class="ilist">
-    <div class="irow who ${chosen ? '' : 'need'}">
-      <span class="irow-btn as-label"><span class="tag">누가</span><span class="irow-t">연습하는 사람</span></span>
-      ${whoSelect('homeWho')}
-    </div>
-    ${chosen ? `<div class="irow who">
-      <label class="irow-btn as-label" for="homeArea"><span class="tag">영역</span><span class="irow-t">연습할 영역</span></label>
-      ${areaSelect('homeArea')}
-    </div>` : ''}
-    ${row('why', '철학', 'AI가 자료를 정리해도, 증명은 내 몫입니다', `
-      <p class="body-tx">자료를 모으고 정리하는 일은 이제 AI가 대신해 줘요. 하지만 <b>무엇을 주장하고 왜 그렇게 판단했는지</b>는 대신 증명해 주지 못해요. 나를 평가하는 사람 앞에서는 내 생각을 내 말로 증명해야 해요. 그래서 이 앱은 자료 정리 잘하는 사람보다 <b>생각을 증명하는 사람</b>이 되도록 돕는 것을 목표로 해요.</p>
-      <p class="body-tx">AI는 문제를 찾고 답도 내 줘요. 그 답을 그대로 믿지 말고 <b>주장·이유·사례로 따져 보는 것</b>까지가 이 앱에서 기르는 힘이에요.</p>`)}
-    ${row('power', '힘', 'AI 시대에 기르는 세 가지 힘', `
-      <p class="body-tx">AI도 문제를 찾고 답을 내요. 그중 무엇을 붙잡을지 <b>고르고, 따지고, 책임지는</b> 건 내 몫이에요.</p>
-      <ol class="flow3">
+    ${row('why', '철학', 'AI 시대에 살아남는 세 가지 힘', `
+      <p class="body-tx">자료 정리도, 문제 찾기도, 답 내기도 이제 AI가 해요. 하지만 그중 무엇을 붙잡을지 <b>고르고</b>, 그 근거가 맞는지 <b>따지고</b>, 내 말로 <b>증명하고 책임지는</b> 일은 내 몫이에요. 이 앱은 그 힘을 세 가지로 길러요.</p>
+      <ol class="flow3 pw3">
         <li><a href="#study-crib"><b>문제를 정의하는 힘</b><span>${formTag('CRIB', 'sm')} 무엇이 문제이고 누가 무엇을 잃는지 먼저 보여 줘요</span></a></li>
         <li><a href="#study-prep"><b>생각을 증명하는 힘</b><span>${formTag('PREP', 'sm')} 내 주장을 이유와 사례로 증명해요</span></a></li>
         <li><a href="#study-awha"><b>움직임을 만드는 힘</b><span>${formTag('AHWA', 'sm')} 할 일을 먼저 주고 행동을 이끌어요</span></a></li>
       </ol>
       <p class="body-tx small">문제를 풀 때는 <b>정의 → 증명 → 움직임</b> 순서로 쓰고, 배울 때는 가장 쉬운 받치는 삼지작법(PREP)부터 시작해요.</p>`)}
     ${row('what', '방법', '짜고, 말하고, 잽니다', `
-      <ol class="flow3">
-        <li><a href="#forms"><b>1 짜기</b><span>삼지작법 고르기: 질문에 맞는 삼지작법을 골라 메모해요</span></a></li>
-        <li><a href="#speak"><b>2 말하기</b><span>삼지작법 익히기: 메모를 보며 소리 내어 말해요</span></a></li>
-        <li><a href="#scales"><b>3 재기</b><span>삼지작법 점검하기: 다섯저울로 짜임을 점검해요</span></a></li>
-      </ol>
-      <p class="body-tx small">한 질문으로 세 단계를 이어서 해요. 삼지작법은 ${formTag('PREP', 'sm')} ${formTag('AHWA', 'sm')} ${formTag('CRIB', 'sm')} 세 가지이고, 목표 시간은 받치는 삼지작법 60초, 답하는 삼지작법 45초, 여는 삼지작법 30초예요.</p>
-      <p class="body-tx small"><b>삼지작법</b>은 불교 논리학(인명학)에서 말하는 종<small>(宗)</small> 주장·인<small>(因)</small> 이유·유<small>(喩)</small> 사례의 세 갈래예요. 이 세 갈래로 짠 네 칸을 먼저 말을 꺼낼 때, 주장할 때, 질문에 답할 때에 맞게 순서를 바꿔 써요. 답하는 삼지작법 <b>아하</b>(AWHA)는 행동(Action) → 이유(Why) → 방법(How) → 다시 행동(Action), 곧 종·인·유·종의 순서로 듣는 사람을 움직여요.</p>`)}
+      <ol class="flow3 pw3">
+        <li><a href="#forms"><b>1 짜기 · 삼지작법 고르기</b><span>질문을 고르면 앱이 어울리는 삼지작법을 추천해요. 네 칸에 떠오르는 단어만 짧게 메모하고, 경험카드에 모아 둔 경험을 불러와도 돼요.</span></a></li>
+        <li><a href="#speak"><b>2 말하기 · 소리 내어 말하기</b><span>메모를 보며 칸마다 🎤로 말하거나 직접 써요. 처음엔 두 칸부터 한 칸씩 늘려요. 목표는 받치는 60초, 답하는 45초, 여는 30초예요.</span></a></li>
+        <li><a href="#scales"><b>3 재기 · 다섯저울로 점검</b><span>기본 논리 70점과 다섯저울 30점으로 짜임을 재요. 가장 약한 저울 하나만 연습하고, 한 문장을 고쳐 다시 재면 점수가 어떻게 바뀌는지 보여요.</span></a></li>
+      </ol>`)}
     ${row('use', '효과', `같은 경험, ${sc.bad}점이 ${sc.good}점으로`, `
       <div class="vs" aria-label="같은 경험, 다른 점수">
         <div class="vs-item bad"><span class="vs-score">${sc.bad}<small>/100</small></span><p>“${esc(p.bad)}”</p><span class="vs-tag">${esc(p.badTag)}</span></div>
@@ -1125,7 +1113,7 @@ function render() {
   S.ui.lastRoute = route;
   $('#view').innerHTML = fn();
   renderNav(route in views ? route : 'home');
-  const wl = $('#whoLine'); if (wl) { const chosen = levelChosen(), lab = LEVELS[levelId()].label + ' · ' + AREAS[areaId()].label; wl.innerHTML = chosen ? `<a href="#home" data-act="focusWho" aria-label="연습 대상: ${esc(lab)}">${esc(lab)}</a>` : '<a href="#home" class="need" data-act="focusWho">대상 고르기</a>'; }
+  const wl = $('#whoLine'); if (wl) { const chosen = levelChosen(), lab = LEVELS[levelId()].label + ' · ' + AREAS[areaId()].label; wl.innerHTML = `<span>${esc(LEVELS[levelId()].label)} · </span><span class="hdr-area-w"><select class="area-select hdr-area" aria-label="연습할 영역: ${esc(AREAS[areaId()].label)}">${LEVEL_AREAS[levelId()].map(k => `<option value="${k}" ${k === areaId() ? 'selected' : ''}>${esc(AREAS[k].label)}</option>`).join('')}</select></span>`; }
   document.body.dataset.route = route; document.body.dataset.group = /^study-/.test(route) || ['drill', 'scaleinfo', 'balance'].includes(route) ? 'learn' : ''; document.body.dataset.who = whoId(); applyFont();
   if (route === 'speak') { updateEstimate(); refreshMics(); }
   if (window.EXPO_AFTER_RENDER) window.EXPO_AFTER_RENDER();

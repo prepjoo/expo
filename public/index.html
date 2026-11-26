@@ -603,7 +603,8 @@ details.more p{margin:8px 0 0;font-size:14px;line-height:1.65;color:var(--ink2)}
 .hdr-r{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
 .hdr-r .who-line{margin:0!important;font-size:12.5px;font-weight:700;white-space:nowrap;text-align:right;color:#8E1B1B}
 .hdr-r .who-line a.need{color:#8E1B1B;text-decoration:underline;text-underline-offset:3px}
-@media (max-width:370px){.tagline{font-size:12px;margin-left:0}}
+@media (max-width:380px){.tagline{font-size:12px;margin-left:0}}
+@media (min-width:381px) and (max-width:420px){.tagline{font-size:12.5px;margin-left:28px}}
 .who-line a{color:inherit;text-decoration:none}.who-line u{text-underline-offset:3px}
 
 /* ===== v5: 단계 색(연장미·연하늘·연초록), 삼지작법 단일 색, 새 네 글자 아이콘 ===== */
@@ -899,6 +900,14 @@ img[src^="char/"]{aspect-ratio:305/320;object-fit:contain}
 .guide-tri .pl{flex:none;width:30px;height:30px}.guide-tri .gl{align-items:center;text-align:center}.guide-tri .gl small{font-size:11px}.guide-tri .gl b{font-size:14.5px;line-height:1.25;word-break:keep-all}
 .g-typing{font-size:34px!important;line-height:1.35!important;letter-spacing:-.6px!important;min-height:3.05em!important;word-break:keep-all}
 #ir-power .flow3 a{display:flex;flex-direction:column;align-items:flex-start;gap:4px}#ir-power .flow3 a b{width:auto;min-width:0;white-space:nowrap}#ir-power .flow3 a>span{display:block;width:100%}
+.hdr-area-w{position:relative;display:inline-flex;align-items:center}
+.hdr-area{appearance:none;-webkit-appearance:none;border:1px solid #E7C9C3;background:#FFF6F4;color:#8E1B1B;font:inherit;font-weight:700;font-size:11.5px;padding:1px 18px 1px 7px;border-radius:999px;max-width:110px;cursor:pointer}
+.hdr-area-w::after{content:"";position:absolute;right:8px;top:50%;width:5px;height:5px;border-right:1.5px solid #8E1B1B;border-bottom:1.5px solid #8E1B1B;transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.hdr-r .who-line{display:flex;align-items:center;justify-content:flex-end;font-size:11.5px!important;gap:3px}.hdr-r{min-width:0}
+#ir-why .pw3 a,#ir-what .pw3 a{display:flex;flex-direction:column;align-items:flex-start;gap:4px}#ir-why .pw3 a b,#ir-what .pw3 a b{width:auto;min-width:0;white-space:nowrap}#ir-why .pw3 a>span,#ir-what .pw3 a>span{display:block;width:100%}
+.hero .display.d3{font-size:clamp(26px,8.2vw,40px)}
+@media (max-width:420px){.hero .display.d3{font-size:6.3vw}}
+@media (max-width:345px){.hdr-r .who-line>span:first-child{display:none}}
 </style>
 <script>
 /* 휴대폰 글자 크기 설정(텍스트 확대)이 크면 화면이 깨지지 않도록, 확대 효과를 최대 1.15배까지만 남기고 화면 전체 배율을 맞춘다. */
@@ -947,7 +956,7 @@ img[src^="char/"]{aspect-ratio:305/320;object-fit:contain}
 <script src="persona.js?v=20261125-d1"></script>
 <script src="content.js?v=20261125-b1"></script>
 <script src="adult.js?v=20261126-h1"></script>
-<script src="app.js?v=20261126-l3"></script>
+<script src="app.js?v=20261126-m2"></script>
 <script src="guide.js?v=20261126-k2"></script>
 <script src="qrcode.js"></script>
 <script src="expo.js?v=20261126-h2"></script>
