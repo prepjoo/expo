@@ -126,7 +126,7 @@ function learnScenes() {
       <h2 class="g-h">원리 읽기</h2>
       ${GA(.4, order.map((f, n) => `<span class="${n === 0 ? 'on' : ''}">${FORMS[f].label.replace(' 삼지작법', '')}</span>`).join(''), 'g-tabs')}
       ${GA(1.2, [0, 1, 2, 3].map(i => gSlot('PREP', i)).join(''), 'g-slots4')}
-      ${GA(2.2, '<span class="c1">宗 빨강</span><span class="c2">因 파랑</span><span class="c3">喻 초록</span>', 'g-legend')}
+      ${GA(2.2, '<span class="c1">宗 빨강</span><span class="c2">因 파랑</span><span class="c3">喩 초록</span>', 'g-legend')}
       ${GA(3.2, ['왜 이 순서일까요?', '한 묶음 예시', '이것만은 지켜요'].map((t, n) => `<p class="${n === 0 ? 'open' : ''}">${t}<i>${n === 0 ? '−' : '+'}</i></p>`).join(''), 'g-fold')}
       <p class="g-cap sm" style="--d:4s">맨 위 탭으로 세 기법을 오가고, 제목을 누르면 설명이 펼쳐져요.</p>` },
     { k: 'l-drill', c: '#22356B', html: `

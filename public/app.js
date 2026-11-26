@@ -462,7 +462,7 @@ function formGrid(k) {
   const L = FORMS[k].slots.map(x => x.key), P = [[13, 17.6], [35, 17.6], [13, 39.6], [35, 39.6]];
   return `<svg class="fgrid" viewBox="0 0 48 48" aria-hidden="true"><rect class="t" x="1" y="1" width="46" height="46" rx="13"/><path class="d" d="M24 7v34M7 24h34"/>${L.map((c, i) => `<text class="l" x="${P[i][0]}" y="${P[i][1]}" text-anchor="middle">${c}</text>`).join('')}</svg>`;
 }
-// 종인유 고유색: 칸마다 종(宗)·인(因)·유(喻) 중 무엇인지
+// 종인유 고유색: 칸마다 종(宗)·인(因)·유(喩) 중 무엇인지
 const ROLE_OF = { CRIB: ['yu', 'in', 'jong', 'in'], PREP: ['jong', 'in', 'yu', 'jong'], AHWA: ['jong', 'in', 'in', 'jong'] };
 const roleBg = (k, i) => `background:var(--${(ROLE_OF[k] || [])[i] || 'ink3'})`;
 function fmono(k) { const f = { CRIB: 'crib', PREP: 'prep', AHWA: 'awha' }[k]; return `<span class="ficon" aria-hidden="true"><img src="icons/${f}.png?v=3" alt="" style="width:100%;height:100%;display:block"></span>`; }
@@ -527,7 +527,7 @@ function viewHome() {
         <li><a href="#scales"><b>3 재기</b><span>삼지작법 점검하기: 다섯저울로 짜임을 점검해요</span></a></li>
       </ol>
       <p class="body-tx small">한 질문으로 세 단계를 이어서 해요. 삼지작법은 ${formTag('PREP', 'sm')} ${formTag('AHWA', 'sm')} ${formTag('CRIB', 'sm')} 세 가지이고, 목표 시간은 받치는 삼지작법 60초, 답하는 삼지작법 45초, 여는 삼지작법 30초예요.</p>
-      <p class="body-tx small"><b>삼지작법</b>은 불교 논리학(인명학)에서 말하는 종<small>(宗)</small> 주장·인<small>(因)</small> 이유·유<small>(喻)</small> 사례의 세 갈래예요. 이 세 갈래로 짠 네 칸을 먼저 말을 꺼낼 때, 주장할 때, 질문에 답할 때에 맞게 순서를 바꿔 써요. 답하는 삼지작법 <b>아하</b>(AWHA)는 행동(Action) → 이유(Why) → 방법(How) → 다시 행동(Action), 곧 종·인·유·종의 순서로 듣는 사람을 움직여요.</p>`)}
+      <p class="body-tx small"><b>삼지작법</b>은 불교 논리학(인명학)에서 말하는 종<small>(宗)</small> 주장·인<small>(因)</small> 이유·유<small>(喩)</small> 사례의 세 갈래예요. 이 세 갈래로 짠 네 칸을 먼저 말을 꺼낼 때, 주장할 때, 질문에 답할 때에 맞게 순서를 바꿔 써요. 답하는 삼지작법 <b>아하</b>(AWHA)는 행동(Action) → 이유(Why) → 방법(How) → 다시 행동(Action), 곧 종·인·유·종의 순서로 듣는 사람을 움직여요.</p>`)}
     ${row('use', '효과', `같은 경험, ${sc.bad}점이 ${sc.good}점으로`, `
       <div class="vs" aria-label="같은 경험, 다른 점수">
         <div class="vs-item bad"><span class="vs-score">${sc.bad}<small>/100</small></span><p>“${esc(p.bad)}”</p><span class="vs-tag">${esc(p.badTag)}</span></div>
