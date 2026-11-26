@@ -520,6 +520,14 @@ function viewHome() {
     ${row('why', '철학', 'AI가 자료를 정리해도, 증명은 내 몫입니다', `
       <p class="body-tx">자료를 모으고 정리하는 일은 이제 AI가 대신해 줘요. 하지만 <b>무엇을 주장하고 왜 그렇게 판단했는지</b>는 대신 증명해 주지 못해요. 나를 평가하는 사람 앞에서는 내 생각을 내 말로 증명해야 해요. 그래서 이 앱은 자료 정리 잘하는 사람보다 <b>생각을 증명하는 사람</b>이 되도록 돕는 것을 목표로 해요.</p>
       <p class="body-tx">AI는 문제를 찾고 답도 내 줘요. 그 답을 그대로 믿지 말고 <b>주장·이유·사례로 따져 보는 것</b>까지가 이 앱에서 기르는 힘이에요.</p>`)}
+    ${row('power', '힘', 'AI 시대에 기르는 세 가지 힘', `
+      <p class="body-tx">AI도 문제를 찾고 답을 내요. 그중 무엇을 붙잡을지 <b>고르고, 따지고, 책임지는</b> 건 내 몫이에요.</p>
+      <ol class="flow3">
+        <li><a href="#study-crib"><b>문제를 정의하는 힘</b><span>${formTag('CRIB', 'sm')} 무엇이 문제이고 누가 무엇을 잃는지 먼저 보여 줘요</span></a></li>
+        <li><a href="#study-prep"><b>생각을 증명하는 힘</b><span>${formTag('PREP', 'sm')} 내 주장을 이유와 사례로 증명해요</span></a></li>
+        <li><a href="#study-awha"><b>움직임을 만드는 힘</b><span>${formTag('AHWA', 'sm')} 할 일을 먼저 주고 행동을 이끌어요</span></a></li>
+      </ol>
+      <p class="body-tx small">문제를 풀 때는 <b>정의 → 증명 → 움직임</b> 순서로 쓰고, 배울 때는 가장 쉬운 받치는 삼지작법(PREP)부터 시작해요.</p>`)}
     ${row('what', '방법', '짜고, 말하고, 잽니다', `
       <ol class="flow3">
         <li><a href="#forms"><b>1 짜기</b><span>삼지작법 고르기: 질문에 맞는 삼지작법을 골라 메모해요</span></a></li>

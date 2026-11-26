@@ -135,6 +135,10 @@
       (k !== 'CRIB' ? '<p class="small" style="margin:10px 0 0"><b>같은 뜻, 다른 문장</b> · 첫 ' + F.slots[0].key + '은 지금의 ' + (k === 'PREP' ? '주장' : '행동 제안') + ', 마지막 ' + F.slots[3].key + '은 ' + (k === 'PREP' ? '요약과 앞으로 할 일' : '시점과 첫걸음을 붙인 다시 촉구') + '예요. 같은 문장을 되풀이하면 앱의 \'끝맺음\' 점수가 낮아져요.</p>' : ''));
     var rules = fold('rules', '이것만은 지켜요', '<ol class="body-tx" style="padding-left:1.2em;margin:0">' + d.rules.map(function (r) { return '<li style="margin:6px 0">' + esc(r) + '</li>'; }).join('') + '</ol>' +
       '<p class="note"><b>흔한 실수</b> ' + esc(d.mistake) + '</p>');
+    var two = k !== 'CRIB' ? '' : fold('two', '이름이 둘인 까닭', '<p class="body-tx" style="margin:0 0 10px">여는 삼지작법은 <b>문제를 정의하는 삼지작법</b>이기도 해요. 하는 일이 둘이기 때문이에요.</p>' +
+      '<table style="width:100%;border-collapse:collapse;font-size:.9em"><tr style="color:var(--muted)"><th style="padding:4px"></th><th style="text-align:left;padding:4px">문제를 정의할 때</th><th style="text-align:left;padding:4px">말을 열 때</th></tr>' +
+      [['언제', '말하기 전, 혼자 생각을 정리할 때', '아무도 묻지 않았는데 내가 먼저 꺼낼 때'], ['누구에게', '나에게 묻기', '듣는 사람에게 말하기'], ['중심 칸', 'C·R: 무엇이 문제이고 누가 무엇을 잃나', '네 칸 전체: 사실로 귀를 열고 이익으로 움직이게'], ['끝나면', '붙잡을 문제 하나가 정해져요', '듣는 사람이 먼저 “그럼 어떻게 해?”라고 물어요']].map(function (r) { return '<tr style="border-top:1px solid var(--line)"><td style="padding:6px 4px;font-weight:700;white-space:nowrap;vertical-align:top">' + r[0] + '</td><td style="padding:6px 4px;vertical-align:top">' + r[1] + '</td><td style="padding:6px 4px;vertical-align:top">' + r[2] + '</td></tr>'; }).join('') + '</table>' +
+      '<p class="small" style="margin:10px 0 0">먼저 C·R로 문제를 정의하고(생각), 그 C·R을 그대로 첫 두 칸 삼아 말을 열어요(말하기). 문제를 제대로 정의해 두지 않으면 말을 열 수도 없어요.</p>');
     var pre = k !== 'CRIB' ? '' : fold('pre', '꺼내기 전에 문제부터 따져 보기', '<p class="body-tx" style="margin:0 0 8px">여는 삼지작법은 문제를 남에게 <b>꺼내는</b> 틀이에요. 꺼내기 전에 그게 정말 문제인지 혼자 따져 볼 때는 <b>받치는 삼지작법(PREP)</b>을 쓰세요.</p>' +
       [['P', 'jong', '무엇이 문제인가', '지난 과제에서 AI 문장을 출처 없이 쓴 것이 문제다.'], ['R', 'in', '왜 문제인가', '확인하지 않은 문장 때문에 점수와 신뢰를 함께 잃기 때문이다.'], ['E', 'yu', '사례와 숫자', '우리 조 과제에서 출처 없는 문장 12곳이 걸려 10점이 깎였다.']].map(function (x) { return '<div style="display:flex;gap:10px;align-items:flex-start;margin:8px 0">' + badge(x[1], x[0]) + '<div class="body-tx" style="margin:0"><b>' + x[2] + '</b> · ' + x[3] + '</div></div>'; }).join('') +
       '<p class="small" style="margin:10px 0">이렇게 따져 본 P·R·E가 그대로 C(상황)와 R(손실)의 재료가 돼요. 사례 하나로 부족하면 같은 일이 또 있었는지, 반대 경우는 없는지 더 찾아봐요.</p>' +
@@ -151,7 +155,7 @@
     var others = Object.keys(FORMS).filter(function (x) { return x !== k; });
     var nav = '<button class="btn" style="width:100%;margin:14px 0 8px" data-act="drillOpen" data-v="' + k + '">' + F.code + ' 워드댄싱으로 실전 연습</button>' +
       '<p class="small muted" style="text-align:center;margin-top:12px"><a href="#origin">삼지작법의 유래 보기</a></p>';
-    return head + intro + table + '<section class="card fold-list">' + why + exb + rules + pre + jong + '</section>' + uses + nav;
+    return head + intro + table + '<section class="card fold-list">' + why + two + exb + rules + pre + jong + '</section>' + uses + nav;
   }
   window.viewStudy = function (slug) {
     try { localStorage.setItem('b5adult:lastStudy', slug); } catch (e) {}
