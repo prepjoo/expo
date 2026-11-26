@@ -11,12 +11,12 @@ const GUIDE_SETS = {
     '워드댄싱에서는 섞인 문장 조각을 네 칸에 순서대로 놓아요. 조각 하나는 함정이에요. 막히면 힌트를 누르세요. 기법마다 여섯 문제, 아래 번호로 오가며 풀어요.',
     '다섯저울은 듣는 사람의 다섯 가지 의심이에요. 저울을 고르고 심판 기준을 읽은 뒤, 저울 연습하기를 눌러 카드를 두 접시에 갈라 보세요.',
     '순서가 손에 익으면, 짜기로 가서 내 답을 말해 보세요.'] },
-  level: { title: '1분 사용설명서', sub: '③ 단계 연습', sec: [7, 10, 10, 12, 8], narr: [
-    '단계 연습 편입니다. 네 칸을 한 번에 외우지 말고, 두 칸에서 시작해 한 칸씩 늘려요.',
-    '말하기 화면 맨 위에서 1단계를 고르면 두 칸만 열려요. 받치는 삼지작법이라면 결론과 이유, 피알만 말하면 됩니다.',
-    '두 칸만 채워도 잴 수 있어요. 결과 화면에서 다음 단계 버튼을 누르면, 쓴 내용은 그대로 두고 한 칸이 더 열려요.',
+  level: { title: '1분 사용설명서', sub: '③ 칸 늘리기', sec: [7, 10, 10, 12, 8], narr: [
+    '칸 늘리기 편입니다. 네 칸을 한 번에 외우지 말고, 두 칸에서 시작해 한 칸씩 늘려요.',
+    '말하기 화면 맨 위에서 두 칸을 고르면 두 칸만 열려요. 받치는 삼지작법이라면 결론과 이유, 피알만 말하면 됩니다.',
+    '두 칸만 채워도 잴 수 있어요. 결과 화면에서 한 칸 더 버튼을 누르면, 쓴 내용은 그대로 두고 한 칸이 더 열려요.',
     '네 칸을 다 채웠다면 점수를 보세요. 기본 논리 칠십 점에 다섯저울 삼십 점. 가장 약한 저울을 연습하고, 고쳐 말하기로 한 문장만 고쳐 다시 재요.',
-    '경험카드를 모아 두면 어떤 질문에도 불러와 쓸 수 있어요. 오늘은 1단계부터 시작해 보세요.'] }
+    '경험카드를 모아 두면 어떤 질문에도 불러와 쓸 수 있어요. 오늘은 두 칸부터 시작해 보세요.'] }
 };
 /* 음성 안내: 녹음 파일 하나(voice/guide.mp3, 55.2초)를 장면 시작점(초)으로 나눠 맞춰요. */
 const GUIDE_AUDIO = 'voice/guide.mp3';
@@ -154,26 +154,26 @@ function learnScenes() {
 }
 function levelScenes() {
   const ans = ['AI가 쓴 과제를 그대로 내면 안 됩니다.', 'AI의 답은 내 생각을 증명해 주지 않기 때문입니다.'];
-  const stg = on => `<div class="g-stagebar">${['PR', 'PRE', 'PREP'].map((t, n) => `<span class="${n === on ? 'on' : ''}"><small>${n + 1}단계</small>${t}</span>`).join('')}</div>`;
+  const stg = on => `<div class="g-stagebar">${['PR', 'PRE', 'PREP'].map((t, n) => `<span class="${n === on ? 'on' : ''}"><small>${['두', '세', '네'][n]} 칸</small>${t}</span>`).join('')}</div>`;
   return [
     { k: 'v-intro', c: '#7A4A12', html: `
       <img class="g-char g-jump" src="${CH('jump')}" alt="">
-      <p class="g-kicker">사용설명서 ③ · 단계 연습</p>
+      <p class="g-kicker">사용설명서 ③ · 칸 늘리기</p>
       <h2 class="g-big d3">두 칸부터<br>한 칸씩</h2>
       <ol class="g-flow"><li style="--d:.9s"><b>1</b>PR</li><li style="--d:1.3s"><b>2</b>PRE</li><li style="--d:1.7s"><b>3</b>PREP</li></ol>
       <p class="g-cap sm" style="--d:2.3s">AW → AWH → AWHA, CR → CRI → CRIB도 같아요.</p>` },
     { k: 'v-steps', c: '#7A4A12', html: `
       <p class="g-kicker">말하기 화면 맨 위</p>
-      <h2 class="g-h">단계 고르기</h2>
+      <h2 class="g-h">칸 고르기</h2>
       ${GA(.4, stg(0), '')}
       ${GA(1.4, gSlot('PREP', 0) + `<p>${ans[0]}</p>`, 'g-line')}
       ${GA(2.2, gSlot('PREP', 1) + `<p>${ans[1]}</p>`, 'g-line')}
-      <p class="g-cap sm" style="--d:3.2s">1단계를 고르면 두 칸만 열려요. 결론과 이유만 말하면 돼요.</p>` },
+      <p class="g-cap sm" style="--d:3.2s">두 칸을 고르면 두 칸만 열려요. 결론과 이유만 말하면 돼요.</p>` },
     { k: 'v-next', c: '#7A4A12', html: `
-      <p class="g-kicker">재기 · 단계 결과</p>
+      <p class="g-kicker">재기 · 칸 늘리기 결과</p>
       <h2 class="g-h">한 칸 더</h2>
-      ${GA(.4, '<b>1단계 PR</b>까지 쟀어요. 단계 연습이라 점수가 낮아도 괜찮아요.', 'g-note')}
-      ${GA(1.4, '<span class="btn">2단계로: PRE 말하기</span>', 'g-fakebtn')}
+      ${GA(.4, '<b>두 칸 PR</b>까지 쟀어요. 칸 늘리기 연습이라 점수가 낮아도 괜찮아요.', 'g-note')}
+      ${GA(1.4, '<span class="btn">한 칸 더: PRE 말하기</span>', 'g-fakebtn')}
       ${GA(2.4, stg(1), '')}
       <p class="g-cap sm" style="--d:3.2s">쓴 내용은 그대로, 사례(E) 칸이 하나 더 열려요.</p>` },
     { k: 'v-fix', c: '#1D6A47', html: `
@@ -187,7 +187,7 @@ function levelScenes() {
       <p class="g-kicker">그리고</p>
       <h2 class="g-h">경험카드</h2>
       <div class="g-stack"><span style="--d:.4s"></span><span style="--d:.7s"></span><span style="--d:1s"><b>경험카드에서 불러오기</b><small>상황 · 문제가 그대로 C · R 칸으로</small></span></div>
-      <p class="g-cap" style="--d:1.6s">오늘은 1단계부터 시작해 보세요.</p>
+      <p class="g-cap" style="--d:1.6s">오늘은 두 칸부터 시작해 보세요.</p>
       <div class="g-end" style="--d:2.2s"><button class="btn cta" data-act="guideStart">바로 연습하기</button><button class="btn ghost" data-act="guideReplay">처음부터 다시 보기</button></div>
       <img class="g-char sm" src="${CH('thumbs')}" alt="">` }
   ];

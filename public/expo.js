@@ -11,7 +11,7 @@
   var FK = function (f) { return f === 'AWHA' ? 'AHWA' : f; };
   var COL = { jong: '#C62828', in: '#1565C0', yu: '#2E7D32', trap: '#6B7280', navy: '#3D4B6E', scale: '#1F6B45', brick: '#8E1B1B' };
   var ROLE = { CRIB: ['yu', 'in', 'jong', 'in'], PREP: ['jong', 'in', 'yu', 'jong'], AHWA: ['jong', 'in', 'in', 'jong'] };   // 아하의 W(왜)와 H(어떻게)는 나란한 근거(因)
-  var ROLE_HAN = { jong: '종(宗)', in: '인(因)', yu: '유(喩)' };
+  var ROLE_HAN = { jong: '종(宗)', in: '인(因)', yu: '유(喻)' };
   var FONT = "'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif";
   var e = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var filledOf = function (scores) { return SCALES.filter(function (x) { return (scores[x.id] || 0) >= 2; }).length; };
@@ -117,11 +117,14 @@
     return pageHead('삼지작법의 유래', '진나가 정리하고 삼장법사가 토론에서 쓴 논리') +
       '<section class="card"><h2 class="sec" style="margin-top:0">1,500년 전 스님들의 토론법</h2>' +
       '<p class="body-tx">삼지작법(三支作法)은 5~6세기 인도의 불교 논리학자 <b>진나(陳那, 디그나가)</b>가 정리한 <b>인명학(因明學)</b>의 논증 형식이에요. 주장을 세 갈래로 받쳐 상대를 설득해요.</p>' +
-      '<ul class="body-tx"><li><b style="color:' + COL.jong + '">종(宗)</b> 주장: 내가 증명하려는 것</li><li><b style="color:' + COL.in + '">인(因)</b> 이유: 그렇게 말할 수 있는 까닭</li><li><b style="color:' + COL.yu + '">유(喩)</b> 사례: 누구나 확인할 수 있는 예</li></ul></section>' +
+      '<ul class="body-tx"><li><b style="color:' + COL.jong + '">종(宗)</b> 주장: 내가 증명하려는 것</li><li><b style="color:' + COL.in + '">인(因)</b> 이유: 그렇게 말할 수 있는 까닭</li><li><b style="color:' + COL.yu + '">유(喻)</b> 사례: 누구나 확인할 수 있는 예</li></ul></section>' +
       '<section class="card"><h2 class="sec" style="margin-top:0">1,400년 전 삼장법사를 토론 승자로 만든 논리</h2>' +
       '<p class="body-tx">서유기의 삼장법사로 알려진 <b>현장(玄奘) 스님</b>은 7세기에 인도 <b>나란다 대학</b>에서 계현(시라바드라) 스님에게 인명학을 배웠어요.</p>' +
       '<p class="body-tx">641~643년 무렵 북인도의 하르샤왕(계일왕)이 수도 <b>곡녀성(카냐쿠브자)</b>에서 큰 토론회를 열었어요. 왕 18명과 스님 3,000명, 학자 수천 명이 모였어요. 현장 스님이 종·인·유로 짠 논증 <b>진유식량(眞唯識量)</b>을 내걸자 18일 동안 아무도 꺾지 못했고, 현장 스님은 토론의 승자가 되었어요.</p>' +
       '<p class="body-tx">진나가 정리한 삼지작법을, 약 1,400년 전 삼장법사가 실제 토론에서 써서 이긴 거예요. 현장 스님은 인명학 책을 중국으로 가져와 번역했고, 그 덕분에 동아시아에 삼지작법이 전해졌어요.</p></section>' +
+      '<section class="card"><h2 class="sec" style="margin-top:0">왜 불교 논리일까요?</h2>' +
+      '<p class="body-tx">인명학은 믿음이나 권위보다 <b>“무엇을 근거로 그렇게 아는가”</b>를 따지는 전통이에요. 신라의 원효 스님도 『판비량론』(671)에서 여러 논증을 비판적으로 검토했어요.</p>' +
+      '<p class="body-tx" style="margin-bottom:0">이 앱은 신앙을 요구하지 않아요. 주장·이유·사례를 나눠 말하고, 그 연결이 맞는지 되묻는 <b>생각의 습관</b>을 연습해요. AI의 답을 따져 볼 때도 같은 틀을 써요.</p></section>' +
       '<section class="card"><h2 class="sec" style="margin-top:0">현대 말하기에 맞게 응용했어요</h2>' +
       '<p class="body-tx">받치는·답하는·여는 삼지작법은 진나의 삼지작법을 <b>현대 말하기에 맞게 응용한 것</b>이에요. 종·인·유로 짠 네 칸을 상황에 맞게 순서를 바꿔 써요.</p>' +
       rows.map(function (r) {

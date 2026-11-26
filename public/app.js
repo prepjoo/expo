@@ -462,7 +462,7 @@ function formGrid(k) {
   const L = FORMS[k].slots.map(x => x.key), P = [[13, 17.6], [35, 17.6], [13, 39.6], [35, 39.6]];
   return `<svg class="fgrid" viewBox="0 0 48 48" aria-hidden="true"><rect class="t" x="1" y="1" width="46" height="46" rx="13"/><path class="d" d="M24 7v34M7 24h34"/>${L.map((c, i) => `<text class="l" x="${P[i][0]}" y="${P[i][1]}" text-anchor="middle">${c}</text>`).join('')}</svg>`;
 }
-// 종인유 고유색: 칸마다 종(宗)·인(因)·유(喩) 중 무엇인지
+// 종인유 고유색: 칸마다 종(宗)·인(因)·유(喻) 중 무엇인지
 const ROLE_OF = { CRIB: ['yu', 'in', 'jong', 'in'], PREP: ['jong', 'in', 'yu', 'jong'], AHWA: ['jong', 'in', 'in', 'jong'] };
 const roleBg = (k, i) => `background:var(--${(ROLE_OF[k] || [])[i] || 'ink3'})`;
 function fmono(k) { const f = { CRIB: 'crib', PREP: 'prep', AHWA: 'awha' }[k]; return `<span class="ficon" aria-hidden="true"><img src="icons/${f}.png?v=3" alt="" style="width:100%;height:100%;display:block"></span>`; }
@@ -518,7 +518,8 @@ function viewHome() {
       ${areaSelect('homeArea')}
     </div>` : ''}
     ${row('why', '철학', 'AI가 자료를 정리해도, 증명은 내 몫입니다', `
-      <p class="body-tx">자료를 모으고 정리하는 일은 이제 AI가 대신해 줘요. 하지만 <b>무엇을 주장하고 왜 그렇게 판단했는지</b>는 대신 증명해 주지 못해요. 나를 평가하는 사람 앞에서는 내 생각을 내 말로 증명해야 해요. 그래서 이 앱은 자료 정리 잘하는 사람보다 <b>생각을 증명하는 사람</b>이 되도록 돕는 것을 목표로 해요.</p>`)}
+      <p class="body-tx">자료를 모으고 정리하는 일은 이제 AI가 대신해 줘요. 하지만 <b>무엇을 주장하고 왜 그렇게 판단했는지</b>는 대신 증명해 주지 못해요. 나를 평가하는 사람 앞에서는 내 생각을 내 말로 증명해야 해요. 그래서 이 앱은 자료 정리 잘하는 사람보다 <b>생각을 증명하는 사람</b>이 되도록 돕는 것을 목표로 해요.</p>
+      <p class="body-tx">AI는 문제를 찾고 답도 내 줘요. 그 답을 그대로 믿지 말고 <b>주장·이유·사례로 따져 보는 것</b>까지가 이 앱에서 기르는 힘이에요.</p>`)}
     ${row('what', '방법', '짜고, 말하고, 잽니다', `
       <ol class="flow3">
         <li><a href="#forms"><b>1 짜기</b><span>삼지작법 고르기: 질문에 맞는 삼지작법을 골라 메모해요</span></a></li>
@@ -526,7 +527,7 @@ function viewHome() {
         <li><a href="#scales"><b>3 재기</b><span>삼지작법 점검하기: 다섯저울로 짜임을 점검해요</span></a></li>
       </ol>
       <p class="body-tx small">한 질문으로 세 단계를 이어서 해요. 삼지작법은 ${formTag('PREP', 'sm')} ${formTag('AHWA', 'sm')} ${formTag('CRIB', 'sm')} 세 가지이고, 목표 시간은 받치는 삼지작법 60초, 답하는 삼지작법 45초, 여는 삼지작법 30초예요.</p>
-      <p class="body-tx small"><b>삼지작법</b>은 불교 논리학(인명학)에서 말하는 종<small>(宗)</small> 주장·인<small>(因)</small> 이유·유<small>(喩)</small> 사례의 세 갈래예요. 이 세 갈래로 짠 네 칸을 먼저 말을 꺼낼 때, 주장할 때, 질문에 답할 때에 맞게 순서를 바꿔 써요. 답하는 삼지작법 <b>아하</b>(AWHA)는 행동(Action) → 이유(Why) → 방법(How) → 다시 행동(Action), 곧 종·인·유·종의 순서로 듣는 사람을 움직여요.</p>`)}
+      <p class="body-tx small"><b>삼지작법</b>은 불교 논리학(인명학)에서 말하는 종<small>(宗)</small> 주장·인<small>(因)</small> 이유·유<small>(喻)</small> 사례의 세 갈래예요. 이 세 갈래로 짠 네 칸을 먼저 말을 꺼낼 때, 주장할 때, 질문에 답할 때에 맞게 순서를 바꿔 써요. 답하는 삼지작법 <b>아하</b>(AWHA)는 행동(Action) → 이유(Why) → 방법(How) → 다시 행동(Action), 곧 종·인·유·종의 순서로 듣는 사람을 움직여요.</p>`)}
     ${row('use', '효과', `같은 경험, ${sc.bad}점이 ${sc.good}점으로`, `
       <div class="vs" aria-label="같은 경험, 다른 점수">
         <div class="vs-item bad"><span class="vs-score">${sc.bad}<small>/100</small></span><p>“${esc(p.bad)}”</p><span class="vs-tag">${esc(p.badTag)}</span></div>
@@ -542,8 +543,8 @@ function viewHome() {
         <button class="btn cta guide-btn alt" data-act="openGuideListen" data-v="learn"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6"/></svg></span><span class="gl"><small>② 익히기 편</small><b>보고 듣기</b></span></button>
       </div>
       <div class="guide-pair">
-        <button class="btn cta guide-btn" data-act="openGuide" data-v="level"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="#fff"><path d="M8 5l11 7-11 7z"/></svg></span><span class="gl"><small>③ 단계 연습 편</small><b>보기</b></span></button>
-        <button class="btn cta guide-btn alt" data-act="openGuideListen" data-v="level"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6"/></svg></span><span class="gl"><small>③ 단계 연습 편</small><b>보고 듣기</b></span></button>
+        <button class="btn cta guide-btn" data-act="openGuide" data-v="level"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="#fff"><path d="M8 5l11 7-11 7z"/></svg></span><span class="gl"><small>③ 칸 늘리기 편</small><b>보기</b></span></button>
+        <button class="btn cta guide-btn alt" data-act="openGuideListen" data-v="level"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6"/></svg></span><span class="gl"><small>③ 칸 늘리기 편</small><b>보고 듣기</b></span></button>
       </div>
   </section>
   <div class="cta-dock">
@@ -614,7 +615,7 @@ function resultBlock(r) {
     <div class="r-head">${formTag(r.form)}<span class="r-date">${d.getMonth() + 1}월 ${d.getDate()}일에 한 말</span></div>
     <p class="r-q">“${esc(r.q && r.q.q || '')}”</p>
     <div class="total"><img src="${CH(g[3])}" alt="" class="pop"><div><div class="n">${r.total}<small> / 100</small></div><div class="grade">${g[1]}</div><div class="small muted">${g[2]}</div></div></div>
-    ${r.stage && r.stage < 4 ? `<div class="stage-next"><p><b>${r.stage - 1}단계 ${FORMS[r.form].slots.slice(0, r.stage).map(x => x.key).join('')}</b>까지 쟀어요. 단계 연습이라 네 칸 점수는 낮게 나와도 괜찮아요.</p><button class="btn" data-act="stageUp">${r.stage}단계로: ${FORMS[r.form].slots.slice(0, r.stage + 1).map(x => x.key).join('')} 말하기</button></div>` : ''}
+    ${r.stage && r.stage < 4 ? `<div class="stage-next"><p><b>${['', '', '두', '세'][r.stage]} 칸 ${FORMS[r.form].slots.slice(0, r.stage).map(x => x.key).join('')}</b>까지 쟀어요. 칸 늘리기 연습이라 네 칸 점수는 낮게 나와도 괜찮아요.</p><button class="btn" data-act="stageUp">한 칸 더: ${FORMS[r.form].slots.slice(0, r.stage + 1).map(x => x.key).join('')} 말하기</button></div>` : ''}
     <div class="split"><span class="sp-s"><b>${r.bonus}</b>/30 다섯저울</span><span>+</span><span class="sp-b"><b>${B.total}</b>/70 기본 논리 점수</span></div>
     ${better ? `<div class="better"><p><b>이 답은 ${better.slots.map(x => x.title).join('-')} 짜임이라 ${better.label}에 더 잘 맞아요.</b> 같은 네 칸을 ${better.label}으로 다시 재 볼 수 있어요.</p><button class="btn ghost sm" data-act="rescoreAs" data-v="${r.better}">${better.label}로 다시 재기</button></div>` : ''}
     <div class="rbox rb-s">
@@ -636,6 +637,7 @@ function resultBlock(r) {
       <p class="pf-note">다섯저울과 기본 논리를 고르게 채운 답이에요. 숫자, 버린 대안, 전과 후, 다음 행동이 어느 칸에 들어가는지 내 답과 비교해 보세요.</p>
       <ol class="pf">${F.slots.map((x, i) => `<li><span class="k" style="${roleBg(r.form, i)};color:#fff">${x.key}</span><div><b>${x.title}</b><p>${markNums(ex[i])}</p></div></li>`).join('')}</ol></details>`; })()}
     <p class="scope">다섯저울은 듣는 사람이 속으로 던질 <b>다섯 가지 의심</b>을 내 답이 미리 풀어 주는지 재고, ${F.label}에 중요한 저울일수록 점수가 커요. 기본 논리 점수는 ${F.label}의 네 칸이 제 역할을 하는지 봐요.</p>
+    <p class="scope">점수는 말의 짜임을 돌아보는 <b>참고 자료</b>예요. 점수가 높다고 사실이 참인 건 아니고, 낮다고 생각의 가치가 없는 것도 아니에요. 근거가 맞는지, 실제로 해낼 수 있는지 한 번 더 따져 보세요.</p>
   </section>
   <div class="grid2 actions"><button class="btn ghost" data-act="retry">고쳐 말하기</button><button class="btn" data-act="newQuestion">새 질문으로</button></div>
   <button class="textbtn center" data-act="answerFollow">${persona().follow}에도 답해 보기</button>`;
@@ -671,6 +673,7 @@ function viewScaleInfo() {
   </section>
   <section class="card"><h2 class="sec" style="margin-top:0">이렇게 채워요</h2>${tipHtml(sc.tip)}</section>
   ${sc.checks ? `<section class="card"><h2 class="sec" style="margin-top:0">심판 기준</h2><ol class="lol">${sc.checks.map(x => `<li>${esc(x)}</li>`).join('')}</ol><p class="note">셋 중 둘 이상 보이면 이 저울이 채워져요. 카드놀이의 저울 심판도 같은 기준으로 판정해요.</p></section>` : ''}
+  ${sc.id === 'fact' ? `<section class="card"><h2 class="sec" style="margin-top:0">실천 전에 확인할 네 가지</h2><p class="body-tx" style="margin:0 0 8px">말이 잘 짜였다고 사실이 참이 되지는 않아요. 행동으로 옮기기 전에 물어보세요.</p><ol class="lol"><li>내가 확인한 <b>사실</b>은 무엇이고, 짐작은 무엇인가?</li><li>그 정보는 <b>언제, 어디서, 누구</b>에게서 나왔나?</li><li>그 정보가 <b>지금 이 상황</b>에도 맞나?</li><li>틀렸을 때 <b>누가 무엇을 잃고</b>, 어떻게 바로잡을 수 있나?</li></ol><p class="note">내가 센 숫자도 증거 하나예요. 사례 하나가 전체를 증명하지는 않으니, 같은 일이 또 있었는지, 반대 경우는 없는지도 찾아보세요.</p></section>` : ''}
   ${(window.BALANCE_READY || []).includes(sc.id) ? (S.ui.balOpen === sc.id && window.balInline ? `<button class="btn ghost mb8" data-act="balClose" aria-expanded="true">${sc.name} 저울 연습 닫기</button><div id="balInline">${window.balInline()}</div>` : `<button class="btn mb8" data-act="balStart" data-v="${sc.id}" aria-expanded="false">${sc.name} 저울 연습하기</button>`) : ''}
   <div class="pager">
     <button class="btn ghost" data-act="scaleIdx" data-v="${i - 1}" ${i === 0 ? 'disabled' : ''}>이전 저울</button>
@@ -694,8 +697,8 @@ function viewSpeak() {
   ${qCard()}
   <section class="speakpad" data-form="${sp.form}">
     <div class="pad-head">${formTag(sp.form, 'lg')}<a class="textbtn" href="#forms">삼지작법 바꾸기</a></div>
-    <div class="stagebar" role="group" aria-label="연습 단계">${[2, 3, 4].map(n => `<button data-act="stage" data-v="${n}" aria-pressed="${st === n}"><b>${n - 1}단계</b><span>${keys.slice(0, n).join('')}</span></button>`).join('')}</div>
-    <p class="stage-tip">${st === 4 ? `네 칸을 모두 채워 ${F.target}초 안에 말해요.` : `${st - 1}단계: ${F.slots.slice(0, st).map(x => x.title).join(' + ')}만 말해요. 익숙해지면 다음 단계로 한 칸을 더해요.`}</p>
+    <div class="stagebar" role="group" aria-label="칸 늘리기">${[2, 3, 4].map(n => `<button data-act="stage" data-v="${n}" aria-pressed="${st === n}"><b>${['', '', '두', '세', '네'][n]} 칸</b><span>${keys.slice(0, n).join('')}</span></button>`).join('')}</div>
+    <p class="stage-tip">${st === 4 ? `네 칸을 모두 채워 ${F.target}초 안에 말해요.` : `${['', '', '두', '세'][st]} 칸: ${F.slots.slice(0, st).map(x => x.title).join(' + ')}만 말해요. 익숙해지면 한 칸을 더해요.`}</p>
     ${F.slots.slice(0, st).map((x, i) => `
     <div class="slot"><div class="k" style="${roleBg(sp.form, i)};color:#fff">${x.key}</div><div>
       <div class="between"><label class="t" for="ta${i}">${x.title}</label>${mic ? `<button class="mic" data-act="mic" data-i="${i}">🎤 말하기</button>` : ''}</div>

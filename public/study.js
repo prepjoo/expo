@@ -1,10 +1,10 @@
 /* 더 공부하기: 크립·프렙·아하 상세 설명 (#study-crib, #study-prep, #study-awha)
    근거 자료: 프로젝트 지침(01_CRIB 기법 기본지침, 02_PREP 기법 기본지침, 아하 개정 기준, Deep Writing BALANCE, 프렙 원고)
-   종인유 고유색: 宗 var(--jong) 빨강 · 因 var(--in) 파랑 · 喩 var(--yu) 초록 */
+   종인유 고유색: 宗 var(--jong) 빨강 · 因 var(--in) 파랑 · 喻 var(--yu) 초록 */
 (function () {
   'use strict';
   var BY = window.CONTENT_BY_ID;
-  var HAN = { jong: '종(宗)', in: '인(因)', yu: '유(喩)' };
+  var HAN = { jong: '종(宗)', in: '인(因)', yu: '유(喻)' };
   var MEAN = { jong: '주장', in: '근거', yu: '사례' };
   var ICON = { CRIB: 'icons/crib.png?v=3', PREP: 'icons/prep.png?v=3', AHWA: 'icons/awha.png?v=3' };
   var SLUG = { CRIB: 'crib', PREP: 'prep', AHWA: 'awha' };
@@ -13,7 +13,7 @@
     CRIB: {
       en: ['Condition', 'Risk', 'Idea', 'Benefit'],
       power: ['문제를 정의하는 힘', '무엇이 문제이고 무엇을 잃는지 밝혀요.'],
-      ai: 'AI 시대에 가장 중요한 역량 중 하나는 문제를 정의하는 능력이에요. 답은 AI도 낼 수 있지만, 무엇이 문제인지 정하는 일은 사람의 몫이에요.',
+      ai: 'AI도 자료에서 문제를 찾고 순위까지 매겨요. 하지만 그중 무엇을 붙잡을지 고르고, 그 근거가 맞는지 따지고, 결과를 책임지는 일은 사람의 몫이에요. 이것이 AI 시대에 가장 중요한 역량 중 하나인 문제를 정의하는 능력이에요.',
       def: '여는 삼지작법은 두 가지 일을 해요. 생각할 때는 문제를 정의하고(C·R) 해결을 내놓는(I·B) 틀이고, 말할 때는 듣는 사람을 내 아이디어로 끌어들이는 설득의 순서예요.',
       groups: { 0: ['문제 정의', 'C·R · 무엇이 문제이고 무엇을 잃나'], 2: ['해결 제시', 'I·B · 어떻게 막고 무엇을 얻나'] },
       when: '먼저 말을 꺼낼 때: 회의 제안, 업무 보고, 발표 첫 30초, 기획서·보고서 도입부',
@@ -51,7 +51,7 @@
         ['다시 결론', '그래서 앞으로 어떻게 하나요?', '처음 결론과 같은 뜻을, 다른 문장으로 적용·실천(다짐이나 제안)으로 맺어요.']
       ],
       why: [
-        '<b>인명학과 꼭 맞물려요.</b> 진나 이전의 인명학은 종(宗)·인(因)·유(喩)·합(合)·결(結)의 다섯 갈래(오지작법)였고, 진나는 되풀이인 합·결을 줄여 삼지작법으로 정리했어요. 프렙의 P·R·E는 종·인·유, 마지막 P는 합·결에 해당해요.',
+        '<b>인명학과 맞물려요.</b> 진나 이전의 인명학은 종(宗)·인(因)·유(喻)·합(合)·결(結)의 다섯 갈래(오지작법)였고, 진나는 되풀이인 합·결을 줄여 삼지작법으로 정리했어요. 프렙의 P·R·E는 종·인·유의 일을 하고, 마지막 P는 합·결과 하는 일이 닮았어요. 같은 것은 아니에요. 세 삼지작법은 옛 형식을 그대로 옮긴 게 아니라 현대 말하기에 맞게 새로 짠 응용 모델이에요.',
         '좋은 고전 글들은 <b>주장을 앞세우고 세부 내용으로 받친다</b>는 분석에서 나온 "힘있는 글쓰기"(주장 → 근거 → 증명 → 주장)의 원칙이 곧 프렙이에요.',
         '<b>종이 없으면 얼굴 없는 글, 인이 없으면 허리 없는 글, 유가 없으면 팔다리 없는 글</b>이에요. 세 갈래가 다 있어야 논리가 서요.'
       ],
@@ -135,6 +135,11 @@
       (k !== 'CRIB' ? '<p class="small" style="margin:10px 0 0"><b>같은 뜻, 다른 문장</b> · 첫 ' + F.slots[0].key + '은 지금의 ' + (k === 'PREP' ? '주장' : '행동 제안') + ', 마지막 ' + F.slots[3].key + '은 ' + (k === 'PREP' ? '요약과 앞으로 할 일' : '시점과 첫걸음을 붙인 다시 촉구') + '예요. 같은 문장을 되풀이하면 앱의 \'끝맺음\' 점수가 낮아져요.</p>' : ''));
     var rules = fold('rules', '이것만은 지켜요', '<ol class="body-tx" style="padding-left:1.2em;margin:0">' + d.rules.map(function (r) { return '<li style="margin:6px 0">' + esc(r) + '</li>'; }).join('') + '</ol>' +
       '<p class="note"><b>흔한 실수</b> ' + esc(d.mistake) + '</p>');
+    var pre = k !== 'CRIB' ? '' : fold('pre', '꺼내기 전에 문제부터 따져 보기', '<p class="body-tx" style="margin:0 0 8px">여는 삼지작법은 문제를 남에게 <b>꺼내는</b> 틀이에요. 꺼내기 전에 그게 정말 문제인지 혼자 따져 볼 때는 <b>받치는 삼지작법(PREP)</b>을 쓰세요.</p>' +
+      [['P', 'jong', '무엇이 문제인가', '지난 과제에서 AI 문장을 출처 없이 쓴 것이 문제다.'], ['R', 'in', '왜 문제인가', '확인하지 않은 문장 때문에 점수와 신뢰를 함께 잃기 때문이다.'], ['E', 'yu', '사례와 숫자', '우리 조 과제에서 출처 없는 문장 12곳이 걸려 10점이 깎였다.']].map(function (x) { return '<div style="display:flex;gap:10px;align-items:flex-start;margin:8px 0">' + badge(x[1], x[0]) + '<div class="body-tx" style="margin:0"><b>' + x[2] + '</b> · ' + x[3] + '</div></div>'; }).join('') +
+      '<p class="small" style="margin:10px 0">이렇게 따져 본 P·R·E가 그대로 C(상황)와 R(손실)의 재료가 돼요. 사례 하나로 부족하면 같은 일이 또 있었는지, 반대 경우는 없는지 더 찾아봐요.</p>' +
+      '<table style="width:100%;border-collapse:collapse;font-size:.9em"><tr style="color:var(--muted)"><th style="text-align:left;padding:4px">단계</th><th style="text-align:left;padding:4px">누가</th><th style="text-align:left;padding:4px">앱에서</th></tr>' +
+      [['① 찾기·분석', 'AI와 함께', '자료 조사, 문제 후보 모으기'], ['② 고르기', '나', 'PREP으로 따지고 C·R로 정하기'], ['③ 따지기', '나 + 삼지작법', '재기 · 다섯저울 ② 가려내라'], ['④ 실행·다시 보기', '나', 'AWHA의 마지막 A, 고쳐 말하기']].map(function (r) { return '<tr style="border-top:1px solid var(--line)"><td style="padding:4px;font-weight:700">' + r[0] + '</td><td style="padding:4px">' + r[1] + '</td><td style="padding:4px">' + r[2] + '</td></tr>'; }).join('') + '</table>');
     var jong = fold('jong', '宗은 하나, 쓰임은 셋', '<p class="small muted" style="margin:0 0 8px">크립의 I, 프렙의 P, 아하의 A는 모두 <b style="color:var(--jong)">종(宗)</b>이에요. 같은 주제(AI 과제)라도 삼지작법에 따라 종을 다르게 말해요.</p>' +
       JONG.map(function (j) {
         var me = j[0] === k;
@@ -146,7 +151,7 @@
     var others = Object.keys(FORMS).filter(function (x) { return x !== k; });
     var nav = '<button class="btn" style="width:100%;margin:14px 0 8px" data-act="drillOpen" data-v="' + k + '">' + F.code + ' 워드댄싱으로 실전 연습</button>' +
       '<p class="small muted" style="text-align:center;margin-top:12px"><a href="#origin">삼지작법의 유래 보기</a></p>';
-    return head + intro + table + '<section class="card fold-list">' + why + exb + rules + jong + '</section>' + uses + nav;
+    return head + intro + table + '<section class="card fold-list">' + why + exb + rules + pre + jong + '</section>' + uses + nav;
   }
   window.viewStudy = function (slug) {
     try { localStorage.setItem('b5adult:lastStudy', slug); } catch (e) {}
