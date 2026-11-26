@@ -7,15 +7,15 @@ const GUIDE_SETS = {
   start: { title: '1분 사용설명서', sub: '시작하기' },
   learn: { title: '1분 사용설명서', sub: '② 익히기', sec: [8, 10, 15, 11, 7], narr: [
     '삼지작법 익히기 편입니다. 받치는, 답하는, 여는 삼지작법. 쉬운 것부터 차례로 익혀요.',
-    '삼지작법 메뉴에서는 맨 위 탭으로 세 기법을 오가요. 네 칸의 색은 종은 빨강, 인은 파랑, 유는 초록. 궁금한 제목을 누르면 설명이 펼쳐져요.',
+    '삼지작법 메뉴에서는 맨 위 탭으로 세 기법을 오가요. 네 칸의 색은 宗은 빨강, 因은 파랑, 喩는 초록. 궁금한 제목을 누르면 설명이 펼쳐져요.',
     '워드댄싱에서는 섞인 문장 조각을 네 칸에 순서대로 놓아요. 조각 하나는 함정이에요. 막히면 힌트를 누르세요. 기법마다 여섯 문제, 아래 번호로 오가며 풀어요. 위쪽 AI 답 뜯어보기에서는 AI의 답을 주장, 이유, 사례로 나눠 빈 칸을 찾아요.',
     '다섯저울은 듣는 사람의 다섯 가지 의심이에요. 저울을 고르고 심판 기준을 읽은 뒤, 저울 연습하기를 눌러 카드를 두 접시에 갈라 보세요.',
     '순서가 손에 익으면, 짜기로 가서 내 답을 말해 보세요.'] },
   level: { title: '1분 사용설명서', sub: '③ 칸 늘리기', sec: [7, 10, 10, 12, 8], narr: [
     '칸 늘리기 편입니다. 네 칸을 한 번에 외우지 말고, 두 칸에서 시작해 한 칸씩 늘려요.',
-    '말하기 화면 맨 위에서 두 칸을 고르면 두 칸만 열려요. 받치는 삼지작법이라면 결론과 이유, 피알만 말하면 됩니다.',
+    '말하기 화면 맨 위에서 두 칸을 고르면 두 칸만 열려요. 받치는 삼지작법이라면 결론과 이유, PR만 말하면 됩니다.',
     '두 칸만 채워도 잴 수 있어요. 결과 화면에서 한 칸 더 버튼을 누르면, 쓴 내용은 그대로 두고 한 칸이 더 열려요.',
-    '네 칸을 다 채웠다면 점수를 보세요. 기본 논리 칠십 점에 다섯저울 삼십 점. 가장 약한 저울을 연습하고, 고쳐 말하기로 한 문장만 고쳐 다시 재요.',
+    '네 칸을 다 채웠다면 점수를 보세요. 기본 논리 70점에 다섯저울 30점. 가장 약한 저울을 연습하고, 고쳐 말하기로 한 문장만 고쳐 다시 재요.',
     '경험카드를 모아 두면 어떤 질문에도 불러와 쓸 수 있어요. 오늘은 두 칸부터 시작해 보세요.'] }
 };
 /* 음성 안내: 녹음 파일 하나(voice/guide.mp3, 55.2초)를 장면 시작점(초)으로 나눠 맞춰요. */
@@ -29,7 +29,8 @@ const GUIDE_NARR = [
   '3단계, 재기. 다섯저울로 내 말의 짜임을 점검하고, 가장 약한 저울 하나만 고쳐서 다시 말해요.',
   '경험을 카드로 모아 두면, 어떤 질문에도 꺼내 쓸 수 있어요. 이제 첫 질문에 답해 보세요.'
 ];
-const sceneLen = i => Guide.set !== 'start' ? GUIDE_SETS[Guide.set].sec[i] : Guide.listen ? Math.max(2, GUIDE_CUES[i + 1] - GUIDE_CUES[i]) : (i === 2 || i === 3 ? 10 : GUIDE_SEC);
+const TYPE_MS = 70, TYPE_HOLD = 2200;
+const sceneLen = i => Guide.set !== 'start' ? Math.max(4, (GUIDE_SETS[Guide.set].narr[i].length * TYPE_MS + TYPE_HOLD) / 1000) : Guide.listen ? Math.max(2, GUIDE_CUES[i + 1] - GUIDE_CUES[i]) : (i === 2 || i === 3 ? 10 : GUIDE_SEC);
 function guideAudio() {
   if (Guide.audio) return Guide.audio;
   const a = new Audio(GUIDE_AUDIO); a.preload = 'auto'; Guide.audio = a;
@@ -224,12 +225,7 @@ function guideRender() {
   box.classList.toggle('listen', Guide.listen);
   clearTimeout(Guide.t); clearTimeout(Guide.dingT);
   if (s.k === 'forms' && Guide.listen && !Guide.paused) Guide.dingT = setTimeout(() => { if (!Guide.paused && Guide.listen) guideDing(); }, 8750);
-  if (Guide.set !== 'start') {
-    partStop();
-    if (Guide.listen) { if (!Guide.paused) partPlay(); return; }
-    if (!Guide.paused && Guide.i < n - 1) { Guide.t0 = Date.now(); Guide.left = sceneLen(Guide.i) * 1000; Guide.t = setTimeout(() => guideGo(1), Guide.left); }
-    return;
-  }
+  if (Guide.set !== 'start') { partStop(); typeStart(0); return; }
   if (Guide.listen) {
     const a = guideAudio();
     if (Guide.seek !== false) { try { a.currentTime = GUIDE_CUES[Guide.i]; } catch (e) {} }
@@ -239,6 +235,21 @@ function guideRender() {
   }
   voiceStop();
   if (!Guide.paused && Guide.i < n - 1) { Guide.t0 = Date.now(); Guide.left = (s.k === 'forms' || s.k === 'speak' ? 10 : GUIDE_SEC) * 1000; Guide.t = setTimeout(() => guideGo(1), Guide.left); }
+}
+/* 익히기·칸 늘리기 편: 음성 대신 위쪽 빈 곳에 설명을 한 글자씩 */
+function typeStart(from) {
+  clearInterval(Guide.typeT); clearTimeout(Guide.t);
+  const el = document.querySelector('.g-typing'); if (!el) return;
+  const text = GUIDE_SETS[Guide.set].narr[Guide.i], n = guideScenes().length;
+  Guide.typed = from || 0;
+  const paint = () => { el.innerHTML = esc(text.slice(0, Guide.typed)) + (Guide.typed < text.length ? '<i class="g-caret" aria-hidden="true"></i>' : ''); };
+  el.setAttribute('aria-label', text); paint();
+  if (Guide.paused) return;
+  Guide.typeT = setInterval(() => {
+    if (Guide.paused) return;
+    Guide.typed++; paint();
+    if (Guide.typed >= text.length) { clearInterval(Guide.typeT); if (Guide.i < n - 1) Guide.t = setTimeout(() => { if (!Guide.paused) guideGo(1); }, TYPE_HOLD); }
+  }, TYPE_MS);
 }
 function guideGo(d) {
   const n = guideScenes().length;
@@ -251,16 +262,17 @@ function openGuide(listen, set) {
   L.innerHTML = `<div class="guide" role="dialog" aria-modal="true" aria-label="${GUIDE_SETS[Guide.set].title} ${GUIDE_SETS[Guide.set].sub}">
     <div class="g-top"><div class="g-bars-top"></div>
       <div class="g-ctl"><span class="g-count"></span>
-        <button class="g-btn snd" data-act="guideSound" aria-label="소리 켜기/끄기"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path class="ic-on" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/><path class="ic-off" d="M16 9l5 6M21 9l-5 6"/></svg></button>
+        ${Guide.set !== 'start' ? '' : `<button class="g-btn snd" data-act="guideSound" aria-label="소리 켜기/끄기"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path class="ic-on" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/><path class="ic-off" d="M16 9l5 6M21 9l-5 6"/></svg></button>`}
         <button class="g-btn" data-act="guidePause" aria-label="멈추기/이어보기"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path class="ic-pause" d="M7 5h3v14H7zM14 5h3v14h-3z"/><path class="ic-play" d="M8 5l11 7-11 7z"/></svg></button>
         <button class="g-btn" data-act="guideClose" aria-label="닫기"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></div>
+    ${Guide.set !== 'start' ? '<p class="g-typing" role="status"></p>' : ''}
     <div class="g-stage"></div>
     <button class="g-tap prev" data-act="guidePrev" aria-label="이전 장면"></button><button class="g-tap next" data-act="guideNext" aria-label="다음 장면"></button>
   </div>`;
   document.body.style.overflow = 'hidden';
   guideRender();
 }
-function closeGuide() { clearTimeout(Guide.t); voiceStop(); partStop(); Guide.audio = null; closeSheet(); }
+function closeGuide() { clearTimeout(Guide.t); clearInterval(Guide.typeT); voiceStop(); partStop(); Guide.audio = null; closeSheet(); }
 
 Object.assign(ACT, {
   openGuide: v => openGuide(false, v),
@@ -273,7 +285,13 @@ Object.assign(ACT, {
   guidePause: () => {
     Guide.paused = !Guide.paused;
     const box = document.querySelector('.guide'); if (box) box.classList.toggle('paused', Guide.paused);
-    if (Guide.set !== 'start' && Guide.listen) {
+    if (Guide.set !== 'start') {
+      if (Guide.paused) { clearTimeout(Guide.t); }
+      else if (Guide.typed >= GUIDE_SETS[Guide.set].narr[Guide.i].length) { if (Guide.i < guideScenes().length - 1) Guide.t = setTimeout(() => { if (!Guide.paused) guideGo(1); }, 1200); }
+      else typeStart(Guide.typed);
+      return;
+    }
+    if (false) {
       if (Guide.paused) { clearTimeout(Guide.t); if (Guide.mode === 'file' && Guide.part) Guide.part.pause(); else if (Guide.mode === 'tts') try { speechSynthesis.pause(); } catch (e) {} }
       else if (Guide.mode === 'file' && Guide.part) Guide.part.play().catch(() => {});
       else if (Guide.mode === 'tts' && speechSynthesis.paused) try { speechSynthesis.resume(); } catch (e) {}

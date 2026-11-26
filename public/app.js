@@ -538,20 +538,13 @@ function viewHome() {
   </div>
   <section class="guide-more" aria-label="사용설명서 더 보기">
     <p class="gm-h">1분 사용설명서 더 보기</p>
-      <div class="guide-pair">
-        <button class="btn cta guide-btn" data-act="openGuide" data-v="learn"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="#fff"><path d="M8 5l11 7-11 7z"/></svg></span><span class="gl"><small>② 익히기 편</small><b>보기</b></span></button>
-        <button class="btn cta guide-btn alt" data-act="openGuideListen" data-v="learn"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6"/></svg></span><span class="gl"><small>② 익히기 편</small><b>보고 듣기</b></span></button>
-      </div>
-      <div class="guide-pair">
-        <button class="btn cta guide-btn" data-act="openGuide" data-v="level"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="#fff"><path d="M8 5l11 7-11 7z"/></svg></span><span class="gl"><small>③ 칸 늘리기 편</small><b>보기</b></span></button>
-        <button class="btn cta guide-btn alt" data-act="openGuideListen" data-v="level"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6"/></svg></span><span class="gl"><small>③ 칸 늘리기 편</small><b>보고 듣기</b></span></button>
-      </div>
+    <div class="guide-pair">
+      <button class="btn cta guide-btn alt" data-act="openGuide" data-v="learn"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 7h14M5 12h10M5 17h7"/></svg></span><span class="gl"><b>② 익히기 편</b></span></button>
+      <button class="btn cta guide-btn alt" data-act="openGuide" data-v="level"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 7h14M5 12h10M5 17h7"/></svg></span><span class="gl"><b>③ 칸 늘리기 편</b></span></button>
+    </div>
   </section>
   <div class="cta-dock">
-    <div class="guide-pair">
-      <button class="btn cta guide-btn" data-act="openGuide"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="#fff"><path d="M8 5l11 7-11 7z"/></svg></span><span class="gl"><small>1분 사용설명서</small><b>보기</b></span></button>
-      <button class="btn cta guide-btn alt" data-act="openGuideListen"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6"/></svg></span><span class="gl"><small>1분 사용설명서</small><b>보고 듣기</b></span></button>
-    </div>
+  <button class="btn cta guide-btn alt" data-act="openGuideListen"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6"/></svg></span><span class="gl"><small>1분 사용설명서</small><b>보고 듣기</b></span></button>
     <button class="btn quick" data-act="startQ">바로 연습: ${esc(p.cta)}</button>
   </div>
   <p class="free">${first ? '무료, 가입 없이 바로 시작해요' : st > 1 ? `연속 ${st}일째 연습 중이에요` : '하루 1분이면 충분해요'}</p>`;
