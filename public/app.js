@@ -536,15 +536,12 @@ function viewHome() {
       <p class="vs-note">왼쪽은 이 한 문장만 말했을 때, 오른쪽은 같은 경험을 ${FORMS[p.reco].label} 네 칸으로 말했을 때 잰 예시 점수예요. 오른쪽 문장은 네 칸 중 ${FORMS[p.reco].slots[sc.ex.hi].title} 칸이에요.</p>
       <details class="vs-full" data-form="${p.reco}"><summary>${sc.good}점을 받은 네 칸 전체 보기</summary><p class="vs-form" style="margin:6px 0 10px;font-size:.92em">이 예시는 ${formTag(p.reco, 'sm')}으로 말했어요.</p><ol>${FORMS[p.reco].slots.map((x, i) => `<li class="${i === sc.ex.hi ? 'hi' : ''}"><b><span class="vs-code" style="display:inline-block;min-width:1.3em;font-weight:800;letter-spacing:.02em">${FORMS[p.reco].code[i]}</span>${x.title}</b>${esc(sc.ex.slots[i])}</li>`).join('')}</ol></details>`)}
   </div>
-  <section class="guide-more" aria-label="사용설명서 더 보기">
-    <p class="gm-h">1분 사용설명서 더 보기</p>
-    <div class="guide-pair">
-      <button class="btn cta guide-btn alt" data-act="openGuide" data-v="learn"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 7h14M5 12h10M5 17h7"/></svg></span><span class="gl"><b>② 익히기 편</b></span></button>
-      <button class="btn cta guide-btn alt" data-act="openGuide" data-v="level"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 7h14M5 12h10M5 17h7"/></svg></span><span class="gl"><b>③ 칸 늘리기 편</b></span></button>
-    </div>
-  </section>
   <div class="cta-dock">
-  <button class="btn cta guide-btn alt" data-act="openGuideListen"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6"/></svg></span><span class="gl"><small>1분 사용설명서</small><b>보고 듣기</b></span></button>
+    <div class="guide-tri" role="group" aria-label="1분 사용설명서">
+      <button class="btn cta guide-btn alt" data-act="openGuideListen"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6"/></svg></span><span class="gl"><small>1분 사용설명서</small><b>① 보고 듣기</b></span></button>
+      <button class="btn cta guide-btn alt" data-act="openGuide" data-v="learn"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 7h14M5 12h10M5 17h7"/></svg></span><span class="gl"><small>1분 사용설명서</small><b>② 익히기 편</b></span></button>
+      <button class="btn cta guide-btn alt" data-act="openGuide" data-v="level"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 7h14M5 12h10M5 17h7"/></svg></span><span class="gl"><small>1분 사용설명서</small><b>③ 칸 늘리기 편</b></span></button>
+    </div>
     <button class="btn quick" data-act="startQ">바로 연습: ${esc(p.cta)}</button>
   </div>
   <p class="free">${first ? '무료, 가입 없이 바로 시작해요' : st > 1 ? `연속 ${st}일째 연습 중이에요` : '하루 1분이면 충분해요'}</p>`;

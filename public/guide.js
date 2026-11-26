@@ -30,7 +30,7 @@ const GUIDE_NARR = [
   '경험을 카드로 모아 두면, 어떤 질문에도 꺼내 쓸 수 있어요. 이제 첫 질문에 답해 보세요.'
 ];
 const TYPE_MS = 70, TYPE_HOLD = 2200;
-const sceneLen = i => Guide.set !== 'start' ? Math.max(4, (GUIDE_SETS[Guide.set].narr[i].length * TYPE_MS + TYPE_HOLD) / 1000) : Guide.listen ? Math.max(2, GUIDE_CUES[i + 1] - GUIDE_CUES[i]) : (i === 2 || i === 3 ? 10 : GUIDE_SEC);
+const sceneLen = i => Guide.set !== 'start' ? Math.max(4, (GUIDE_SETS[Guide.set].narr[i].length * TYPE_MS + (GUIDE_SETS[Guide.set].narr[i].split(/(?<=[.?!])\s+/).length - 1) * 1100 + TYPE_HOLD) / 1000) : Guide.listen ? Math.max(2, GUIDE_CUES[i + 1] - GUIDE_CUES[i]) : (i === 2 || i === 3 ? 10 : GUIDE_SEC);
 function guideAudio() {
   if (Guide.audio) return Guide.audio;
   const a = new Audio(GUIDE_AUDIO); a.preload = 'auto'; Guide.audio = a;
@@ -225,7 +225,7 @@ function guideRender() {
   box.classList.toggle('listen', Guide.listen);
   clearTimeout(Guide.t); clearTimeout(Guide.dingT);
   if (s.k === 'forms' && Guide.listen && !Guide.paused) Guide.dingT = setTimeout(() => { if (!Guide.paused && Guide.listen) guideDing(); }, 8750);
-  if (Guide.set !== 'start') { partStop(); typeStart(0); return; }
+  if (Guide.set !== 'start') { partStop(); typeStart(); return; }
   if (Guide.listen) {
     const a = guideAudio();
     if (Guide.seek !== false) { try { a.currentTime = GUIDE_CUES[Guide.i]; } catch (e) {} }
@@ -236,20 +236,27 @@ function guideRender() {
   voiceStop();
   if (!Guide.paused && Guide.i < n - 1) { Guide.t0 = Date.now(); Guide.left = (s.k === 'forms' || s.k === 'speak' ? 10 : GUIDE_SEC) * 1000; Guide.t = setTimeout(() => guideGo(1), Guide.left); }
 }
-/* 익히기·칸 늘리기 편: 음성 대신 위쪽 빈 곳에 설명을 한 글자씩 */
+/* 익히기·칸 늘리기 편: 음성 대신 위쪽 빈 곳에 설명을 한 문장씩, 한 글자씩 */
+const SENT_HOLD = 1100;
+const narrSents = i => GUIDE_SETS[Guide.set].narr[i].split(/(?<=[.?!])\s+/).filter(Boolean);
 function typeStart(from) {
   clearInterval(Guide.typeT); clearTimeout(Guide.t);
   const el = document.querySelector('.g-typing'); if (!el) return;
-  const text = GUIDE_SETS[Guide.set].narr[Guide.i], n = guideScenes().length;
-  Guide.typed = from || 0;
-  const paint = () => { el.innerHTML = esc(text.slice(0, Guide.typed)) + (Guide.typed < text.length ? '<i class="g-caret" aria-hidden="true"></i>' : ''); };
-  el.setAttribute('aria-label', text); paint();
+  const ss = narrSents(Guide.i), n = guideScenes().length;
+  if (from == null) { Guide.sent = 0; Guide.typed = 0; }
+  el.setAttribute('aria-label', GUIDE_SETS[Guide.set].narr[Guide.i]);
+  const paint = () => { const t = ss[Guide.sent] || ''; el.innerHTML = esc(t.slice(0, Guide.typed)) + (Guide.typed < t.length ? '<i class="g-caret" aria-hidden="true"></i>' : ''); };
+  paint();
   if (Guide.paused) return;
-  Guide.typeT = setInterval(() => {
+  const tick = () => {
     if (Guide.paused) return;
-    Guide.typed++; paint();
-    if (Guide.typed >= text.length) { clearInterval(Guide.typeT); if (Guide.i < n - 1) Guide.t = setTimeout(() => { if (!Guide.paused) guideGo(1); }, TYPE_HOLD); }
-  }, TYPE_MS);
+    const t = ss[Guide.sent];
+    if (Guide.typed < t.length) { Guide.typed++; paint(); return; }
+    clearInterval(Guide.typeT);
+    if (Guide.sent < ss.length - 1) Guide.t = setTimeout(() => { if (Guide.paused) return; Guide.sent++; Guide.typed = 0; paint(); Guide.typeT = setInterval(tick, TYPE_MS); }, SENT_HOLD);
+    else if (Guide.i < n - 1) Guide.t = setTimeout(() => { if (!Guide.paused) guideGo(1); }, TYPE_HOLD);
+  };
+  Guide.typeT = setInterval(tick, TYPE_MS);
 }
 function guideGo(d) {
   const n = guideScenes().length;
@@ -287,8 +294,7 @@ Object.assign(ACT, {
     const box = document.querySelector('.guide'); if (box) box.classList.toggle('paused', Guide.paused);
     if (Guide.set !== 'start') {
       if (Guide.paused) { clearTimeout(Guide.t); }
-      else if (Guide.typed >= GUIDE_SETS[Guide.set].narr[Guide.i].length) { if (Guide.i < guideScenes().length - 1) Guide.t = setTimeout(() => { if (!Guide.paused) guideGo(1); }, 1200); }
-      else typeStart(Guide.typed);
+      else typeStart(true);
       return;
     }
     if (false) {
