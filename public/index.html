@@ -880,6 +880,15 @@ img[src^="char/"]{aspect-ratio:305/320;object-fit:contain}
 .g-fakebtn{display:flex;gap:8px}.g-fakebtn .btn{flex:1;pointer-events:none;min-height:46px;font-size:15px}
 .g-stagebar{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.g-stagebar span{display:flex;flex-direction:column;align-items:center;padding:8px 4px;border-radius:12px;border:1px solid var(--rule);background:#fff;font-weight:800;font-size:15px}.g-stagebar small{font-size:11.5px;font-weight:600;color:var(--ink3)}.g-stagebar span.on{background:var(--ink);border-color:var(--ink);color:#fff}.g-stagebar span.on small{color:#fff}
 .g-split{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink3)}.g-split span{display:flex;flex-direction:column;align-items:center;background:#fff;border:1px solid var(--rule);border-radius:12px;padding:6px 14px}.g-split b{font-size:22px;color:var(--ink)}.g-split i{font-style:normal;font-weight:800}
+.ai-mode{margin-bottom:14px}
+.ai-s{padding:10px 0;border-top:1px solid var(--rule2,#DDD8CC)}.ai-s:first-of-type{border-top:0}.ai-s>p{margin:0 0 8px;font-size:15.5px;line-height:1.55;padding-left:10px;border-left:4px solid transparent}
+.ai-s.c-j>p{border-left-color:var(--jong)}.ai-s.c-i>p{border-left-color:var(--in)}.ai-s.c-y>p{border-left-color:var(--yu)}.ai-s.c-n>p{border-left-color:#B8B2A4}
+.ai-tags{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.ai-tags button{display:flex;align-items:center;justify-content:center;gap:3px;min-height:38px;border-radius:10px;border:1px solid var(--rule2,#DDD8CC);background:var(--surface,#fff);font:inherit;font-size:13.5px;font-weight:700;color:var(--ink2);cursor:pointer}
+.ai-tags button small{font-size:11.5px;font-weight:600;opacity:.8}.ai-tags button:disabled{cursor:default}
+.ai-tags .t-j.on{background:var(--jong);border-color:var(--jong);color:#fff}.ai-tags .t-i.on{background:var(--in);border-color:var(--in);color:#fff}.ai-tags .t-y.on{background:var(--yu);border-color:var(--yu);color:#fff}.ai-tags .t-n.on{background:#6F6A5E;border-color:#6F6A5E;color:#fff}
+.ai-s.bad .ai-tags button.on{box-shadow:0 0 0 2px #E8A33D}
+.ai-why{margin:8px 0 0;font-size:13.5px;line-height:1.55;color:var(--ink2)}.ai-s.ok .ai-why{color:#1D6A47}.ai-s.bad .ai-why{color:#8A4B00}
+.ai-r{margin:4px 0;font-size:14.5px;padding-left:22px;position:relative}.ai-r::before{position:absolute;left:0;font-weight:800}.ai-r.ok::before{content:"✓";color:#1D6A47}.ai-r.no::before{content:"✗";color:#B3261E}.ai-r.warn::before{content:"!";color:#B26A00}
 </style>
 <script>
 /* 휴대폰 글자 크기 설정(텍스트 확대)이 크면 화면이 깨지지 않도록, 확대 효과를 최대 1.15배까지만 남기고 화면 전체 배율을 맞춘다. */
@@ -928,11 +937,12 @@ img[src^="char/"]{aspect-ratio:305/320;object-fit:contain}
 <script src="persona.js?v=20261125-d1"></script>
 <script src="content.js?v=20261125-b1"></script>
 <script src="adult.js?v=20261126-h1"></script>
-<script src="app.js?v=20261126-h2"></script>
-<script src="guide.js?v=20261126-h2"></script>
+<script src="app.js?v=20261126-i2"></script>
+<script src="guide.js?v=20261126-i2"></script>
 <script src="qrcode.js"></script>
 <script src="expo.js?v=20261126-h2"></script>
 <script src="study.js?v=20261126-h2"></script>
+<script src="aicheck.js?v=20261126-i2"></script>
 <script src="balance.js?v=20261126-h1"></script>
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function(){});</script>
 </body>

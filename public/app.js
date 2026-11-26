@@ -453,7 +453,7 @@ function stepper(cur) {
 }
 function qCard() {
   const sp = S.ui.speak;
-  if (sp.q && sp.q.who !== '직접 쓴 질문' && !todaysQuestions().some(x => x.q === sp.q.q)) { sp.q = null; S.ui.formPicked = false; S.ui.formOpen = null; }
+  if (sp.q && sp.q.who !== '직접 쓴 질문' && sp.q.who !== 'AI 답 고쳐 말하기' && !todaysQuestions().some(x => x.q === sp.q.q)) { sp.q = null; S.ui.formPicked = false; S.ui.formOpen = null; }
   if (!sp.q) { const q = currentQ(); sp.q = { who: q.who, q: q.q }; }
   const w = sp.q.who || '질문', wl = /질문$/.test(w) ? w : w + '의 질문';
   return `<div class="qbox sticky"><div class="between"><span class="who">${esc(wl)}</span><button class="textbtn" data-act="pickQ">질문 바꾸기</button></div><div class="q">“${esc(sp.q.q)}”</div></div>`;
@@ -743,6 +743,7 @@ function syncDrillState(cur) {
 function markDrillDone(id) { try { const d = drillDone(); d[id] = 1; localStorage.setItem(DRILL_DONE_KEY, JSON.stringify(d)); } catch (e) {} }
 
 function viewDrill() {
+  if (S.ui.drill.mode === 'ai' && window.viewAiCheck) return window.viewAiCheck();
   const D = S.ui.drill; if (!D.who || !DRILL[D.form][D.who]) D.who = whoId();
   D.idx = D.idx || {}; const L = drillList(), qi = Math.min(D.idx[D.form] || 0, L.length - 1), done = drillDone();
   const cur = drillCur(), defs = SLOTDEFS[D.form], byId = {};
@@ -759,6 +760,7 @@ function viewDrill() {
   else if (D.checked) { pose = 'stop'; msg = `${right}칸이 맞았어요. 주황색 칸의 설명을 보고 다시 옮겨 보세요.`; }
   return `
   ${pageHead('워드댄싱', '문장 조각을 눌러 네 칸에 순서대로 넣으세요. 하나는 함정이에요.')}
+  ${window.drillModeBar ? window.drillModeBar('order') : ''}
   <div class="seg-tabs f" role="tablist" aria-label="삼지작법 고르기">${Object.keys(FORMS).map(x => `<button role="tab" aria-selected="${x === D.form}" data-act="drillForm" data-v="${x}" data-form="${x}">${fmono(x)}${FORMS[x].label}</button>`).join('')}</div>
   <h2 class="lp-h">${FORMS[D.form].label} · ${FORMS[D.form].code}</h2><p class="lp-sub">${FORMS[D.form].when}${L.length > 1 ? ` · 문제 ${qi + 1}/${L.length}` : ''}</p>
   <section class="card"><h2 class="sec" style="margin-top:0">질문</h2><p class="lq">${esc(cur.question)}</p></section>
@@ -1034,7 +1036,7 @@ const ACT = {
   reco: v => { S.ui.speakOpen = RECO[v]; const f = RECO[v]; const q = todaysQuestions().find(x => x.form === f) || currentQ(); startSpeak(q, f); },
   // drill
   drillForm: v => { S.ui.drill.form = v; render(); },
-  drillOpen: v => { S.ui.drill.form = v; S.ui.drill.openForm = v; go('drill'); },
+  drillOpen: v => { S.ui.drill.mode = 'order'; S.ui.drill.form = v; S.ui.drill.openForm = v; go('drill'); },
   drillGo: v => { const D = S.ui.drill; D.idx = D.idx || {}; D.idx[D.form] = +v; render(); },
   drillHint: () => { const D = S.ui.drill; D.hint = Math.min(2, (D.hint || 0) + 1); render(); },
   drillWho: v => { S.ui.drill = Object.assign(S.ui.drill, { who: v, placed: [null, null, null, null], checked: false }); render(); },
