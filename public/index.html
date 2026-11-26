@@ -905,9 +905,10 @@ img[src^="char/"]{aspect-ratio:305/320;object-fit:contain}
 .hdr-area-w::after{content:"";position:absolute;right:8px;top:50%;width:5px;height:5px;border-right:1.5px solid #8E1B1B;border-bottom:1.5px solid #8E1B1B;transform:translateY(-70%) rotate(45deg);pointer-events:none}
 .hdr-r .who-line{display:flex;align-items:center;justify-content:flex-end;font-size:11.5px!important;gap:3px}.hdr-r{min-width:0}
 #ir-why .pw3 a,#ir-what .pw3 a{display:flex;flex-direction:column;align-items:flex-start;gap:4px}#ir-why .pw3 a b,#ir-what .pw3 a b{width:auto;min-width:0;white-space:nowrap}#ir-why .pw3 a>span,#ir-what .pw3 a>span{display:block;width:100%}
-.hero .display.d3{font-size:clamp(26px,8.2vw,40px)}
-@media (max-width:420px){.hero .display.d3{font-size:6.3vw}}
 @media (max-width:345px){.hdr-r .who-line>span:first-child{display:none}}
+.slist li.nob::before{display:none}
+@media (max-width:480px){header.top{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:10px;row-gap:2px}header.top>div:first-child{display:contents}header.top .brand{grid-column:1;grid-row:1;align-self:start}header.top .hdr-r{grid-column:2;grid-row:1}header.top .tagline{grid-column:1/-1;grid-row:2;margin:0 0 0 34px!important;font-size:12.5px!important}}
+@media (max-width:345px){header.top .tagline{margin-left:0!important;font-size:12px!important}}
 </style>
 <script>
 /* 휴대폰 글자 크기 설정(텍스트 확대)이 크면 화면이 깨지지 않도록, 확대 효과를 최대 1.15배까지만 남기고 화면 전체 배율을 맞춘다. */
@@ -941,7 +942,7 @@ img[src^="char/"]{aspect-ratio:305/320;object-fit:contain}
 <div class="wrap">
   <header class="top" id="top">
     <div><a href="#home" class="brand" aria-label="BALANCE 5 홈"><img src="logo.png" alt="" width="26" height="26" style="display:block">BALANCE&nbsp;5</a>
-    <p class="tagline">1,400년 전 삼장법사의 불교논리</p></div>
+    <p class="tagline">삼지작법, 1400년 전 삼장법사의 불교논리</p></div>
     <div class="hdr-r"><div class="hdr-btns"><button class="iconbtn backbtn" id="backBtn" aria-label="이전 화면으로" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><span>뒤로</span></button><a class="iconbtn" id="homeBtn" href="#home" aria-label="홈"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></a><button class="iconbtn" id="menuBtn" aria-label="이동과 설정">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button></div><p class="who-line" id="whoLine"></p></div>
@@ -956,7 +957,7 @@ img[src^="char/"]{aspect-ratio:305/320;object-fit:contain}
 <script src="persona.js?v=20261125-d1"></script>
 <script src="content.js?v=20261125-b1"></script>
 <script src="adult.js?v=20261126-h1"></script>
-<script src="app.js?v=20261126-m2"></script>
+<script src="app.js?v=20261126-n2"></script>
 <script src="guide.js?v=20261126-k2"></script>
 <script src="qrcode.js"></script>
 <script src="expo.js?v=20261126-h2"></script>
