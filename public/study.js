@@ -111,6 +111,15 @@
   };
   var card = function (title, body) { return '<section class="card"><h2 class="sec" style="margin-top:0">' + title + '</h2>' + body + '</section>'; };
 
+  function roleBox(k, F, R) {
+    var M = (typeof ROLE_MEAN !== 'undefined' && ROLE_MEAN[k]) || R.map(function (r) { return MEAN[r]; });
+    var cell = function (i) { return '<b style="color:var(--' + R[i] + ')">' + F.slots[i].key + '</b> <span style="color:var(--' + R[i] + ');font-weight:700">' + HAN[R[i]].slice(2, 3) + ' ' + M[i] + '</span>'; };
+    var flow = k === 'AHWA' ? cell(0) + ' → [ ' + cell(1) + ' | ' + cell(2) + ' ] → ' + cell(3) : [0, 1, 2, 3].map(cell).join(' → ');
+    var note = { PREP: '주장(宗)을 근거(因)로 받치고, 증명(喩)으로 눈에 보이게 한 뒤, 주장(宗)으로 맺어요.',
+      AHWA: '이유와 방법은 위아래가 아니라, 행동(宗)을 함께 받치는 두 원인(因)이에요.',
+      CRIB: '문제 상황(喩)과 손실 이유(因)로 문제를 정의하고, 주장(宗)을 이익 이유(因)로 받쳐요.' }[k];
+    return '<div class="small" style="margin:10px 0 0;padding:10px 12px;background:var(--in-soft);border-radius:10px;line-height:1.7"><b style="color:var(--in)">종·인·유로 보면</b><br>' + flow + '<br><span class="muted">' + note + '</span></div>';
+  }
   function view(k) {
     var F = FORMS[k], d = D[k], R = ROLE_OF[k], it = BY[d.ex];
     var tabs = '<div class="seg-tabs f" role="tablist" aria-label="삼지작법 고르기">' + Object.keys(FORMS).map(function (x) { return '<button role="tab" aria-selected="' + (x === k) + '" data-act="go" data-v="study-' + SLUG[x] + '" data-form="' + x + '">' + fmono(x) + FORMS[x].label + '</button>'; }).join('') + '</div>';
@@ -123,9 +132,9 @@
     var table = card('네 칸', d.rows.map(function (r, i) {
       var g = d.groups && d.groups[i];
       return (g ? '<p class="lp-grp' + (i ? ' next' : '') + '"><b>' + g[0] + '</b> ' + g[1] + '</p>' : '') + '<div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;' + (i && !(d.groups && d.groups[i]) ? 'border-top:1px solid var(--line)' : '') + '">' + badge(R[i], F.slots[i].key) +
-        '<div style="flex:1"><div><b>' + bold1(d.en[i]) + ' ' + r[0] + '</b> <small style="color:var(--' + R[i] + ');font-weight:700">' + HAN[R[i]] + ' ' + ((typeof ROLE_MEAN !== 'undefined' && ROLE_MEAN[k]) ? ROLE_MEAN[k][i] : MEAN[R[i]]) + '</small></div>' +
+        '<div style="flex:1"><div><b>' + bold1(d.en[i]) + ' ' + r[0] + '</b></div>' +
         '<div class="small" style="margin:2px 0">듣는 사람: "' + esc(r[1]) + '"</div><div class="small muted">' + esc(r[2]) + '</div></div></div>';
-    }).join('') + (k === 'AHWA' ? '<p class="small" style="margin:10px 0 0;padding:10px 12px;background:var(--in-soft);border-radius:10px"><b style="color:var(--in)">W와 H는 나란히</b> · A(宗) → [ W 원인-이유(因) | H 원인-방법(因) ] → A(宗). 왜와 어떻게는 위아래가 아니라 행동을 함께 받치는 두 기둥이에요.</p>' : ''));
+    }).join('') + roleBox(k, F, R));
     var why = fold('why', '왜 이 순서일까요?', '<ul class="body-tx" style="padding-left:1.1em;margin:0">' + d.why.map(function (w) { return '<li style="margin:6px 0">' + w + '</li>'; }).join('') + '</ul>' +
       (d.weight ? '<p class="small" style="margin:12px 0 4px"><b>프렙의 정보 배분</b> · 결론은 짧고 무겁게, 사례는 길고 구체적으로</p><table style="width:100%;border-collapse:collapse;font-size:.9em"><tr style="color:var(--muted)"><th style="text-align:left;padding:4px">칸</th><th style="text-align:right;padding:4px">중요도</th><th style="text-align:right;padding:4px">분량</th></tr>' +
         d.weight.map(function (w, i) { return '<tr style="border-top:1px solid var(--line)"><td style="padding:4px;color:var(--' + R[i] + ');font-weight:700">' + w[0] + '</td><td style="text-align:right;padding:4px">' + w[1] + '</td><td style="text-align:right;padding:4px">' + w[2] + '</td></tr>'; }).join('') + '</table>' : ''));
