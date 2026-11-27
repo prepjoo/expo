@@ -78,7 +78,7 @@
         ['다시 행동', '그럼 언제, 무엇부터 하나요?', '처음 행동과 같은 뜻을, 시점과 첫걸음을 붙인 다른 문장으로 촉구해요.']
       ],
       why: [
-        '<b>왜(W)와 어떻게(H)는 나란한 짝이에요.</b> 둘 다 행동(宗)을 받치는 근거(因)예요. 근거에는 이유와 방법 두 가지가 있다는 것, 프렙의 R 자리에 이유 대신 방법이 와도 된다는 것과 같은 뿌리예요.',
+        '<b>왜(W)와 어떻게(H)는 나란한 짝이에요.</b> 둘 다 행동(宗)을 받치는 원인(因)이에요. 원인에는 이유와 방법 두 가지가 있다는 것, 프렙의 R 자리에 이유 대신 방법이 와도 된다는 것과 같은 뿌리예요.',
         '사이먼 사이넥의 <b>골든서클</b>처럼 왜를 어떻게보다 먼저 말해요. 이유에 동의해야 방법에 귀를 기울이기 때문이에요.',
         '질문에 답할 때 상대가 동의하지 않으면 "왜 그런데?(Why so)", 동의하면 "어떻게?(How so)"를 묻는다는 질의응답의 원리를 한 번에 채워 줘요.',
         '골든서클과 달리 <b>맨 앞과 맨 뒤에 행동</b>을 놓아, 듣는 사람이 "그래서 무엇을 하면 되지?"를 처음부터 알고 끝까지 기억하게 해요.'
@@ -123,9 +123,9 @@
     var table = card('네 칸', d.rows.map(function (r, i) {
       var g = d.groups && d.groups[i];
       return (g ? '<p class="lp-grp' + (i ? ' next' : '') + '"><b>' + g[0] + '</b> ' + g[1] + '</p>' : '') + '<div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;' + (i && !(d.groups && d.groups[i]) ? 'border-top:1px solid var(--line)' : '') + '">' + badge(R[i], F.slots[i].key) +
-        '<div style="flex:1"><div><b>' + bold1(d.en[i]) + ' ' + r[0] + '</b> <small style="color:var(--' + R[i] + ');font-weight:700">' + HAN[R[i]] + ' ' + MEAN[R[i]] + '</small></div>' +
+        '<div style="flex:1"><div><b>' + bold1(d.en[i]) + ' ' + r[0] + '</b> <small style="color:var(--' + R[i] + ');font-weight:700">' + HAN[R[i]] + ' ' + ((typeof ROLE_MEAN !== 'undefined' && ROLE_MEAN[k]) ? ROLE_MEAN[k][i] : MEAN[R[i]]) + '</small></div>' +
         '<div class="small" style="margin:2px 0">듣는 사람: "' + esc(r[1]) + '"</div><div class="small muted">' + esc(r[2]) + '</div></div></div>';
-    }).join('') + (k === 'AHWA' ? '<p class="small" style="margin:10px 0 0;padding:10px 12px;background:var(--in-soft);border-radius:10px"><b style="color:var(--in)">W와 H는 나란히</b> · A(宗) → [ W 왜(因) | H 어떻게(因) ] → A(宗). 왜와 어떻게는 위아래가 아니라 행동을 함께 받치는 두 기둥이에요.</p>' : ''));
+    }).join('') + (k === 'AHWA' ? '<p class="small" style="margin:10px 0 0;padding:10px 12px;background:var(--in-soft);border-radius:10px"><b style="color:var(--in)">W와 H는 나란히</b> · A(宗) → [ W 원인-이유(因) | H 원인-방법(因) ] → A(宗). 왜와 어떻게는 위아래가 아니라 행동을 함께 받치는 두 기둥이에요.</p>' : ''));
     var why = fold('why', '왜 이 순서일까요?', '<ul class="body-tx" style="padding-left:1.1em;margin:0">' + d.why.map(function (w) { return '<li style="margin:6px 0">' + w + '</li>'; }).join('') + '</ul>' +
       (d.weight ? '<p class="small" style="margin:12px 0 4px"><b>프렙의 정보 배분</b> · 결론은 짧고 무겁게, 사례는 길고 구체적으로</p><table style="width:100%;border-collapse:collapse;font-size:.9em"><tr style="color:var(--muted)"><th style="text-align:left;padding:4px">칸</th><th style="text-align:right;padding:4px">중요도</th><th style="text-align:right;padding:4px">분량</th></tr>' +
         d.weight.map(function (w, i) { return '<tr style="border-top:1px solid var(--line)"><td style="padding:4px;color:var(--' + R[i] + ');font-weight:700">' + w[0] + '</td><td style="text-align:right;padding:4px">' + w[1] + '</td><td style="text-align:right;padding:4px">' + w[2] + '</td></tr>'; }).join('') + '</table>' : ''));
