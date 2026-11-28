@@ -1,5 +1,5 @@
 /* 오프라인 캐시: 전시장 와이파이가 끊겨도 체험이 돌아가게 */
-const V = 'expo-20261128-b1';
+const V = 'expo-20261128-b3';
 const FILES = ['./', 'index.html', 'config.js', 'platform-web.js', 'data.js', 'persona.js', 'content.js', 'adult.js', 'app.js', 'guide.js', 'qrcode.js', 'expo.js', 'study.js', 'balance.js', 'aicheck.js',
   'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'logo.png', 'icons/crib.png', 'icons/prep.png', 'icons/awha.png', 'voice/guide.mp3',
   'char/thumbs.webp', 'char/point_left.webp', 'char/stop.webp', 'char/surprised.webp', 'char/think.webp', 'char/point_right2.webp', 'char/joy.webp', 'char/point_right.webp', 'char/compare.webp', 'char/jump.webp'];

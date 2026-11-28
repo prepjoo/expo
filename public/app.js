@@ -515,9 +515,9 @@ function viewHome() {
     ${row('why', '철학', 'AI 시대에 살아남는 세 가지 힘', `
       <p class="body-tx">자료 정리도, 문제 찾기도, 답 내기도 이제 AI가 해요. 하지만 그중 무엇을 붙잡을지 <b>고르고</b>, 그 근거가 맞는지 <b>따지고</b>, 내 말로 <b>증명하고 책임지는</b> 일은 내 몫이에요. 이 앱은 그 힘을 세 가지로 길러요.</p>
       <ol class="flow3 pw3 pwx">
-        ${[['CRIB', '무엇이 문제이고 누가 무엇을 잃는지 먼저 보여 줘요'], ['PREP', '내 주장을 근거와 증명으로 받쳐요'], ['AHWA', '할 일을 먼저 주고 행동을 이끌어요']].map(([k, line]) => {
+        ${[['CRIB', '문제를 정의하는 힘', '무엇이 문제이고 누가 무엇을 잃는지 먼저 보여 줘요'], ['PREP', '생각을 증명하는 힘', '내 주장을 근거와 증명으로 받쳐요'], ['AHWA', '움직임을 만드는 힘', '할 일을 먼저 주고 행동을 이끌어요']].map(([k, title, line]) => {
           const P = window.STUDY_POWER ? window.STUDY_POWER(k) : null, open = S.ui.homePw === k;
-          return `<li><button type="button" data-act="homePw" data-v="${k}" aria-expanded="${open}"><b>${P ? P.title : ''}<i class="pwx-ar" aria-hidden="true"></i></b><span>${formTag(k, 'sm')} ${line}</span></button>${open && P ? `<div class="pwx-b"><p class="pwx-k">AI 시대 역량 · <b>${esc(P.title)}</b></p><p>${esc(P.desc)} ${esc(P.ai)}</p></div>` : ''}</li>`;
+          return `<li><button type="button" data-act="homePw" data-v="${k}" aria-expanded="${open}"><b>${title}<i class="pwx-ar" aria-hidden="true"></i></b><span><em class="pwx-f">${FORMS[k].label}:</em> ${line}</span></button>${open && P ? `<div class="pwx-b"><p class="pwx-k">AI 시대 역량 · <b>${esc(P.title)}</b></p><p>${esc(P.desc)} ${esc(P.ai)}</p></div>` : ''}</li>`;
         }).join('')}
       </ol>
       <p class="body-tx small">문제를 풀 때는 <b>정의 → 증명 → 움직임</b> 순서로 쓰고, 배울 때는 가장 쉬운 받치는 삼지작법(PREP)부터 시작해요.</p>`)}
