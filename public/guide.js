@@ -134,7 +134,7 @@ function learnScenes() {
       <p class="g-kicker">익히기 · 워드댄싱</p>
       <h2 class="g-h">순서 맞추기</h2>
       ${GA(.4, ['AI의 답은 내 생각을 증명해 주지 않기 때문입니다.', 'AI가 쓴 과제를 그대로 내면 안 됩니다.', 'AI가 저보다 글을 더 잘 쓰는 것 같습니다.'].map((t, n) => `<span class="${n === 2 ? 'trap' : ''}" style="--o:${n}">${t}${n === 2 ? '<em>함정</em>' : ''}</span>`).join(''), 'g-pieces')}
-      ${GA(2.6, gSlot('PREP', 0, '결론 ✓') + gSlot('PREP', 1, '이유 ✓') + gSlot('PREP', 2, '사례') + gSlot('PREP', 3, '다시 결론'), 'g-slots4')}
+      ${GA(2.6, gSlot('PREP', 0, '결론(주장) ✓') + gSlot('PREP', 1, '근거 ✓') + gSlot('PREP', 2, '증명(사례)') + gSlot('PREP', 3, '결론(다시 주장)'), 'g-slots4')}
       ${GA(3.6, '<span class="hint">💡 힌트 보기</span><span class="dots"><i class="on">1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i></span>', 'g-drow')}
       <p class="g-cap sm" style="--d:4.4s">조각 하나는 함정이에요. 막히면 힌트, 기법마다 6문제.</p>
       ${GA(5.4, '<span class="on">AI 답 뜯어보기</span><span>주장·이유·사례로 나눠 빈 칸 찾기</span>', 'g-tabs')}` },

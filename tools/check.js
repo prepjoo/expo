@@ -7,7 +7,7 @@ for (const it of C.items) {
   it.slots.forEach((s, i) => { if (s.length > 40) errs.push(`칸${i + 1} ${s.length}자`); });
   const numIdx = it.form === 'PREP' ? 2 : it.form === 'AWHA' ? 2 : -1;
   if (!/\d|절반|세 번|한 달/.test(it.slots.join(''))) errs.push('숫자 없음');
-  if (numIdx >= 0 && !/\d/.test(it.slots[numIdx])) errs.push('사례·방법 칸 숫자 없음');
+  if (numIdx >= 0 && !/\d/.test(it.slots[numIdx])) errs.push('증명(사례)·방법 칸 숫자 없음');
   const F = it.form === 'AWHA' ? 'AHWA' : it.form;
   const r = S.scoreAnswer(F, it.slots, it.q);
   const t = S.scoreAnswer(F, [it.trap, '', '', ''], it.q).total;
