@@ -916,6 +916,14 @@ img[src^="char/"]{aspect-ratio:305/320;object-fit:contain}
 .pwx-b{margin:8px 0 2px;padding:10px 12px;border-radius:12px;background:var(--in-soft,#EEF3FB);font-size:14px;line-height:1.6}.pwx-b p{margin:0}.pwx-k{font-size:12.5px;color:var(--ink3);margin-bottom:4px!important}
 .pwx-f{font-style:normal;font-weight:700;color:var(--ink2)}
 .pwx{margin:14px 0 10px}.pwx li{padding:14px 2px;border-top:1px solid var(--rule2,#DDD8CC)}.pwx li:first-child{border-top:0;padding-top:4px}.pwx li>button{gap:6px}.pwx li>button b{font-size:16px}
+
+/* 홈 슬로건: 이어지는 줄은 한 글자 더 들여쓰기, 핵심어는 초록 바탕 */
+.hero .slist li.nob{padding-left:calc(16px + 1em)}
+.hero .slogan b{background:var(--pine-soft,#E2F0E7);color:var(--pine-d,#14503A);padding:0 4px;border-radius:5px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+/* 머리글의 대상·영역: 초록 톤 */
+.hdr-r .who-line,.hdr-r .who-line a.need{color:var(--pine-d,#14503A)}
+.hdr-area{border-color:#BFDCCB;background:var(--pine-tint,#F1F7F3);color:var(--pine-d,#14503A)}
+.hdr-area-w::after{border-right-color:var(--pine-d,#14503A);border-bottom-color:var(--pine-d,#14503A)}
 </style>
 <script>
 /* 휴대폰 글자 크기 설정(텍스트 확대)이 크면 화면이 깨지지 않도록, 확대 효과를 최대 1.15배까지만 남기고 화면 전체 배율을 맞춘다. */
