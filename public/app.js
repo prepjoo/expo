@@ -519,8 +519,7 @@ function viewHome() {
           const P = window.STUDY_POWER ? window.STUDY_POWER(k) : null, open = S.ui.homePw === k;
           return `<li><button type="button" data-act="homePw" data-v="${k}" aria-expanded="${open}"><b>${title}<i class="pwx-ar" aria-hidden="true"></i></b><span><em class="pwx-f">${FORMS[k].label}:</em> ${line}</span></button>${open && P ? `<div class="pwx-b"><p class="pwx-k">AI 시대 역량 · <b>${esc(P.title)}</b></p><p>${esc(P.desc)} ${esc(P.ai)}</p></div>` : ''}</li>`;
         }).join('')}
-      </ol>
-      <p class="body-tx small">문제를 풀 때는 <b>정의 → 증명 → 움직임</b> 순서로 쓰고, 배울 때는 가장 쉬운 받치는 삼지작법(PREP)부터 시작해요.</p>`)}
+      </ol>`)}
     ${row('what', '방법', '짜고, 말하고, 잽니다', `
       <ol class="flow3 pw3">
         <li><a href="#forms"><b>1 짜기 · 삼지작법 고르기</b><span>질문을 고르면 앱이 어울리는 삼지작법을 추천해요. 네 칸에 떠오르는 단어만 짧게 메모하고, 경험카드에 모아 둔 경험을 불러와도 돼요.</span></a></li>

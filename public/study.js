@@ -125,7 +125,7 @@
   function view(k) {
     var F = FORMS[k], d = D[k], R = ROLE_OF[k], it = BY[d.ex];
     var tabs = '<div class="seg-tabs f" role="tablist" aria-label="삼지작법 고르기">' + Object.keys(FORMS).map(function (x) { return '<button role="tab" aria-selected="' + (x === k) + '" data-act="go" data-v="study-' + SLUG[x] + '" data-form="' + x + '">' + fmono(x) + FORMS[x].label + '</button>'; }).join('') + '</div>';
-    var head = pageHead('삼지작법', '종·인·유 세 칸을 상황에 맞는 순서로 쓰는 세 가지 말하기 틀이에요.') + tabs +
+    var head = pageHead('삼지작법', '종·인·유 세 칸을 상황에 맞는 순서로 쓰는 세 가지 말하기 틀이에요.') + '<p class="body-tx" style="margin:-4px 0 14px;font-size:14.5px">문제를 풀 때는 <b>정의 → 증명 → 움직임</b> 순서로 쓰고, 배울 때는 가장 쉬운 받치는 삼지작법(PREP)부터 시작해요.</p>' + tabs +
       '<h2 class="lp-h">' + F.label + ' · ' + F.code + '</h2><p class="lp-sub">' + F.pron + ' · ' + d.en.join(' → ') + '</p>';
     var power = '<section class="card lp-power"><p class="lp-pw"><span>AI 시대 역량</span><b>' + d.power[0] + '</b></p><p class="lp-pd">' + d.power[1] + (d.ai ? ' ' + d.ai : '') + '</p>' +
       '<p class="lp-loop"><b>문제를 풀 때</b> ' + ['CRIB', 'PREP', 'AHWA'].map(function (x) { return '<span class="' + (x === k ? 'on' : '') + '">' + D[x].power[0] + '</span>'; }).join('<i>→</i>') + '</p></section>';
