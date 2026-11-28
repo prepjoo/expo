@@ -492,7 +492,7 @@ function homeScores(id) {
 }
 function viewHome() {
   const chosen = levelChosen();
-  const id = whoId(), p = persona(), st = streak(), first = !S.history.length, open = S.ui.homeOpen || 'why', sc = homeScores(id);
+  const id = whoId(), p = persona(), st = streak(), first = !S.history.length, open = S.ui.homeOpen || '__none', sc = homeScores(id);
   const row = (key, tag, title, body) => `
     <section class="irow ${open === key ? 'open' : ''}" data-k="${key}">
       <button class="irow-btn" data-act="homeOpen" data-v="${key}" aria-expanded="${open === key}" aria-controls="ir-${key}">
