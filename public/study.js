@@ -115,12 +115,13 @@
 
   function roleBox(k, F, R) {
     var M = (typeof ROLE_MEAN !== 'undefined' && ROLE_MEAN[k]) || R.map(function (r) { return MEAN[r]; });
-    var cell = function (i) { return '<b style="color:var(--' + R[i] + ')">' + F.slots[i].key + '</b> <span style="color:var(--' + R[i] + ');font-weight:700">' + HAN[R[i]].slice(2, 3) + ' ' + M[i] + '</span>'; };
+    // 칸 이름(무엇을 말하나)과 종·인·유 풀이(그 말이 하는 일)를 나란히 보여 줘요. 예: P 결론 = 宗 주장
+    var cell = function (i) { return '<b style="color:var(--' + R[i] + ')">' + F.slots[i].key + ' ' + F.slots[i].title + '</b> <span style="color:var(--' + R[i] + ');font-weight:700">= ' + HAN[R[i]].slice(2, 3) + ' ' + M[i] + '</span>'; };
     var flow = k === 'AHWA' ? cell(0) + ' → [ ' + cell(1) + ' | ' + cell(2) + ' ] → ' + cell(3) : [0, 1, 2, 3].map(cell).join(' → ');
-    var note = { PREP: '주장(宗)을 근거(因)로 받치고, 증명(喩)으로 눈에 보이게 한 뒤, 주장(宗)으로 맺어요.',
-      AHWA: '이유와 방법은 위아래가 아니라, 행동(宗)을 함께 받치는 두 원인(因)이에요.',
-      CRIB: '문제 상황(喩)과 손실 이유(因)로 문제를 정의하고, 주장(宗)을 이익 이유(因)로 받쳐요.' }[k];
-    return '<div class="small" style="margin:10px 0 0;padding:10px 12px;background:var(--in-soft);border-radius:10px;line-height:1.7"><b style="color:var(--in)">종·인·유로 보면</b><br>' + flow + '<br><span class="muted">' + note + '</span></div>';
+    var note = { PREP: '결론은 주장(宗)이에요. 이유는 그 주장의 근거(因)가 되고, 사례는 주장을 눈에 보이게 하는 증명(喩)이 돼요. 다시 결론으로 주장(宗)을 맺어요.',
+      AHWA: '행동은 주장(宗)이에요. 이유와 방법은 위아래가 아니라, 행동을 함께 받치는 두 원인(因)이에요.',
+      CRIB: '상황은 문제 상황(喩), 손실은 그것이 왜 문제인지 밝히는 손실 이유(因)예요. 아이디어는 주장(宗), 이익은 그 주장을 받치는 이익 이유(因)예요.' }[k];
+    return '<div class="small" style="margin:10px 0 0;padding:10px 12px;background:var(--in-soft);border-radius:10px;line-height:1.7"><b style="color:var(--in)">종·인·유로 보면</b> <span class="muted">· 칸 이름은 무엇을 말할지, 종·인·유는 그 말이 하는 일이에요.</span><br>' + flow + '<br><span class="muted">' + note + '</span></div>';
   }
   function view(k) {
     var F = FORMS[k], d = D[k], R = ROLE_OF[k], it = BY[d.ex];
