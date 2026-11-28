@@ -514,10 +514,11 @@ function viewHome() {
   <div class="ilist">
     ${row('why', '철학', 'AI 시대에 살아남는 세 가지 힘', `
       <p class="body-tx">자료 정리도, 문제 찾기도, 답 내기도 이제 AI가 해요. 하지만 그중 무엇을 붙잡을지 <b>고르고</b>, 그 근거가 맞는지 <b>따지고</b>, 내 말로 <b>증명하고 책임지는</b> 일은 내 몫이에요. 이 앱은 그 힘을 세 가지로 길러요.</p>
-      <ol class="flow3 pw3">
-        <li><a href="#study-crib"><b>문제를 정의하는 힘</b><span>${formTag('CRIB', 'sm')} 무엇이 문제이고 누가 무엇을 잃는지 먼저 보여 줘요</span></a></li>
-        <li><a href="#study-prep"><b>생각을 증명하는 힘</b><span>${formTag('PREP', 'sm')} 내 주장을 이유와 사례로 증명해요</span></a></li>
-        <li><a href="#study-awha"><b>움직임을 만드는 힘</b><span>${formTag('AHWA', 'sm')} 할 일을 먼저 주고 행동을 이끌어요</span></a></li>
+      <ol class="flow3 pw3 pwx">
+        ${[['CRIB', '무엇이 문제이고 누가 무엇을 잃는지 먼저 보여 줘요'], ['PREP', '내 주장을 근거와 증명으로 받쳐요'], ['AHWA', '할 일을 먼저 주고 행동을 이끌어요']].map(([k, line]) => {
+          const P = window.STUDY_POWER ? window.STUDY_POWER(k) : null, open = S.ui.homePw === k;
+          return `<li><button type="button" data-act="homePw" data-v="${k}" aria-expanded="${open}"><b>${P ? P.title : ''}<i class="pwx-ar" aria-hidden="true"></i></b><span>${formTag(k, 'sm')} ${line}</span></button>${open && P ? `<div class="pwx-b"><p class="pwx-k">AI 시대 역량 · <b>${esc(P.title)}</b></p><p>${esc(P.desc)} ${esc(P.ai)}</p></div>` : ''}</li>`;
+        }).join('')}
       </ol>
       <p class="body-tx small">문제를 풀 때는 <b>정의 → 증명 → 움직임</b> 순서로 쓰고, 배울 때는 가장 쉬운 받치는 삼지작법(PREP)부터 시작해요.</p>`)}
     ${row('what', '방법', '짜고, 말하고, 잽니다', `
@@ -1078,6 +1079,7 @@ const ACT = {
   delCardYes: v => { S.cards = S.cards.filter(x => x.id !== v); Store.save('cards'); closeSheet(); render(); toast('카드를 지웠어요.', 'think'); },
   login: v => { if (window.B5 && window.B5.auth) window.B5.auth.login(v).catch(() => toast('로그인을 시작하지 못했어요. 잠시 뒤 다시 해 주세요.', 'surprised')); },
   logout: async () => { if (!(window.B5 && window.B5.auth)) return; await window.B5.auth.logout(); Store.account = null; Store.mode = 'local'; Store.backend = null; closeSheet(); render(); toast('로그아웃했어요.', 'think'); },
+  homePw: v => { S.ui.homePw = S.ui.homePw === v ? null : v; render(); },
   homeOpen: v => { S.ui.homeOpen = S.ui.homeOpen === v ? null : v; if (!S.ui.homeOpen) S.ui.homeOpen = '__none'; render(); },
   speakOpen: v => { readSlotsFromDom(); if (S.ui.speakOpen === v) { S.ui.speakOpen = null; } else { S.ui.speakOpen = v; S.ui.speak.form = v; } Store.saveLocal(); render(); const el = document.querySelector('.choice.open'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); },
 

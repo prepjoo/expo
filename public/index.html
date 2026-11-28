@@ -909,6 +909,11 @@ img[src^="char/"]{aspect-ratio:305/320;object-fit:contain}
 .slist li.nob::before{display:none}
 @media (max-width:480px){header.top{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:10px;row-gap:2px}header.top>div:first-child{display:contents}header.top .brand{grid-column:1;grid-row:1;align-self:start}header.top .hdr-r{grid-column:2;grid-row:1}header.top .tagline{grid-column:1/-1;grid-row:2;margin:0 0 0 34px!important;font-size:12.5px!important}}
 @media (max-width:345px){header.top .tagline{margin-left:0!important;font-size:12px!important}}
+.pwx li>button{all:unset;box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start;gap:4px;width:100%;cursor:pointer}
+.pwx li>button b{display:flex;align-items:center;gap:6px;white-space:nowrap}.pwx li>button>span{display:block;width:100%}
+.pwx-ar{display:inline-block;width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);margin:-3px 0 0 2px;transition:transform .2s}
+.pwx li>button[aria-expanded="true"] .pwx-ar{transform:rotate(-135deg);margin-top:3px}
+.pwx-b{margin:8px 0 2px;padding:10px 12px;border-radius:12px;background:var(--in-soft,#EEF3FB);font-size:14px;line-height:1.6}.pwx-b p{margin:0}.pwx-k{font-size:12.5px;color:var(--ink3);margin-bottom:4px!important}
 </style>
 <script>
 /* 휴대폰 글자 크기 설정(텍스트 확대)이 크면 화면이 깨지지 않도록, 확대 효과를 최대 1.15배까지만 남기고 화면 전체 배율을 맞춘다. */
@@ -957,11 +962,11 @@ img[src^="char/"]{aspect-ratio:305/320;object-fit:contain}
 <script src="persona.js?v=20261125-d1"></script>
 <script src="content.js?v=20261125-b1"></script>
 <script src="adult.js?v=20261126-h1"></script>
-<script src="app.js?v=20261128-a1"></script>
+<script src="app.js?v=20261128-b1"></script>
 <script src="guide.js?v=20261126-k2"></script>
 <script src="qrcode.js"></script>
 <script src="expo.js?v=20261128-a1"></script>
-<script src="study.js?v=20261128-a3"></script>
+<script src="study.js?v=20261128-b1"></script>
 <script src="aicheck.js?v=20261126-i2"></script>
 <script src="balance.js?v=20261126-h1"></script>
 <script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function(){});</script>

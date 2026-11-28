@@ -168,6 +168,7 @@
       '<p class="small muted" style="text-align:center;margin-top:12px"><a href="#origin">삼지작법의 유래 보기</a></p>';
     return head + intro + table + '<section class="card fold-list">' + why + two + exb + rules + pre + jong + '</section>' + uses + nav;
   }
+  window.STUDY_POWER = function (k) { var d = D[k]; return d ? { title: d.power[0], desc: d.power[1], ai: d.ai || '' } : null; };
   window.viewStudy = function (slug) {
     try { localStorage.setItem('b5adult:lastStudy', slug); } catch (e) {}
     var k = { crib: 'CRIB', prep: 'PREP', awha: 'AHWA' }[slug];
