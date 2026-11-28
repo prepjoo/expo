@@ -268,7 +268,7 @@ const ROLE = {
     t => FT.fact(t) && FT.past(t) ? 2 : (FT.fact(t) || FT.past(t) ? 1 : 0), (t, s) => FT.next(t) ? 2 : overlap(t, s[0]) ? 1 : 0],
   CRIB: [t => (FT.sit(t) || countNums(t)) && t.length <= 80 ? 2 : 1, t => FT.loss(t) ? 2 : RX.delta.test(t) ? 1 : 0,
     t => FT.next(t) || FT.act(t) || FT.alt(t) || /(제안|도입|하자)/.test(t) ? 2 : 0, t => FT.gain(t) ? 2 : FT.next(t) ? 1 : 0],
-  // 아하 = A 행동(종) → W 이유(인) → H 방법(인) → A 다시 행동(종). W와 H는 나란한 근거(因)
+  // 아하 = A 결론(행동 제안)(종) → W 이유(인) → H 방법(인) → A 결론(행동 요청)(종). W와 H는 나란한 근거(因)
   AHWA: [t => FT.next(t) && t.length <= 80 ? 2 : (done(t) ? 1 : 0), t => FT.reason(t) || FT.alt(t) ? 2 : (FT.loss(t) || FT.gain(t) ? 1 : 0),
     t => FT.act(t) && FT.fact(t) ? 2 : (FT.act(t) || FT.fact(t) ? 1 : 0), (t, s) => FT.next(t) ? 2 : overlap(t, s[0]) ? 1 : 0]
 };
@@ -318,7 +318,7 @@ const FOLLOW = {
 const RECO = { pick: 'AHWA', fact: 'PREP', contrast: 'CRIB', fit: 'CRIB', move: 'PREP' };
 const RECO_TXT = {
   pick: '"왜 그 방법이었나요?"에 버린 대안과 기준을 넣어 답하는 연습을 하세요.',
-  fact: '생각과 사실을 나눠, 사례 칸에는 숫자나 직접 한 행동 같은 사실만 넣는 연습을 하세요.',
+  fact: '생각과 사실을 나눠, 증명(사례) 칸에는 숫자나 직접 한 행동 같은 사실만 넣는 연습을 하세요.',
   contrast: '"○○에서 △△로"처럼 전과 후를 대비하는 연습을 하세요.',
   fit: '첫 문장을 짧게, 30초 안에 끝내는 여는 삼지작법 연습을 하세요.',
   move: '끝 문장에 "하지 않으면 잃는 것(손실)"이나 "하면 얻는 것(이익)"을 숫자로 붙이는 연습을 하세요.'

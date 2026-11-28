@@ -130,7 +130,7 @@
       rows.map(function (r) {
         var F = FORMS[r[0]];
         return '<div style="display:flex;gap:14px;align-items:center;margin:12px 0"><span style="flex:0 0 60px">' + manji(r[0], 60) + '</span>' + '<div><b>' + r[1] + ' · ' + F.code + ' <small style="font-weight:600;opacity:.65;font-size:.78em">' + F.pron + '</small></b><div class="small muted">' + r[2] + ' · ' +
-          F.slots.map(function (x, i) { var w = EN[r[0]][i]; return '<b>' + w.charAt(0) + '</b>' + w.slice(1) + ' ' + x.title + '<small>(' + ROLE_HAN[ROLE[r[0]][i]].slice(2, 3) + ' ' + ROLE_MEAN[r[0]][i] + ')</small>'; }).join(' → ') + '</div></div></div>';
+          F.slots.map(function (x, i) { var w = EN[r[0]][i]; return '<b>' + w.charAt(0) + '</b>' + w.slice(1) + ' ' + x.title + '<small>(' + ROLE_HAN[ROLE[r[0]][i]].slice(2, 3) + ')</small>'; }).join(' → ') + '</div></div></div>';
       }).join('') + '</section>' +
       '<section class="card"><h2 class="sec" style="margin-top:0">이 페이지의 출처</h2><ul class="small" style="line-height:1.75;padding-left:18px;margin:0">' +
       '<li>진나(陳那, Dignāga, 약 480~540), 『인명정리문론(因明正理門論, Nyāyamukha)』. 현장 한역 649년.</li>' +
