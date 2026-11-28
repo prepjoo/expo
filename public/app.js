@@ -508,7 +508,7 @@ function viewHome() {
       <li>생각과 글이 사라지는 AI 시대,</li>
       <li class="nob">이제는 <b>문제 정의</b>와 <b>말로 증명</b>하는 힘이 필요해요.</li>
       <li>세 가지 <b>삼지작법</b>으로 <b>30초</b>에 내 생각을 증명해 보세요.</li>
-      <li class="nob">세 가지 삼지작법이면 “그래서요?” 같은 압박 질문에도 흔들리지 않아요.</li>
+      <li class="nob">“그래서요?” 같은 압박 질문에도 흔들리지 않아요.</li>
     </ul>
   </section>
   <div class="ilist">
